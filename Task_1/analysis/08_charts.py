@@ -38,35 +38,39 @@ def _ab_with_attrs(df):
     return ab.merge(attrs, on="id_user", how="left")
 
 
-# ── Chart 1: Conversion Rate bar chart with 95% CIs ─────────────────────────
+# ── Chart 1: Payments Per User bar chart with 95% bootstrap CIs ──────────────
 
-def chart01_conversion_rate(ab):
+def chart01_payments_per_user(ab):
     ctrl = ab[ab["split_group"] == 0]
     test = ab[ab["split_group"] == 1]
-    cr_c = (ctrl["revenue"] > 0).mean()
-    cr_t = (test["revenue"] > 0).mean()
-    se_c = np.sqrt(cr_c * (1 - cr_c) / len(ctrl))
-    se_t = np.sqrt(cr_t * (1 - cr_t) / len(test))
+    ppu_c = ctrl["payment_count"].mean()
+    ppu_t = test["payment_count"].mean()
+
+    rng = np.random.default_rng(42)
+    n_boot = 5_000
+    boot_c = rng.choice(ctrl["payment_count"].values, (n_boot, len(ctrl)), replace=True).mean(1)
+    boot_t = rng.choice(test["payment_count"].values, (n_boot, len(test)), replace=True).mean(1)
+    ci_c = (float(np.percentile(boot_c, 2.5)), float(np.percentile(boot_c, 97.5)))
+    ci_t = (float(np.percentile(boot_t, 2.5)), float(np.percentile(boot_t, 97.5)))
 
     fig, ax = plt.subplots(figsize=(7, 5))
-    bars = ax.bar(["Control", "Test"], [cr_c * 100, cr_t * 100],
+    bars = ax.bar(["Control", "Test"], [ppu_c, ppu_t],
                   color=[CTRL_COLOR, TEST_COLOR], width=0.5, alpha=0.85)
-    ax.errorbar([0, 1], [cr_c * 100, cr_t * 100],
-                yerr=[se_c * 1.96 * 100, se_t * 1.96 * 100],
+    ax.errorbar([0, 1], [ppu_c, ppu_t],
+                yerr=[[ppu_c - ci_c[0], ppu_t - ci_t[0]], [ci_c[1] - ppu_c, ci_t[1] - ppu_t]],
                 fmt="none", color="black", capsize=6, linewidth=2)
-    for bar, val in zip(bars, [cr_c, cr_t]):
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.06,
-                f"{val:.2%}", ha="center", va="bottom", fontsize=13, fontweight="bold")
-    ax.set_ylabel("Conversion Rate (%)", fontsize=12)
-    ax.set_ylim(0, max(cr_c, cr_t) * 100 * 1.5)
-    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:.1f}%"))
-    ax.set_title("Conversion Rate: Test vs Control\n(with 95% Confidence Intervals)", fontsize=13)
+    for bar, val in zip(bars, [ppu_c, ppu_t]):
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() * 1.04 + 0.0001,
+                f"{val:.4f}", ha="center", va="bottom", fontsize=13, fontweight="bold")
+    ax.set_ylabel("Avg Payments Per User", fontsize=12)
+    ax.set_ylim(0, max(ppu_c, ppu_t) * 1.6)
+    ax.set_title("Payments Per User: Test vs Control\n(Primary Metric — 95% Bootstrap Confidence Intervals)", fontsize=13)
     ax.text(0.5, -0.14,
-            "Conversion rate = % of users who made ≥1 successful payment. Error bars show 95% CI.\n"
-            "Test group shows slightly lower conversion — difference is not statistically significant.",
+            "Payments per user = total successful payments ÷ all users (including non-payers). Error bars show 95% bootstrap CI.\n"
+            "Captures both conversion rate and repeat-purchase behaviour in a single metric.",
             transform=ax.transAxes, ha="center", fontsize=9, color="#555", style="italic")
     fig.tight_layout()
-    save(fig, "01_conversion_rate.png")
+    save(fig, "01_payments_per_user.png")
 
 
 # ── Chart 2: Payment Amount Distribution (violin, log scale) ─────────────────
@@ -322,7 +326,7 @@ def main():
     df = load_mobile_payments()
     ab = _ab_with_attrs(df)
 
-    chart01_conversion_rate(ab)
+    chart01_payments_per_user(ab)
     chart02_amount_distribution(ab)
     chart03_daily_timeseries(df, ab)
     chart04_arpu(ab)

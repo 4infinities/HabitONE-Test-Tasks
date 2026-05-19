@@ -19,7 +19,6 @@ import os
 import pandas as pd
 from scipy import stats
 
-from statsmodels.stats.proportion import proportions_ztest as sp_proportions_ztest
 from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_all_payments, load_mobile_payments
 
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "outputs")
@@ -110,34 +109,6 @@ def mw_row(scenario, metric, ctrl, test):
     }
 
 
-def ztest_cr_row(scenario, ctrl, test):
-    """
-    Двухвыборочный Z-тест для долей (одностороннийtest > control).
-    H0: CR(test) == CR(ctrl). H1: CR(test) > CR(ctrl).
-    CI рассчитывается для разницы долей через нормальное приближение.
-    """
-    c_pay = int((ctrl["revenue"] > 0).sum())
-    t_pay = int((test["revenue"] > 0).sum())
-    # proportions_ztest: count[0] / nobs[0] is the first proportion (test)
-    _, p = sp_proportions_ztest([t_pay, c_pay], [len(test), len(ctrl)], alternative="larger")
-    m_c, m_t = c_pay / len(ctrl), t_pay / len(test)
-    diff = m_t - m_c
-    se = np.sqrt(m_t * (1 - m_t) / len(test) + m_c * (1 - m_c) / len(ctrl))
-    return {
-        "scenario": scenario,
-        "metric": "conversion_rate",
-        "test": "Proportions Z-test (one-tailed)",
-        "control_mean": m_c,
-        "test_mean": m_t,
-        "abs_diff": diff,
-        "rel_diff_pct": (m_t / m_c - 1) * 100 if m_c else float("nan"),
-        "ci_95_low": diff - 1.96 * se,
-        "ci_95_high": diff + 1.96 * se,
-        "p_value": p,
-        "p_bonferroni": min(p * N_METRICS, 1.0),
-        "significant": p < ALPHA / N_METRICS,
-    }
-
 
 def run_scenario(df, label):
     """
@@ -150,9 +121,9 @@ def run_scenario(df, label):
     ctrl_arpp = ctrl[ctrl["revenue"] > 0]["revenue"]
     test_arpp = test[test["revenue"] > 0]["revenue"]
     rows = [
-        mw_row(label, "ARPP", ctrl_arpp, test_arpp),
+        mw_row(label, "payments_per_user", ctrl["payment_count"], test["payment_count"]),
         mw_row(label, "RPU", ctrl["revenue"], test["revenue"]),
-        ztest_cr_row(label, ctrl, test),
+        mw_row(label, "ARPP", ctrl_arpp, test_arpp),
     ]
 
     # Whale RPU: выручка от китов / все пользователи группы
@@ -198,18 +169,19 @@ def sign_test(df, label):
     ].copy()
     post["date"] = post["date_payment"].dt.date
 
+    # PPU sign test: daily payment count per cohort size (split_group already in post)
     daily = (
-        post.groupby(["date", "split_group"])["id_user"]
-        .nunique()
+        post.groupby(["date", "split_group"])
+        .size()
         .unstack(fill_value=0)
     )
     if 0 not in daily.columns or 1 not in daily.columns:
         return None
     daily = daily.rename(columns={0: "ctrl", 1: "test"})
-    daily["cr_ctrl"] = daily["ctrl"] / n_ctrl
-    daily["cr_test"] = daily["test"] / n_test
+    daily["ppu_ctrl"] = daily["ctrl"] / n_ctrl
+    daily["ppu_test"] = daily["test"] / n_test
 
-    wins = int((daily["cr_test"] > daily["cr_ctrl"]).sum())
+    wins = int((daily["ppu_test"] > daily["ppu_ctrl"]).sum())
     n_days = len(daily)
     result = binomtest(wins, n_days, p=0.5, alternative="greater")
     return {
@@ -233,6 +205,7 @@ def main():
         # Скорректированный порог: 0.05 / 3 ≈ 0.0167
         print(f"\n{'='*60}")
         print(f"STATISTICAL TESTS: {label.upper()}  (Bonferroni alpha = {ALPHA/N_METRICS:.4f})")
+        print(f"Primary metric: payments_per_user (Mann-Whitney U)")
         print(f"{'='*60}")
         print(tests_df[[
             "metric", "control_mean", "test_mean", "rel_diff_pct",
@@ -252,7 +225,7 @@ def main():
     # Sign test — mobile only (primary scenario, CLAUDE.md Step 5)
     sign = sign_test(load_mobile_payments(), "mobile")
     if sign:
-        print(f"\n--- Sign test (mobile): {sign['wins']}/{sign['n_days']} days test > control"
+        print(f"\n--- Sign test PPU (mobile): {sign['wins']}/{sign['n_days']} days test > control"
               f"  p={sign['p_value']:.4f}  {'SIGNIFICANT' if sign['significant'] else 'not significant'}")
         pd.DataFrame([sign]).to_csv(
             os.path.join(OUTPUT_DIR, "sign_test.csv"), index=False, float_format="%.6f")

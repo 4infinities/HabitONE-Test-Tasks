@@ -9,7 +9,6 @@ from datetime import date
 import numpy as np
 import pandas as pd
 from scipy import stats
-from statsmodels.stats.proportion import proportions_ztest
 
 from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_mobile_payments
 
@@ -41,10 +40,12 @@ def compute_results(df):
     pay_t = int((test["revenue"] > 0).sum())
     cr_c, cr_t = pay_c / n_c, pay_t / n_t
 
-    # Conversion rate Z-test (one-tailed: test > control)
-    _, p_cr = proportions_ztest([pay_t, pay_c], [n_t, n_c], alternative="larger")
-    se_cr = np.sqrt(cr_t * (1 - cr_t) / n_t + cr_c * (1 - cr_c) / n_c)
-    diff_cr = cr_t - cr_c
+    # PRIMARY METRIC: Payments Per User — Mann-Whitney U (test > control)
+    ppu_c = ctrl["payment_count"].mean()
+    ppu_t = test["payment_count"].mean()
+    _, p_ppu = stats.mannwhitneyu(test["payment_count"], ctrl["payment_count"], alternative="greater")
+    ci_ppu_c = _bootstrap_ci(ctrl["payment_count"].values)
+    ci_ppu_t = _bootstrap_ci(test["payment_count"].values)
 
     # ARPP: payer-only amounts, Mann-Whitney (test > control)
     arpp_c = ctrl.loc[ctrl["revenue"] > 0, "revenue"]
@@ -55,17 +56,21 @@ def compute_results(df):
     _, p_rpu = stats.mannwhitneyu(test["revenue"], ctrl["revenue"], alternative="greater")
     rpu_c, rpu_t = ctrl["revenue"].mean(), test["revenue"].mean()
 
-    # Bootstrap CI for ARPU
+    # Bootstrap CI for RPU
     ci_rpu_c = _bootstrap_ci(ctrl["revenue"].values)
     ci_rpu_t = _bootstrap_ci(test["revenue"].values)
 
-    # Power analysis for conversion rate (1 pp MDE, alpha=0.05, power=0.80)
-    p_t_mde = cr_c + 0.01
-    h = 2 * (np.arcsin(np.sqrt(p_t_mde)) - np.arcsin(np.sqrt(cr_c)))
+    # Power analysis for PPU (5% relative MDE, alpha=0.05, power=0.80)
+    ppu_mde = ppu_c * 1.05
+    ppu_sd = ctrl["payment_count"].std()
     z_req = stats.norm.ppf(1 - ALPHA) + stats.norm.ppf(0.80)
-    n_req_cr = int(np.ceil((z_req / h) ** 2)) if h > 0 else float("nan")
-    obs_power_cr = float(1 - stats.norm.cdf(
-        stats.norm.ppf(1 - ALPHA) - h * np.sqrt(min(n_c, n_t) / 2)))
+    n_req_ppu = int(np.ceil(2 * (z_req * ppu_sd / (ppu_mde - ppu_c)) ** 2)) if ppu_mde > ppu_c and ppu_sd > 0 else float("nan")
+    obs_power_ppu = float(1 - stats.norm.cdf(
+        stats.norm.ppf(1 - ALPHA) - abs(ppu_t - ppu_c) / (ppu_sd * np.sqrt(2 / min(n_c, n_t)))))
+
+    # Conversion rate (secondary — kept for reference)
+    diff_cr = cr_t - cr_c
+    se_cr = np.sqrt(cr_t * (1 - cr_t) / n_t + cr_c * (1 - cr_c) / n_c)
 
     # Whale metrics
     cutoff = _whale_cutoff(ab)
@@ -113,12 +118,14 @@ def compute_results(df):
         "n_c": n_c, "n_t": n_t,
         "pay_c": pay_c, "pay_t": pay_t,
         "cr_c": cr_c, "cr_t": cr_t,
-        "p_cr": p_cr, "diff_cr": diff_cr, "se_cr": se_cr,
+        "diff_cr": diff_cr, "se_cr": se_cr,
+        "ppu_c": ppu_c, "ppu_t": ppu_t,
+        "p_ppu": p_ppu, "ci_ppu_c": ci_ppu_c, "ci_ppu_t": ci_ppu_t,
+        "n_req_ppu": n_req_ppu, "obs_power_ppu": obs_power_ppu,
         "arpp_c": float(arpp_c.mean()), "arpp_t": float(arpp_t.mean()),
         "p_arpp": p_arpp,
         "rpu_c": rpu_c, "rpu_t": rpu_t,
         "p_rpu": p_rpu, "ci_rpu_c": ci_rpu_c, "ci_rpu_t": ci_rpu_t,
-        "n_req_cr": n_req_cr, "obs_power_cr": obs_power_cr,
         "whale_cutoff": cutoff,
         "n_whales_c": len(w_c), "n_whales_t": len(w_t),
         "whale_cr_c": whale_cr_c, "whale_cr_t": whale_cr_t,
@@ -191,6 +198,9 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
 def generate_html(r):
     cr_ci_low = r["diff_cr"] - 1.96 * r["se_cr"]
     cr_ci_high = r["diff_cr"] + 1.96 * r["se_cr"]
+    ppu_diff = r["ppu_t"] - r["ppu_c"]
+    ppu_ci_low = r["ci_ppu_t"][0] - r["ci_ppu_c"][1]
+    ppu_ci_high = r["ci_ppu_t"][1] - r["ci_ppu_c"][0]
 
     whale_sig_note = (
         f"Mann-Whitney U test on whale payment amounts: p={r['p_whale']:.3f} — "
@@ -199,15 +209,19 @@ def generate_html(r):
         else "Formal significance test not applicable due to small whale sample size."
     )
 
-    powered_note = (
-        f"<strong>The experiment was adequately powered for conversion rate</strong> "
-        f"(required ~{r['n_req_cr']:,} users/group for 1 pp MDE; actual: ~{r['n_c']:,}; "
-        f"estimated power: {r['obs_power_cr']:.0%})."
-        if r["n_c"] >= r["n_req_cr"]
-        else f"<strong>The experiment may be underpowered for conversion rate</strong> "
-             f"(required ~{r['n_req_cr']:,} users/group for 1 pp MDE; actual: ~{r['n_c']:,}; "
-             f"estimated power: {r['obs_power_cr']:.0%})."
-    )
+    try:
+        n_req_ppu = int(r["n_req_ppu"])
+        powered_note = (
+            f"<strong>The experiment was adequately powered for payments per user</strong> "
+            f"(required ~{n_req_ppu:,} users/group for 5% relative MDE; actual: ~{r['n_c']:,}; "
+            f"estimated power: {r['obs_power_ppu']:.0%})."
+            if r["n_c"] >= n_req_ppu
+            else f"<strong>The experiment may be underpowered for payments per user</strong> "
+                 f"(required ~{n_req_ppu:,} users/group for 5% relative MDE; actual: ~{r['n_c']:,}; "
+                 f"estimated power: {r['obs_power_ppu']:.0%})."
+        )
+    except (TypeError, ValueError):
+        powered_note = "Power analysis for payments per user could not be computed (insufficient baseline variance)."
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -231,13 +245,14 @@ def generate_html(r):
   <p>
     The new payment screen UI produced <strong>no statistically significant improvement</strong>
     on any primary business metric.
-    Conversion rate in the test group was <strong>{r['cr_t']:.2%}</strong>
-    vs <strong>{r['cr_c']:.2%}</strong> in control
-    (difference: <strong>{r['diff_cr']:+.2f} pp</strong>, p={r['p_cr']:.3f} — not significant,
+    The primary metric — <strong>payments per user</strong> (total successful payments per person,
+    capturing both conversion and repeat purchases) — was
+    <strong>{r['ppu_t']:.4f}</strong> in the test group vs <strong>{r['ppu_c']:.4f}</strong>
+    in control (difference: <strong>{ppu_diff:+.4f}</strong>, p={r['p_ppu']:.3f} — not significant,
     and the direction is <em>negative</em>).
     Average Revenue Per Payer was ${r['arpp_t']:,.0f} (test) vs ${r['arpp_c']:,.0f} (control),
     also not significant (p={r['p_arpp']:.3f}).
-    There is <strong>no statistical evidence</strong> that launching would increase revenue or conversions.
+    There is <strong>no statistical evidence</strong> that launching would increase payments or revenue.
   </p>
 </div>
 
@@ -275,13 +290,14 @@ def generate_html(r):
   <tr>
     <th>Metric</th><th>Control</th><th>Test</th><th>Difference</th><th>Result</th>
   </tr>
-  <tr>
-    <td><strong>Conversion Rate</strong><br>
-        <small>% of users who paid ≥1 time</small></td>
-    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
-    <td>{r['cr_t']:.2%}<br><small>({r['pay_t']:,} / {r['n_t']:,})</small></td>
-    <td>{r['diff_cr']:+.2f} pp</td>
-    <td>{_badge(r['p_cr'])}</td>
+  <tr style="background:#fff8e1">
+    <td><strong>★ Payments Per User (PPU)</strong><br>
+        <small>PRIMARY METRIC — total successful payments ÷ all users<br>
+        Captures both conversion and repeat purchases</small></td>
+    <td>{r['ppu_c']:.4f}<br><small>(95% CI: [{r['ci_ppu_c'][0]:.4f}, {r['ci_ppu_c'][1]:.4f}])</small></td>
+    <td>{r['ppu_t']:.4f}<br><small>(95% CI: [{r['ci_ppu_t'][0]:.4f}, {r['ci_ppu_t'][1]:.4f}])</small></td>
+    <td>{ppu_diff:+.4f}<br><small>({(r['ppu_t'] / r['ppu_c'] - 1) * 100 if r['ppu_c'] else 0:+.1f}%)</small></td>
+    <td>{_badge(r['p_ppu'])}</td>
   </tr>
   <tr>
     <td><strong>Avg Revenue Per Payer (ARPP)</strong><br>
@@ -299,9 +315,17 @@ def generate_html(r):
     <td>{(r['rpu_t'] / r['rpu_c'] - 1) * 100:+.1f}%</td>
     <td>{_badge(r['p_rpu'])}</td>
   </tr>
+  <tr>
+    <td><strong>Conversion Rate</strong><br>
+        <small>% of users who paid ≥1 time (secondary reference)</small></td>
+    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
+    <td>{r['cr_t']:.2%}<br><small>({r['pay_t']:,} / {r['n_t']:,})</small></td>
+    <td>{(r['diff_cr']*100):+.2f} pp</td>
+    <td>—</td>
+  </tr>
 </table>
 
-<div class="chart">{_img_tag("01_conversion_rate.png", "Conversion Rate Chart")}</div>
+<div class="chart">{_img_tag("01_payments_per_user.png", "Payments Per User Chart")}</div>
 <div class="chart">{_img_tag("04_arpu.png", "ARPU Chart")}</div>
 <div class="chart">{_img_tag("02_amount_distribution.png", "Amount Distribution")}</div>
 <div class="chart">{_img_tag("03_daily_timeseries.png", "Daily Conversion Rate")}</div>
@@ -309,9 +333,10 @@ def generate_html(r):
 <h2>5. Statistical Significance — Plain English</h2>
 <p>Statistical tests used:</p>
 <ul>
-  <li><strong>Conversion Rate:</strong> Two-proportion Z-test (one-tailed).
-    Tests whether the test group has a higher conversion rate than control.
-    P-value: {r['p_cr']:.3f}.</li>
+  <li><strong>★ Payments Per User (primary):</strong> Mann-Whitney U test (non-parametric;
+    appropriate because the distribution is zero-inflated — most users pay 0 times).
+    Tests whether the test group produces more payments per user than control.
+    P-value: {r['p_ppu']:.3f}.</li>
   <li><strong>Avg Revenue Per Payer:</strong> Mann-Whitney U test (non-parametric;
     appropriate because payment amounts are heavily right-skewed due to whale spending).
     P-value: {r['p_arpp']:.3f}.</li>
@@ -322,14 +347,13 @@ def generate_html(r):
 <div class="warn">
   <strong>All three primary metrics: p-value &gt; 0.05 — no statistically significant effect found.</strong>
   In plain terms: the observed differences between test and control are consistent with random
-  variation. We cannot conclude that the new design changes user behavior.
+  variation. We cannot conclude that the new design changes user behaviour.
 </div>
 
 <p>
-  <strong>Confidence interval for conversion rate difference:</strong>
-  [{cr_ci_low:+.3f} pp, {cr_ci_high:+.3f} pp] (95% CI).
-  The interval includes zero and the lower bound is negative —
-  the redesign <em>may actually reduce conversion rate</em>.
+  <strong>95% bootstrap confidence interval for PPU difference (test − control):</strong>
+  [{ppu_ci_low:+.4f}, {ppu_ci_high:+.4f}].
+  The interval includes zero — the redesign shows no reliable impact on payment frequency.
 </p>
 
 <p>{powered_note}</p>
@@ -428,8 +452,8 @@ def generate_html(r):
   <p>
     The new payment screen UI <strong>does not demonstrate a statistically significant
     improvement</strong> over the current design on any primary metric.
-    Conversion rate was marginally <em>lower</em> in the test group
-    ({r['cr_t']:.2%} vs {r['cr_c']:.2%}, p={r['p_cr']:.3f}).
+    The primary metric — payments per user — was marginally <em>lower</em> in the test group
+    ({r['ppu_t']:.4f} vs {r['ppu_c']:.4f}, p={r['p_ppu']:.3f}).
     Revenue metrics showed no significant change.
     While whale spending trended upward in the test group, the whale sample is too small
     to draw firm conclusions.
