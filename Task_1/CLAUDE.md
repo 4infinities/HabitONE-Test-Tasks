@@ -1,335 +1,238 @@
-# A/B Test Analysis — Mobile Payment Screen Redesign
+# CLAUDE.md — A/B Test: Mobile Payment Screen Redesign
 
-## Business Context
+## 🎯 Project Goal
 
-A game project where users buy in-game currency with real money. The design team proposed a new mobile payment screen UI to increase payment activity. The new variant was rolled out starting **July 23, 00:00** to a subset of users (`split_group = 1`), while the rest kept the baseline (`split_group = 0`).
+A game design team proposed a **new payment screen UI for mobile users** to increase the number of successful purchases of in-game currency (players pay real money).  
+The new variant was rolled out to a test group **starting July 23, 00:00**.  
+A control group continued seeing the original screen.
 
-**Key business question:** Should we roll out the new payment screen to all users, or reject it?
+**Business Question:**  
+> Should the new payment screen be launched for all users, or should it be rejected?  
+> Answer must be backed by charts and statistical calculations.
 
-> **Analysis boundary:** All cohort splits and payment windows use `TEST_START = 2021-07-23 00:00:00` from `analysis/constants.py` (A/B registrations begin on this date in the data).
+**Final Deliverable:**  
+A self-explanatory PDF/HTML report for the CEO — no technical background assumed.  
+The report must contain: key findings, visualizations, statistical conclusions, and a clear recommendation (launch / do not launch).
 
 ---
 
-## Data Dictionary
+## 🏢 Business Context
 
-| Field | Description |
+- **Product type:** Mobile game with in-game currency purchases (real money → virtual currency)
+- **Monetization model:** Whale model — a small segment of high-paying users (~5%) drives the majority of revenue (>60%). The redesign must be evaluated not only on conversion rate but also on **payment amount per payer** and **impact on whale segment**.
+- **Change scope:** Only the **payment screen UI** was changed — no changes to pricing, currency amounts, or game mechanics.
+- **Experiment start date:** July 23, 00:00
+- **Target platform:** Mobile users only (the redesign was built for mobile)
+
+---
+
+## 📁 Data
+
+**File:** `raw_data` (provided separately, likely CSV)
+
+### Data Dictionary
+
+| Column | Description |
 |---|---|
-| `id_user` | User identifier |
+| `id_user` | Unique user identifier |
 | `gender` | User gender |
-| `date_reg` | Registration datetime |
-| `platform` | User platform |
-| `Id_traffic_source` | Ad platform / traffic source |
+| `date_reg` | User registration datetime |
+| `platform` | User platform (mobile, desktop, tablet, etc.) |
+| `id_traffic_source` | Ad platform / acquisition source |
 | `country_group` | Country group |
 | `age_group` | Age group |
-| `system` | Device OS |
-| `date_payment` | Payment datetime (NULL = registered but never paid) |
+| `system` | Device operating system |
+| `date_payment` | Payment datetime (NULL = user never paid) |
 | `method` | Payment method |
 | `amount` | Payment amount |
-| `successful_payment` | 1 if payment was successful |
-| `split_group` | 0 = control, 1 = test |
+| `successful_payment` | 1 if payment was successful, 0 otherwise |
+| `split_group` | A/B group marker: **1 = test group**, 0 = control group |
 
-> **Important:** Rows with NULL `date_payment` = registered users who never made a payment. They MUST be included in the denominator for conversion rate and RPU calculations.
+> **Important:** Rows with `date_payment` = NULL represent registered users who never made a payment. These rows are valid and must be kept for conversion rate calculations.
 
 ---
 
-## Primary Metrics
+## ⚙️ Data Preparation & Filtering Rules
 
-| Metric | Formula | Rationale |
+### 1. Remove non-mobile users (artifact — out of scope)
+The redesign was built for **mobile only**.  
+Non-mobile users who appear in both test and control groups are an artifact of the experiment assignment system and must be **excluded from all analyses**.
+
+```python
+# Keep only mobile users
+df = df[df['platform'].str.lower().isin(['mobile', 'android', 'ios'])]
+# OR filter by 'system' column if platform is ambiguous — inspect both columns first
+```
+
+### 2. Remove pre-experiment data
+Only include users whose **registration date** (`date_reg`) is **on or after July 24** to avoid contamination from users registered before the experiment started.
+
+```python
+df = df[df['date_reg'] >= '2021-07-23']
+```
+
+### 3. Sanity Check — group balance
+Verify that test and control groups are balanced on invariant metrics (metrics that should NOT be affected by the experiment):
+- `gender` distribution
+- `age_group` distribution
+- `country_group` distribution
+- `id_traffic_source` distribution
+
+Run chi-square tests for categorical balance between groups. If groups are imbalanced, flag it in the report.
+
+---
+
+## 🐋 Whale Segment Analysis
+
+In whale-model games, average metrics can be misleading. Perform a **separate analysis for whale users**.
+
+**Whale definition:** Users in the top 5% by total payment amount (among payers only).
+
+```python
+whale_threshold = df_payers['amount'].quantile(0.95)
+df['is_whale'] = df['amount'] >= whale_threshold
+```
+
+For whale users, analyze separately:
+- Conversion rate (whale share in test vs. control)
+- Average payment amount
+- Statistical significance (use Mann-Whitney U test for amounts due to non-normality)
+
+> ⚠️ If the redesign negatively affects whales (lower amount or conversion), this is a critical red flag even if overall conversion improves.
+
+---
+
+## 📊 Analysis Methodology (Based on Udacity A/B Testing Framework)
+
+Follow this sequence:
+
+### Step 1 — Invariant Metric Sanity Checks
+Confirm the experiment setup is valid by checking that non-target metrics did not change between groups:
+- Use **chi-square test** for categorical distributions (gender, age_group, country_group)
+- If sanity checks fail → report the flaw and proceed with caution
+
+### Step 2 — Define Evaluation Metrics & Minimum Detectable Effect (MDE)
+
+Primary metrics:
+| Metric | Definition | MDE |
 |---|---|---|
-| **Revenue Per User (RPU)** | `SUM(amount) / COUNT(DISTINCT id_user)` | Core business metric — not just payment count |
-| **Conversion Rate** | `COUNT(DISTINCT paying users) / COUNT(DISTINCT all users)` | Secondary — funnel health |
-| **ARPU among payers** | `SUM(amount) / COUNT(DISTINCT paying users)` | Whale detection component |
-| **Payments per user** | `COUNT(payments) / COUNT(DISTINCT id_user)` | Proxy metric mentioned in task |
+| Conversion Rate (CR) | % of users who made ≥1 successful payment | Δ ≥ 1 pp |
+| Average Revenue Per Payer (ARPP) | Mean `amount` among payers | Δ ≥ 5% |
+| Total Revenue | Sum of `amount` per group (normalized per user) | Δ ≥ 5% |
 
----
+Secondary metrics (whale-specific):
+- Whale conversion rate
+- Whale average payment amount
 
-## Implementation Plan
+### Step 3 — Statistical Tests
 
-### STEP 0 — Data Loading & Initial Audit
-
-```python
-# Load raw_data file
-# Check shape, dtypes, nulls
-# Check date ranges: date_reg, date_payment
-# Verify split_group distribution (is it ~50/50?)
-# Check for users appearing in both groups (contamination check)
-```
-
-**Critical checks:**
-- Are there users with `split_group` that changes across rows? → flag as contaminated
-- What is the actual split ratio? (may not be 50/50)
-- What platforms are present? (`platform` values)
-
----
-
-### STEP 1 — Data Filtering
+**For Conversion Rate (proportions):**
+- Use **two-proportion Z-test** (or chi-square test)
+- Significance level: α = 0.05
+- One-tailed test (checking if new variant is better)
 
 ```python
-# Filter: keep only MOBILE users
-# Exclude platform == 'desktop' and platform == 'other'
-# BUT: first run a REFERENCE CHECK on desktop/other users:
-#   - If desktop/other shows NO difference between groups → confirms randomization worked
-#   - If desktop/other shows a difference → red flag (systematic bias in assignment)
-
-# After reference check, proceed with mobile-only cohort for main analysis
+from statsmodels.stats.proportion import proportions_ztest
+count = [test_conversions, control_conversions]
+nobs = [test_users, control_users]
+stat, pval = proportions_ztest(count, nobs, alternative='larger')
 ```
 
-**Rationale:** The UI change was mobile-only. Desktop/other should show zero effect — use them as a randomization sanity check.
-
----
-
-### STEP 2 — AA Check (users registered BEFORE July 23)
-
-**Cohort logic:**
-- Users registered **before July 23** never saw the new screen — their UI never changed.
-- Users registered **from July 23 onward** are the actual A/B test body (split_group 0 vs 1).
-
-These are two separate populations and must never be mixed in the main analysis.
+**For Payment Amount (continuous):**
+- Data is likely right-skewed (whale model) — do NOT assume normality
+- Use **Mann-Whitney U test**
 
 ```python
-# Take users registered BEFORE July 23 (pre-existing cohort)
-# Compare their RPU and conversion rate in two time windows:
-#   - Their behaviour BEFORE July 23
-#   - Their behaviour AFTER July 23 (same screen, different calendar period)
-# If metrics shift significantly after July 23 for this cohort →
-#   something external changed (seasonality, promo, bug) that will
-#   also affect the A/B test groups and cannot be attributed to the UI change.
-
-# Additionally: check if any pre-July-23 users have split_group assigned.
-# If yes → likely a technical artifact; exclude them from the A/B test body.
+from scipy.stats import mannwhitneyu
+stat, pval = mannwhitneyu(test_amounts, control_amounts, alternative='greater')
 ```
 
-**What this tells us:** If the old cohort's behaviour is stable across the July 23 boundary, external conditions are clean and the A/B test result can be trusted. If it shifts — flag as a confound.
+**Compute Confidence Intervals** for the difference in conversion rates and mean amounts.
 
----
+### Step 4 — Effect Size
+- For proportions: compute **Cohen's h** or raw lift (%)
+- For amounts: compute **relative difference** in medians and means
 
-### STEP 2.5 — Baseline Metrics (pre July 23, mobile only)
+### Step 5 — Double-Check with Sign Test (optional but recommended)
+Aggregate data by day. For each day, mark whether test > control. Count "wins" and run a **binomial sign test**.
 
 ```python
-# Take all mobile users with activity BEFORE July 23
-# Aggregate to id_user level
-# Calculate:
-#   - RPU (total revenue / all users incl. non-payers)
-#   - Conversion rate (paying users / all users)
-#   - ARPU among payers only
-#   - Median and mean RPU, mean/median ratio
-#   - Revenue distribution shape (for whale pre-check)
-
-# This is the baseline from which MDE is expressed as a % uplift.
-# After computing this, ask the user:
-#   "Baseline RPU = X. What uplift % was expected from this test?
-#    This is needed to calculate required sample size."
+from scipy.stats import binom_test
+pval = binom_test(wins, n_days, p=0.5, alternative='greater')
 ```
 
-**Output:** Single baseline metrics table (pre-test, mobile only). This is the reference point for all subsequent comparisons and for the power analysis in Step 6.
+### Step 6 — Segment Deep-Dives
+Run conversion rate comparison for sub-segments:
+- By `country_group`
+- By `age_group`
+- By `id_traffic_source`
+- Whale vs. non-whale
+
+Identify if there are segments where the new design harms performance (heterogeneous treatment effects).
 
 ---
 
-### STEP 3 — Sample Homogeneity Check
+## 📈 Required Visualizations
 
-For each dimension below, compare **control vs test** distributions using:
-- Chi-square test for categorical variables
-- Summary table with % breakdown
+All charts must have clear titles, axis labels, and a text annotation explaining what the chart shows in plain language.
 
-**Dimensions to check:**
-1. `gender`
-2. `platform` (after filtering — should be uniform)
-3. `age_group`
-4. `system` (iOS vs Android — critical, behavior differs)
-5. `Id_traffic_source`
-6. `country_group`
-7. `method` (payment method distribution)
-8. Registration date distribution (are newer users over-represented in one group?)
-
-**Output:** Single summary table — `GROUP A vs GROUP B` with p-values per dimension. Flag any dimension with p < 0.05.
+1. **Bar chart:** Conversion rate — test vs. control (with confidence intervals)
+2. **Box plot / violin plot:** Payment amount distribution — test vs. control (log scale recommended for whale data)
+3. **Time series:** Daily conversion rate by group (from July 24 onward)
+4. **Bar chart:** Average revenue per user (ARPU) — test vs. control
+5. **Heatmap or grouped bar chart:** Conversion rate by country_group × split_group
+6. **Whale segment:** Side-by-side bar charts for whale CR and whale ARPP
+7. **Sanity check charts:** Gender, age, country distribution by group
 
 ---
 
-### STEP 4 — Successful Payment Sanity Check
+## 📝 Final Report Structure (for CEO)
 
-```python
-# Quick check: did payment SUCCESS RATE change between groups?
-# successful_payment = 1 rate in control vs test
-# If payment processing success rate differs → technical issue, not UX effect
-```
+The report must be self-explanatory. Structure it as follows:
 
----
+Executive Summary (1 paragraph — the answer + key number)
+What was tested and why (business context, no jargon)
+Who was included in the analysis (filtering decisions explained)
+Key Metrics Results (table + charts)
+Statistical Significance Summary (plain English — "we are 95% confident that...")
+Whale Impact Analysis (separate section — critical for revenue)
+Segment Analysis (any notable differences by country/age)
+Risks & Caveats (what we cannot conclude, experiment limitations)
+Recommendation: LAUNCH / DO NOT LAUNCH / LAUNCH WITH CONDITIONS
+— Include conditions if applicable (e.g., "launch only for users in Group A countries")
 
-### STEP 5 — Whale Distribution Analysis
-
-```python
-# Aggregate to user level: total_revenue, payment_count per user
-# Plot revenue distribution (log scale histogram)
-# Calculate:
-#   - % of users generating top 80% of revenue (Pareto check)
-#   - Gini coefficient
-#   - Mean vs median RPU ratio (>3x → whale model)
-
-# Decision logic:
-# IF whale model detected:
-#   → Focus on: whale count per group, whale RPU, % revenue from whales
-#   → Use Mann-Whitney U test (non-parametric) for RPU comparison
-#   → Consider bootstrap confidence intervals
-# IF near-normal distribution:
-#   → Use Welch's t-test for RPU
-#   → Calculate power from underlying distribution parameters
-```
 
 ---
 
-### STEP 6 — Sample Size & Power Analysis
-
-```python
-# Required inputs:
-#   - Baseline RPU (from control group, post July 23)
-#   - Baseline RPU std dev
-#   - Desired MDE (ask: what was the expected uplift? default assumption: 5-10%)
-#   - Alpha = 0.05, Power = 0.80 (standard)
-#   - Actual split ratio from data
-
-# Calculate:
-#   - Required sample size per group
-#   - Actual sample size per group
-#   - Are we underpowered or overpowered?
-
-# NOTE: If MDE was never pre-specified, document this as a limitation.
-# Use the OBSERVED effect size only for informational purposes, 
-# not as post-hoc justification.
-```
+## 🗂️ Project File Structure
+project/
+├── CLAUDE.md               ← this file
+├── raw_data.csv            ← source data
+├── analysis.ipynb          ← main analysis notebook (Jupyter)
+├── report.html             ← final CEO report (auto-generated from notebook)
+├── charts/                 ← all saved charts (PNG, 300 DPI)
+│   ├── 01_conversion_rate.png
+│   ├── 02_amount_distribution.png
+│   ├── 03_daily_timeseries.png
+│   ├── 04_arpu.png
+│   ├── 05_country_heatmap.png
+│   ├── 06_whale_analysis.png
+│   └── 07_sanity_checks.png
+└── requirements.txt        ← pandas, scipy, statsmodels, matplotlib, seaborn, plotly
 
 ---
 
-### STEP 7 — Statistical Tests
+## ✅ Definition of Done
 
-#### If NON-whale distribution:
-```python
-# Primary test: Welch's t-test on RPU (user-level aggregation)
-# Secondary test: Chi-square on conversion rate
-# Correction: Bonferroni for multiple metrics (RPU + conversion rate + ARPU)
-```
-
-#### If WHALE distribution:
-```python
-# Primary test: Mann-Whitney U on RPU
-# Bootstrap CI (10,000 iterations) on mean RPU difference
-# Permutation test as robustness check
-# Compare: whale count per group, whale ARPU
-```
-
-**Critical:** Unit of analysis = `id_user` (not individual payments). Aggregate first, then test.
-
----
-
-### STEP 8 — Temporal Stability Analysis
-
-```python
-# Split post-July 23 period into time buckets (daily or weekly)
-# For each bucket: calculate RPU by group
-# Plot: RPU over time, control vs test
-
-# Look for:
-#   1. Novelty effect — test group spikes early then converges → NOT a real effect
-#   2. Ramp-up — effect strengthens over time → possibly real, possibly learning
-#   3. Stable separation — consistent gap over time → strong evidence
-
-# If experiment ran < 2 weeks: flag as potentially insufficient for novelty detection
-```
-
----
-
-### STEP 9 — Subgroup Analysis (Exploratory)
-
-```python
-# Break results by: iOS vs Android, age_group, country_group
-# Purpose: identify if effect is concentrated in a specific segment
-# WARNING: these are exploratory — do not use for primary decision
-# Apply FDR correction if reporting multiple subgroup p-values
-```
-
----
-
-### STEP 10 — Final Outputs
-
-#### Tables:
-1. **Sample homogeneity table** — % breakdown by dimension, control vs test, p-value
-2. **Core metrics table** — RPU, conversion rate, ARPU, payments/user — control vs test, absolute diff, relative diff, CI, p-value
-3. **Power analysis table** — required n, actual n, observed effect, MDE
-
-#### Charts:
-1. **Revenue distribution** — log-scale histogram, control vs test (whale check)
-2. **RPU over time** — daily/weekly line chart, control vs test (novelty/stability check)
-3. **Conversion funnel** — registered → paid, by group
-4. **Subgroup heatmap** — RPU lift by segment (iOS/Android × age group)
-
----
-
-### STEP 11 — Conclusion Framework
-
-Answer these questions in order:
-
-| # | Question | Source |
-|---|---|---|
-| 1 | Were groups comparable before the test? | Step 2 (AA check) |
-| 2 | Are groups demographically similar? | Step 3 |
-| 3 | Is the sample size sufficient? | Step 6 |
-| 4 | Is the effect statistically significant? | Step 7 |
-| 5 | Is the effect practically significant (MDE exceeded)? | Step 7 |
-| 6 | Is the effect stable over time (not novelty)? | Step 8 |
-| 7 | Does the effect hold across key segments? | Step 9 |
-
-**Decision rule:**
-- ALL of 1–6 satisfied → **Roll out**
-- 4 significant but 5 or 6 fails → **Extend test / inconclusive**
-- 1 or 2 fails → **Experiment compromised, do not decide**
-- 3 fails (underpowered) → **Cannot conclude, extend test**
-
----
-
-## Critical Pitfalls to Avoid
-
-| Pitfall | Mitigation |
-|---|---|
-| Analyzing payment rows instead of users | Always aggregate to `id_user` level first |
-| Excluding non-payers from denominator | NULL `date_payment` rows stay in denominator |
-| Ignoring novelty effect | Check temporal stability (Step 8) |
-| Desktop/other contaminating mobile test | Filter before main analysis (Step 1) |
-| Multiple comparisons inflation | Bonferroni or FDR correction (Step 7) |
-| Post-hoc MDE justification | Document if MDE was never pre-specified |
-| User contamination (both groups) | Check for duplicate `id_user` across groups (Step 0) |
-| Ignoring split ratio | Verify actual ratio, adjust power calc accordingly |
-
----
-
-## File Structure (expected output)
-
-```
-/analysis/
-├── 00_data_audit.py
-├── 01_filtering.py
-├── 02_aa_check.py
-├── 03_homogeneity.py
-├── 04_sanity_checks.py
-├── 05_whale_analysis.py
-├── 06_power_analysis.py
-├── 07_statistical_tests.py
-├── 08_temporal_stability.py
-├── 09_subgroup_analysis.py
-├── 10_final_report.ipynb
-└── outputs/
-    ├── homogeneity_table.csv
-    ├── metrics_table.csv
-    ├── power_table.csv
-    ├── revenue_distribution.png
-    ├── rpu_over_time.png
-    ├── conversion_funnel.png
-    └── subgroup_heatmap.png
-```
-
----
-
-## Output Formats
-
-The formats listed above (CSV tables, PNG charts, Jupyter notebook) are a starting point. **The user will specify additional or alternative output formats before implementation begins** — e.g. PDF report, HTML dashboard, Google Sheets export, Markdown summary, Notion-ready tables, etc. Do not finalize output format decisions until confirmed.
+- [ ] Non-mobile users excluded and documented
+- [ ] Pre-experiment users excluded and documented  
+- [ ] Sanity checks passed (or flagged with explanation)
+- [ ] Primary metrics tested with correct statistical tests
+- [ ] Whale segment analyzed separately
+- [ ] All 7 charts generated and saved
+- [ ] p-values, confidence intervals, and effect sizes computed for all metrics
+- [ ] Final report rendered as HTML (or PDF) with no code visible
+- [ ] Recommendation stated clearly in first paragraph of report
 
 ---
 

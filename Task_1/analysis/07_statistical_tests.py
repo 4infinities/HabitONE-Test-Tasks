@@ -19,7 +19,8 @@ import os
 import pandas as pd
 from scipy import stats
 
-from constants import SCRIPT_DIR, build_ab_user_revenue, load_all_payments, load_mobile_payments
+from statsmodels.stats.proportion import proportions_ztest as sp_proportions_ztest
+from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_all_payments, load_mobile_payments
 
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "outputs")
 
@@ -86,7 +87,7 @@ def mw_row(scenario, metric, ctrl, test):
     Преимущество перед t-test: работает при любом распределении,
     устойчив к выбросам (китам).
     """
-    _, p = stats.mannwhitneyu(ctrl, test, alternative="two-sided")
+    _, p = stats.mannwhitneyu(ctrl, test, alternative="greater")
     ci = bootstrap_ci(ctrl.values, test.values)
     m_c, m_t = ctrl.mean(), test.mean()
     return {
@@ -109,37 +110,29 @@ def mw_row(scenario, metric, ctrl, test):
     }
 
 
-def chi2_row(scenario, ctrl, test):
+def ztest_cr_row(scenario, ctrl, test):
     """
-    Хи-квадрат тест для сравнения конверсии (доля плательщиков).
-
-    Что проверяет: одинакова ли доля плательщиков в группах?
-    H0: conversion_rate(ctrl) == conversion_rate(test).
-
-    Как работает:
-      - Строится таблица сопряжённости 2×2:
-          [заплатили_ctrl, не заплатили_ctrl]
-          [заплатили_test, не заплатили_test]
-      - Сравниваются наблюдаемые частоты с ожидаемыми при H0.
-      - Подходит именно здесь: бинарный исход (заплатил / нет),
-        большой размер выборки (n >> 5 в каждой ячейке).
-      - correction=False: поправка Йетса не нужна при больших выборках.
+    Двухвыборочный Z-тест для долей (одностороннийtest > control).
+    H0: CR(test) == CR(ctrl). H1: CR(test) > CR(ctrl).
+    CI рассчитывается для разницы долей через нормальное приближение.
     """
     c_pay = int((ctrl["revenue"] > 0).sum())
     t_pay = int((test["revenue"] > 0).sum())
-    table = [[c_pay, len(ctrl) - c_pay], [t_pay, len(test) - t_pay]]
-    _, p = stats.chi2_contingency(table, correction=False)[:2]
+    # proportions_ztest: count[0] / nobs[0] is the first proportion (test)
+    _, p = sp_proportions_ztest([t_pay, c_pay], [len(test), len(ctrl)], alternative="larger")
     m_c, m_t = c_pay / len(ctrl), t_pay / len(test)
+    diff = m_t - m_c
+    se = np.sqrt(m_t * (1 - m_t) / len(test) + m_c * (1 - m_c) / len(ctrl))
     return {
         "scenario": scenario,
         "metric": "conversion_rate",
-        "test": "Chi-square",
+        "test": "Proportions Z-test (one-tailed)",
         "control_mean": m_c,
         "test_mean": m_t,
-        "abs_diff": m_t - m_c,
+        "abs_diff": diff,
         "rel_diff_pct": (m_t / m_c - 1) * 100 if m_c else float("nan"),
-        "ci_95_low": float("nan"),
-        "ci_95_high": float("nan"),
+        "ci_95_low": diff - 1.96 * se,
+        "ci_95_high": diff + 1.96 * se,
         "p_value": p,
         "p_bonferroni": min(p * N_METRICS, 1.0),
         "significant": p < ALPHA / N_METRICS,
@@ -154,10 +147,12 @@ def run_scenario(df, label):
     ab = build_ab_user_revenue(df)
     ctrl, test = ab[ab["split_group"] == 0], ab[ab["split_group"] == 1]
 
+    ctrl_arpp = ctrl[ctrl["revenue"] > 0]["revenue"]
+    test_arpp = test[test["revenue"] > 0]["revenue"]
     rows = [
-        mw_row(label, "payments_per_user", ctrl["payment_count"].astype(float), test["payment_count"].astype(float)),
+        mw_row(label, "ARPP", ctrl_arpp, test_arpp),
         mw_row(label, "RPU", ctrl["revenue"], test["revenue"]),
-        chi2_row(label, ctrl, test),
+        ztest_cr_row(label, ctrl, test),
     ]
 
     # Whale RPU: выручка от китов / все пользователи группы
@@ -179,6 +174,51 @@ def run_scenario(df, label):
         "whale_rpu_rel_diff_pct": (whale_rpu_t / whale_rpu_c - 1) * 100 if whale_rpu_c else float("nan"),
     }
     return pd.DataFrame(rows), whale_info
+
+
+def sign_test(df, label):
+    """
+    Биномиальный знаковый тест (CLAUDE.md Step 5).
+    Для каждого дня проверяем: CR(test) > CR(ctrl)?
+    H0: P(test wins) = 0.5. H1: P(test wins) > 0.5.
+    """
+    from scipy.stats import binomtest
+    ab = build_ab_user_revenue(df)
+    group_n = ab.groupby("split_group")["id_user"].count()
+    n_ctrl = int(group_n.get(0, 0))
+    n_test = int(group_n.get(1, 0))
+    if n_ctrl == 0 or n_test == 0:
+        return None
+
+    post = df[
+        df["id_user"].isin(set(ab["id_user"]))
+        & df["date_payment"].notna()
+        & (df["date_payment"] >= TEST_START)
+        & (df["successful_payment"] == 1)
+    ].copy()
+    post["date"] = post["date_payment"].dt.date
+
+    daily = (
+        post.groupby(["date", "split_group"])["id_user"]
+        .nunique()
+        .unstack(fill_value=0)
+    )
+    if 0 not in daily.columns or 1 not in daily.columns:
+        return None
+    daily = daily.rename(columns={0: "ctrl", 1: "test"})
+    daily["cr_ctrl"] = daily["ctrl"] / n_ctrl
+    daily["cr_test"] = daily["test"] / n_test
+
+    wins = int((daily["cr_test"] > daily["cr_ctrl"]).sum())
+    n_days = len(daily)
+    result = binomtest(wins, n_days, p=0.5, alternative="greater")
+    return {
+        "scenario": label,
+        "wins": wins,
+        "n_days": n_days,
+        "p_value": result.pvalue,
+        "significant": result.pvalue < ALPHA,
+    }
 
 
 def main():
@@ -208,6 +248,15 @@ def main():
     pd.DataFrame(whale_rows).to_csv(
         os.path.join(OUTPUT_DIR, "whale_rpu_step7.csv"), index=False, float_format="%.4f")
     print(f"\nSaved: metrics_table.csv, whale_rpu_step7.csv")
+
+    # Sign test — mobile only (primary scenario, CLAUDE.md Step 5)
+    sign = sign_test(load_mobile_payments(), "mobile")
+    if sign:
+        print(f"\n--- Sign test (mobile): {sign['wins']}/{sign['n_days']} days test > control"
+              f"  p={sign['p_value']:.4f}  {'SIGNIFICANT' if sign['significant'] else 'not significant'}")
+        pd.DataFrame([sign]).to_csv(
+            os.path.join(OUTPUT_DIR, "sign_test.csv"), index=False, float_format="%.6f")
+        print(f"Saved: sign_test.csv")
 
 
 if __name__ == "__main__":

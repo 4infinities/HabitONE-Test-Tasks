@@ -13,6 +13,13 @@ df = pd.read_csv(csv_path)
 df['date_reg'] = pd.to_datetime(df['date_reg'])
 df['date_payment'] = pd.to_datetime(df['date_payment'], errors='coerce')
 
+# CLAUDE.md: inspect platform x system before deciding on mobile filter
+print("=== Platform x System inspection ===")
+print("Unique platform values:", sorted(df['platform'].dropna().unique().tolist()))
+print("Unique system values:  ", sorted(df['system'].dropna().unique().tolist()))
+print("\nCross-tab (platform x system):")
+print(df.groupby(['platform', 'system']).size().reset_index(name='count').to_string(index=False))
+
 print("=== Step 1: Data Filtering ===")
 print(f"Original dataset: {len(df)} rows")
 
@@ -63,7 +70,7 @@ else:
 
 # Filter to mobile-only for main analysis
 print("\n--- Filtering to Mobile Users ---")
-mobile_df = df[df['platform'] == 'mobile'].copy()
+mobile_df = df[df['platform'].str.lower().isin(['mobile', 'android', 'ios'])].copy()
 print(f"Mobile users: {len(mobile_df)} rows ({(len(mobile_df)/len(df))*100:.1f}% of total)")
 
 # Save filtered data for subsequent steps

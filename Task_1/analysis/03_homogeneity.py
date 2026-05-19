@@ -8,7 +8,7 @@ from constants import TEST_START, SCRIPT_DIR, load_mobile_payments, ab_test_ids
 
 RAW_DATA_PATH = os.path.join(SCRIPT_DIR, "..", "Raw Data.csv")
 
-DIMENSIONS = ["id_traffic_source", "system"]
+DIMENSIONS = ["gender", "age_group", "country_group", "id_traffic_source", "system"]
 
 print("=== Step 3: Sample Homogeneity (A/B test body) ===")
 print(f"Test start: {TEST_START}")
