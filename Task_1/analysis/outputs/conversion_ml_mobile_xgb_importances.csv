@@ -1,0 +1,16 @@
+feature,importance,abs_importance
+cat__id_traffic_source_Alderaan,0.4926363,0.4926363
+cat__id_traffic_source_Coruscant,0.067983486,0.067983486
+cat__id_traffic_source_Mandalore,0.0493564,0.0493564
+cat__system_Other,0.04809904,0.04809904
+cat__age_group_4,0.040905267,0.040905267
+cat__age_group_2,0.03992825,0.03992825
+cat__age_group_5,0.03814497,0.03814497
+cat__age_group_3,0.036927674,0.036927674
+cat__gender_male,0.03439578,0.03439578
+cat__country_group_4,0.033836693,0.033836693
+cat__system_iOS,0.033598088,0.033598088
+cat__country_group_2,0.03115804,0.03115804
+cat__country_group_3,0.028128194,0.028128194
+cat__id_traffic_source_Corellia,0.024901835,0.024901835
+cat__id_traffic_source_Jakku,0.0,0.0

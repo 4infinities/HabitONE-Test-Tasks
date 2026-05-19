@@ -1,0 +1,5 @@
+scenario,metric,baseline_mean,baseline_std,mde_absolute,required_n,actual_n_control,actual_n_test,powered,obs_power_at_mde,obs_effect_pct
+mobile,payments_per_user,0.115157,1.340677,0.005758,851077,6070,5961,False,0.056321,-0.025418
+mobile,RPU,15.050306,216.632767,0.752515,1300935,6070,5961,False,0.054130,0.228085
+all_devices,payments_per_user,0.110176,1.232135,0.005509,785307,8913,8577,False,0.059877,0.050815
+all_devices,RPU,13.814639,193.514735,0.690732,1232103,8913,8577,False,0.056282,0.415241

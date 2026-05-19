@@ -1,0 +1,7 @@
+cohort,model,traffic_source_importance_share,top_feature,top_feature_importance
+all,logistic_regression,0.26485987117752324,cat__system_Windows,0.5971344539238538
+all,random_forest,0.6600190246947206,cat__id_traffic_source_Alderaan,0.3189162103329493
+all,xgboost,0.5869366526603699,cat__id_traffic_source_Alderaan,0.424999862909317
+mobile,logistic_regression,0.43376390299497114,cat__id_traffic_source_Alderaan,0.48437488959172625
+mobile,random_forest,0.7185143127426322,cat__id_traffic_source_Alderaan,0.3661028933721431
+mobile,xgboost,0.6348780393600464,cat__id_traffic_source_Alderaan,0.4926362931728363

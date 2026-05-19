@@ -1,0 +1,5 @@
+feature,chi2_pvalue,n_levels,min_conversion,max_conversion,spread_pp
+age_group,0.000023,5,0.019963,0.035080,1.511716
+system,0.000000,3,0.018963,0.095238,7.627544
+id_traffic_source,0.000000,6,0.000000,0.079208,7.920792
+country_group,0.000000,4,0.021182,0.052498,3.131612

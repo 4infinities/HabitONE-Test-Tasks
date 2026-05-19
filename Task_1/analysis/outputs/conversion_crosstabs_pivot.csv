@@ -1,0 +1,7 @@
+age_group__level,age_group__n_users,age_group__n_payers,age_group__conversion_rate,system__level,system__n_users,system__n_payers,system__conversion_rate,id_traffic_source__level,id_traffic_source__n_users,id_traffic_source__n_payers,id_traffic_source__conversion_rate,country_group__level,country_group__n_users,country_group__n_payers,country_group__conversion_rate
+5,2195.000000,77.000000,0.035080,Other,21.000000,2.000000,0.095238,Corellia,202,16,0.079208,2,2362.000000,124.000000,0.052498
+4,6855.000000,202.000000,0.029468,iOS,7949.000000,307.000000,0.038621,Coruscant,7711,466,0.060433,3,751.000000,34.000000,0.045273
+1,3054.000000,76.000000,0.024885,Android,20514.000000,389.000000,0.018963,Mandalore,2768,63,0.022760,4,916.000000,22.000000,0.024017
+3,8365.000000,183.000000,0.021877,,,,,Alderaan,17799,153,0.008596,1,24455.000000,518.000000,0.021182
+2,8015.000000,160.000000,0.019963,,,,,325,3,0,0.000000,,,,
+,,,,,,,,Jakku,1,0,0.000000,,,,

@@ -1,0 +1,2 @@
+period,test_start,cohort_users,paying_users,total_revenue,rpu,conversion_rate,arpu_payers,payments_per_user,mean_rpu,median_rpu,mean_median_ratio
+pre_test_mobile_pre_existing,2021-07-23 00:00:00,28484,613,312665.855,10.976894221317231,0.02152085381266676,510.05849102773243,0.0788863923606235,10.976894221317231,0.0,inf
