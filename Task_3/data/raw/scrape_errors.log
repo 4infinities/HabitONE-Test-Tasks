@@ -1,0 +1,51 @@
+2026-05-20 13:43:20,807 | HabitONE | https://www.ebay.com/sch/i.html?_nkw=HabitONE+mushroom+coffee&_sacat=0&LH_BIN=1 | 403 Client Error: Forbidden for url: https://www.ebay.com/sch/i.html?_nkw=HabitONE+mushroom+coffee&_sacat=0&LH_BIN=1
+2026-05-20 13:43:24,044 | Four Sigmatic | https://us.foursigmatic.com/collections/all | 500 Server Error: Internal Server Error for url: https://us.foursigmatic.com/collections/all
+2026-05-20 13:48:27,404 | Four Sigmatic | https://www.ebay.com/sch/i.html?_nkw=Four+Sigmatic+mushroom+coffee&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Four+Sigmatic+mushroom+coffee&_sacat=0&LH_BIN=1
+2026-05-20 13:50:58,613 | Ryze | https://www.ebay.com/sch/i.html?_nkw=Ryze+mushroom+coffee+superfoods&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Ryze+mushroom+coffee+superfoods&_sacat=0&LH_BIN=1
+2026-05-20 13:54:18,592 | MudWtr | https://www.ebay.com/sch/i.html?_nkw=MudWtr+mushroom+coffee+alternative&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=MudWtr+mushroom+coffee+alternative&_sacat=0&LH_BIN=1
+2026-05-20 13:54:21,461 | Everyday Dose | https://everydaydose.com/collections/all | no product links found (playwright)
+2026-05-20 13:54:39,033 | Everyday Dose | https://www.ebay.com/sch/i.html?_nkw=Everyday+Dose+mushroom+coffee+lions+mane&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Everyday+Dose+mushroom+coffee+lions+mane&_sacat=0&LH_BIN=1
+2026-05-20 13:54:39,071 | Shroomi | https://drinkshroomi.com/collections/all | HTTPSConnectionPool(host='drinkshroomi.com', port=443): Max retries exceeded with url: /collections/all (Caused by NameResolutionError("HTTPSConnection(host='drinkshroomi.com', port=443): Failed to resolve 'drinkshroomi.com' ([Errno 11001] getaddrinfo failed)"))
+2026-05-20 13:54:39,476 | Shroomi | https://drinkshroomi.com/collections/all | Page.goto: net::ERR_NAME_NOT_RESOLVED at https://drinkshroomi.com/collections/all
+Call log:
+  - navigating to "https://drinkshroomi.com/collections/all", waiting until "domcontentloaded"
+
+2026-05-20 13:54:57,031 | Shroomi | https://www.ebay.com/sch/i.html?_nkw=Shroomi+mushroom+coffee+organic&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Shroomi+mushroom+coffee+organic&_sacat=0&LH_BIN=1
+2026-05-20 13:55:00,627 | Rasa | https://rasacoffee.com/collections/all | no product links found (playwright)
+2026-05-20 13:55:18,167 | Rasa | https://www.ebay.com/sch/i.html?_nkw=Rasa+adaptogen+coffee&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Rasa+adaptogen+coffee&_sacat=0&LH_BIN=1
+2026-05-20 13:58:35,296 | Om Mushrooms | https://www.ebay.com/sch/i.html?_nkw=Om+Mushrooms+coffee+powder+capsule&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Om+Mushrooms+coffee+powder+capsule&_sacat=0&LH_BIN=1
+2026-05-20 13:59:09,740 | BodyBrain Coffee | https://www.ebay.com/sch/i.html?_nkw=BodyBrain+mushroom+coffee+tongkat+ali&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=BodyBrain+mushroom+coffee+tongkat+ali&_sacat=0&LH_BIN=1
+2026-05-20 13:59:56,676 | IQJOE | https://www.ebay.com/sch/i.html?_nkw=IQJOE+mushroom+coffee+nootropic&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=IQJOE+mushroom+coffee+nootropic&_sacat=0&LH_BIN=1
+2026-05-20 14:03:39,256 | Clevr Blends | https://www.ebay.com/sch/i.html?_nkw=Clevr+Blends+adaptogen+latte&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Clevr+Blends+adaptogen+latte&_sacat=0&LH_BIN=1
+2026-05-20 14:06:01,520 | Strong Coffee Co. | https://www.ebay.com/sch/i.html?_nkw=Strong+Coffee+Company+adaptogen+instant&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Strong+Coffee+Company+adaptogen+instant&_sacat=0&LH_BIN=1
+2026-05-20 14:06:01,850 | La Republica | https://larepublicacoffee.com/collections/all | HTTPSConnectionPool(host='larepublicacoffee.com', port=443): Max retries exceeded with url: /collections/all (Caused by SSLError(SSLError(1, '[SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1002)')))
+2026-05-20 14:06:02,818 | La Republica | https://larepublicacoffee.com/collections/all | Page.goto: net::ERR_SSL_PROTOCOL_ERROR at https://larepublicacoffee.com/collections/all
+Call log:
+  - navigating to "https://larepublicacoffee.com/collections/all", waiting until "domcontentloaded"
+
+2026-05-20 14:06:20,357 | La Republica | https://www.ebay.com/sch/i.html?_nkw=La+Republica+mushroom+coffee+organic&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=La+Republica+mushroom+coffee+organic&_sacat=0&LH_BIN=1
+2026-05-20 14:07:55,514 | Renude | https://www.ebay.com/sch/i.html?_nkw=Renude+Chagaccino+mushroom+coffee&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Renude+Chagaccino+mushroom+coffee&_sacat=0&LH_BIN=1
+2026-05-20 14:07:55,855 | North Spore | https://northspore.com/collections/mushroom-coffee | 404 Client Error: Not Found for url: https://northspore.com/collections/mushroom-coffee
+2026-05-20 14:10:09,956 | North Spore | https://www.ebay.com/sch/i.html?_nkw=North+Spore+mushroom+coffee+ground&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=North+Spore+mushroom+coffee+ground&_sacat=0&LH_BIN=1
+2026-05-20 14:14:49,177 | Nootrum | https://www.ebay.com/sch/i.html?_nkw=Nootrum+mushroom+coffee+powder&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Nootrum+mushroom+coffee+powder&_sacat=0&LH_BIN=1
+2026-05-20 14:14:52,863 | Pella Nutrition | https://mypellanutrition.com/collections/all | 404 Client Error: Not Found for url: https://mypellanutrition.com/collections/all
+2026-05-20 14:14:57,444 | Pella Nutrition | https://mypellanutrition.com/collections/all | no product links found (playwright)
+2026-05-20 14:15:07,730 | Pella Nutrition | https://www.ebay.com/sch/i.html?_nkw=Pella+Nutrition+7-mushroom+coffee&_sacat=0&LH_BIN=1 | 503 Server Error: Service Unavailable for url: https://www.ebay.com/sch/i.html?_nkw=Pella+Nutrition+7-mushroom+coffee&_sacat=0&LH_BIN=1
+2026-05-20 14:34:19,485 | Everyday Dose | https://everydaydose.com/collections/all | no product links found (playwright)
+2026-05-20 14:47:35,054 | La Republica | https://larepublicacoffee.com/collections/all | Page.goto: net::ERR_SSL_PROTOCOL_ERROR at https://larepublicacoffee.com/collections/all
+Call log:
+  - navigating to "https://larepublicacoffee.com/collections/all", waiting until "domcontentloaded"
+
+2026-05-20 14:56:23,690 | Pella Nutrition | https://mypellanutrition.com/collections/all | no product links found (playwright)
+2026-05-20 15:15:35,465 | Everyday Dose | https://everydaydose.com/collections/all | no product links found (playwright)
+2026-05-20 15:34:24,880 | Pella Nutrition | https://mypellanutrition.com/collections/all | no product links found (playwright)
+2026-05-20 16:05:07,371 | Everyday Dose | https://everydaydose.com/collections/all | Page.goto: Timeout 40000ms exceeded.
+Call log:
+  - navigating to "https://everydaydose.com/collections/all", waiting until "networkidle"
+
+2026-05-20 16:05:18,192 | Pella Nutrition | https://mypellanutrition.com/ | no product links found
+2026-05-20 20:03:48,943 | Strong Coffee Co. | https://strongcoffeecompany.com/products/morning-fix-travel-box | 404 Client Error: Not Found for url: https://strongcoffeecompany.com/products/morning-fix-travel-box
+2026-05-20 20:50:26,632 | Nootrum | https://nootrum.com/products/nootrum-chaga-truffles | 404 Client Error: Not Found for url: https://nootrum.com/products/nootrum-chaga-truffles
+2026-05-20 20:51:52,230 | Pella Nutrition | https://mypellanutrition.com/collections/all | no product links found (playwright)
+2026-05-21 02:02:00,905 | Ryze | https://ryzesuperfoods.com/products/diner-mug-chair | 403 Client Error: Forbidden for url: https://ryzesuperfoods.com/products/diner-mug-chair
+2026-05-21 02:02:07,913 | Ryze | https://ryzesuperfoods.com/products/ryze-ritual-set-dark-roast | 403 Client Error: Forbidden for url: https://ryzesuperfoods.com/products/ryze-ritual-set-dark-roast

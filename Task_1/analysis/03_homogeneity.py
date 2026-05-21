@@ -9,6 +9,8 @@ from constants import TEST_START, SCRIPT_DIR, load_mobile_payments, ab_test_ids
 RAW_DATA_PATH = os.path.join(SCRIPT_DIR, "..", "Raw Data.csv")
 
 DIMENSIONS = ["gender", "age_group", "country_group", "id_traffic_source", "system"]
+ALPHA = 0.05
+BONFERRONI_ALPHA = ALPHA / len(DIMENSIONS)  # 0.01
 
 print("=== Step 3: Sample Homogeneity (A/B test body) ===")
 print(f"Test start: {TEST_START}")
@@ -59,19 +61,45 @@ for cohort_label in ["mobile", "all"]:
             continue
 
         ct = pd.crosstab(sub["split_group"], sub[dim])
-        chi2, p, _, _ = chi2_contingency(ct)
-        flag = "WARN p<0.05" if p < 0.05 else "OK"
+        chi2, p, dof, expected = chi2_contingency(ct)
+
+        # Detect small expected cells (chi2 assumption violation)
+        small_cell_note = ""
+        if (expected < 5).any():
+            small_cats = ct.columns[(expected < 5).any(axis=0)].tolist()
+            small_counts = {cat: int(ct[cat].sum()) for cat in small_cats}
+            small_cell_note = f"  [small cells: {small_counts} — chi2 unreliable for these]"
+
+        if p < BONFERRONI_ALPHA:
+            flag = f"WARN p<{BONFERRONI_ALPHA:.3f} (Bonferroni)"
+        elif p < ALPHA:
+            flag = f"MARGINAL p<{ALPHA} (not significant after Bonferroni)"
+        else:
+            flag = "OK"
+
+        # Print frequency table
+        ct_pct = ct.div(ct.sum(axis=1), axis=0).mul(100).round(1)
+        ct_display = ct.copy().astype(str)
+        for col in ct.columns:
+            ct_display[col] = ct[col].astype(str) + " (" + ct_pct[col].astype(str) + "%)"
+        ct_display.index = ct_display.index.map({0: "control", 1: "test"})
+        print(f"\n{cohort_label.upper()} — {dim}  chi2={chi2:.2f}, df={dof}, p={p:.4f}  [{flag}]")
+        print(ct_display.to_string())
+        if small_cell_note:
+            print(f"  NOTE{small_cell_note}")
+
         rows_append = {
             "cohort": cohort_label,
             "dimension": dim,
             "p_value": p,
             "chi2": chi2,
+            "dof": dof,
             "flag": flag,
+            "small_cell_note": small_cell_note.strip(),
             "control_n": (user_attrs["split_group"] == 0).sum(),
             "test_n": (user_attrs["split_group"] == 1).sum(),
         }
         all_rows.append(rows_append)
-        print(f"{cohort_label} - {dim}: chi2={chi2:.2f}, p={p:.4f}  [{flag}]")
 
 out_dir = os.path.join(SCRIPT_DIR, "outputs")
 os.makedirs(out_dir, exist_ok=True)
@@ -80,7 +108,10 @@ pd.DataFrame(all_rows).to_csv(out_path, index=False)
 print(f"\nSaved: {out_path}")
 
 warns = [r["dimension"] for r in all_rows if r.get("flag", "").startswith("WARN")]
+marginals = [r["dimension"] for r in all_rows if r.get("flag", "").startswith("MARGINAL")]
 if warns:
-    print(f"\nWARNING: Imbalance detected in: {', '.join(warns)}")
-else:
-    print("\nPASS: No significant imbalance (p < 0.05) across checked dimensions")
+    print(f"\nWARNING (Bonferroni p<{BONFERRONI_ALPHA:.3f}): {', '.join(warns)}")
+if marginals:
+    print(f"MARGINAL (p<{ALPHA} but not after Bonferroni): {', '.join(marginals)}")
+if not warns and not marginals:
+    print(f"\nPASS: No significant imbalance (Bonferroni-corrected α={BONFERRONI_ALPHA:.3f})")

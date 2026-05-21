@@ -104,6 +104,7 @@ def run_scenario(df, label):
     test_arpp = test[test["revenue"] > 0]["revenue"]
     rows = [power_row_proportion(label, "conversion_rate", ctrl, test)]
     for mde in MDE_RANGE:
+        rows.append(power_row(label, "PPU", ctrl["payment_count"], test["payment_count"], mde=mde))
         rows.append(power_row(label, "ARPP", ctrl_arpp, test_arpp, mde=mde))
         rows.append(power_row(label, "RPU", ctrl["revenue"], test["revenue"], mde=mde))
     return rows
@@ -114,8 +115,13 @@ def main():
     rows = run_scenario(load_mobile_payments(), "mobile") + run_scenario(load_all_payments(), "all_devices")
     out = pd.DataFrame(rows)
 
-    print("\n=== POWER ANALYSIS  (MDE=10%, alpha=0.05, power=0.80) ===")
-    print(out.to_string(index=False))
+    print("\n=== POWER ANALYSIS  (alpha=0.05, power=0.80) ===")
+    for scenario in out["scenario"].unique():
+        print(f"\n--- {scenario} ---")
+        block = out[out["scenario"] == scenario].drop(columns="scenario")
+        for metric in block["metric"].unique():
+            print(f"\n  [{metric}]")
+            print(block[block["metric"] == metric].drop(columns="metric").to_string(index=False))
 
     path = os.path.join(OUTPUT_DIR, "power_table.csv")
     out.to_csv(path, index=False, float_format="%.6f")

@@ -18,6 +18,7 @@ import numpy as np
 import os
 import pandas as pd
 from scipy import stats
+from statsmodels.stats.proportion import proportions_ztest
 
 from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_all_payments, load_mobile_payments
 
@@ -27,7 +28,7 @@ OUTPUT_DIR = os.path.join(SCRIPT_DIR, "outputs")
 ALPHA = 0.05
 
 # Количество тестируемых метрик — нужно для поправки Bonferroni
-N_METRICS = 3  # payments_per_user, RPU, conversion_rate
+N_METRICS = 4  # payments_per_user, RPU, ARPP, conversion_rate
 
 # Число итераций bootstrap: чем больше — тем точнее CI, 10k — стандарт
 N_BOOTSTRAP = 10_000
@@ -110,6 +111,37 @@ def mw_row(scenario, metric, ctrl, test):
 
 
 
+def ztest_row(scenario, ctrl, test):
+    """
+    Two-proportion one-tailed Z-test для conversion rate.
+    H0: CR(test) <= CR(ctrl). H1: CR(test) > CR(ctrl).
+    CI считается через нормальное приближение для разницы пропорций.
+    """
+    n_c, n_t = len(ctrl), len(test)
+    conv_c = int((ctrl["payment_count"] > 0).sum())
+    conv_t = int((test["payment_count"] > 0).sum())
+    p_c, p_t = conv_c / n_c, conv_t / n_t
+    _, p = proportions_ztest([conv_t, conv_c], [n_t, n_c], alternative="larger")
+    # CI для разницы пропорций (нормальное приближение)
+    se = np.sqrt(p_c * (1 - p_c) / n_c + p_t * (1 - p_t) / n_t)
+    diff = p_t - p_c
+    ci_low, ci_high = diff - 1.96 * se, diff + 1.96 * se
+    return {
+        "scenario": scenario,
+        "metric": "conversion_rate",
+        "test": "Z-test (proportions)",
+        "control_mean": p_c,
+        "test_mean": p_t,
+        "abs_diff": diff,
+        "rel_diff_pct": (p_t / p_c - 1) * 100 if p_c else float("nan"),
+        "ci_95_low": ci_low,
+        "ci_95_high": ci_high,
+        "p_value": p,
+        "p_bonferroni": min(p * N_METRICS, 1.0),
+        "significant": p < ALPHA / N_METRICS,
+    }
+
+
 def run_scenario(df, label):
     """
     Запускает все тесты для одного сценария (mobile или all_devices).
@@ -121,6 +153,7 @@ def run_scenario(df, label):
     ctrl_arpp = ctrl[ctrl["revenue"] > 0]["revenue"]
     test_arpp = test[test["revenue"] > 0]["revenue"]
     rows = [
+        ztest_row(label, ctrl, test),
         mw_row(label, "payments_per_user", ctrl["payment_count"], test["payment_count"]),
         mw_row(label, "RPU", ctrl["revenue"], test["revenue"]),
         mw_row(label, "ARPP", ctrl_arpp, test_arpp),
