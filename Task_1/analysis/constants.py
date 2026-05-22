@@ -3,9 +3,12 @@
 import os
 import pandas as pd
 
-# Test boundary: 2021-07-23 00:00 — A/B registrations and post-test windows start here.
+# Test boundary: 2021-07-23 00:00 — A/B registrations start here.
 # Pre-existing cohort: date_reg < TEST_START. A/B body: date_reg >= TEST_START.
 TEST_START = pd.Timestamp("2021-07-23 00:00:00")
+
+# Payments counted only from July 24 — first full day after experiment start.
+PAYMENT_START = pd.Timestamp("2021-07-24 00:00:00")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MOBILE_DATA_PATH = os.path.join(SCRIPT_DIR, "mobile_data.csv")
@@ -71,7 +74,7 @@ def build_ab_user_revenue(df):
     ut = user_table(df)
     ab_ut = ut[ut["date_reg"] >= TEST_START].dropna(subset=["split_group"]).copy()
     ab_ut["split_group"] = ab_ut["split_group"].astype(int)
-    pay = successful_payments(df, user_ids=set(ab_ut["id_user"]), payment_start=TEST_START)
+    pay = successful_payments(df, user_ids=set(ab_ut["id_user"]), payment_start=PAYMENT_START)
     ab_ut["revenue"] = ab_ut["id_user"].map(pay.groupby("id_user")["amount"].sum()).fillna(0.0)
     ab_ut["payment_count"] = ab_ut["id_user"].map(pay.groupby("id_user").size()).fillna(0).astype(int)
     return ab_ut

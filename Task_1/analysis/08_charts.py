@@ -17,7 +17,7 @@ import seaborn as sns
 from scipy import stats
 from statsmodels.stats.proportion import proportion_confint
 
-from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_mobile_payments
+from constants import SCRIPT_DIR, TEST_START, PAYMENT_START, build_ab_user_revenue, load_mobile_payments
 
 CHARTS_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "charts"))
 
@@ -73,6 +73,39 @@ def _prop_ci(count, n, alpha=0.05):
     return float(lo), float(hi)
 
 
+def _bootstrap_sum_ci(values, n_boot=5_000, rng=None):
+    if rng is None:
+        rng = np.random.default_rng(42)
+    boots = rng.choice(values, (n_boot, len(values)), replace=True).sum(1)
+    return float(np.percentile(boots, 2.5)), float(np.percentile(boots, 97.5))
+
+
+_GENDER_ORDER   = ["male", "female"]
+_AGE_ORDER      = ["5", "4", "3", "2", "1"]          # barh bottom→top, so list is reversed display order
+_TRAFFIC_ORDER  = ["corellia", "jakku", "mandalore", "coruscant", "alderaan"]
+_SYSTEM_ORDER   = ["mac", "other", "android", "ios"]
+_COUNTRY_ORDER  = ["4", "3", "2", "1"]
+
+_DIM_ORDER = {
+    "gender":            _GENDER_ORDER,
+    "age_group":         _AGE_ORDER,
+    "id_traffic_source": _TRAFFIC_ORDER,
+    "system":            _SYSTEM_ORDER,
+    "country_group":     _COUNTRY_ORDER,
+}
+
+
+def _canonical_cats(cats, dim):
+    """Return categories in stable canonical order."""
+    order = _DIM_ORDER.get(dim)
+    if order is None:
+        return sorted(cats)
+    lower_map = {str(c).lower(): c for c in cats}
+    ordered = [lower_map[k] for k in order if k in lower_map]
+    rest = sorted(c for c in cats if str(c).lower() not in order)
+    return ordered + rest
+
+
 def _bar_panel(ax, series_c, series_t, ylabel, title, val_fmt="{:.4f}", rng=None):
     """Reusable: draws a two-bar (Control / Test) plot with bootstrap CIs on ax."""
     if rng is None:
@@ -104,220 +137,254 @@ def _bar_panel(ax, series_c, series_t, ylabel, title, val_fmt="{:.4f}", rng=None
     return means, cis
 
 
-# ── Chart 01: Primary Metrics — PPU + RPU side by side ───────────────────────
+# ── Chart 01: Primary Metrics — PPU + ARPU + ARPPU + Total Revenue ───────────
 
 def chart01_primary_metrics(ab):
     rng = np.random.default_rng(42)
     ctrl = ab[ab["split_group"] == 0]
     test = ab[ab["split_group"] == 1]
+    ctrl_payers = ctrl.loc[ctrl["revenue"] > 0, "revenue"]
+    test_payers = test.loc[test["revenue"] > 0, "revenue"]
 
-    _, p_ppu = stats.mannwhitneyu(
-        test["payment_count"], ctrl["payment_count"], alternative="greater")
-    _, p_rpu = stats.mannwhitneyu(
-        test["revenue"], ctrl["revenue"], alternative="greater")
+    _, p_ppu  = stats.mannwhitneyu(test["payment_count"], ctrl["payment_count"], alternative="greater")
+    _, p_arpu = stats.mannwhitneyu(test["revenue"], ctrl["revenue"], alternative="greater")
+    _, p_arpp = stats.mannwhitneyu(test_payers, ctrl_payers, alternative="greater")
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    fig.suptitle("Primary Metrics: Test vs Control — Mobile A/B Test",
-                 fontsize=13, y=1.02)
+    fig, axes = plt.subplots(2, 2, figsize=(13, 11))
+    fig.suptitle("Primary Metrics: Test vs Control — Mobile A/B Test", fontsize=13, y=1.01)
 
-    _bar_panel(
-        axes[0], ctrl["payment_count"], test["payment_count"],
-        "Avg Payments Per User",
-        f"Payments Per User (PPU) [PRIMARY]\nNot significant — p = {p_ppu:.3f}",
-        val_fmt="{:.4f}", rng=rng,
+    _bar_panel(axes[0, 0], ctrl["payment_count"], test["payment_count"],
+               "Avg Payments Per User",
+               f"Payments Per User (PPU) [PRIMARY]\np = {p_ppu:.3f}",
+               val_fmt="{:.4f}", rng=rng)
+
+    _bar_panel(axes[0, 1], ctrl["revenue"], test["revenue"],
+               "Avg Revenue Per User (USD)",
+               f"ARPU (Avg Revenue Per User)\np = {p_arpu:.3f}",
+               val_fmt="${:.2f}", rng=rng)
+    axes[0, 1].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:.0f}"))
+
+    _bar_panel(axes[1, 0], ctrl_payers, test_payers,
+               "Avg Revenue Per Paying User (USD)",
+               f"ARPPU (Avg Revenue Per Paying User)\np = {p_arpp:.3f}",
+               val_fmt="${:.2f}", rng=rng)
+    axes[1, 0].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:.0f}"))
+
+    total_c = float(ctrl["revenue"].sum())
+    total_t = float(test["revenue"].sum())
+    ci_total_c = _bootstrap_sum_ci(ctrl["revenue"].values, rng=rng)
+    ci_total_t = _bootstrap_sum_ci(test["revenue"].values, rng=rng)
+    total_vals = [total_c, total_t]
+    total_cis  = [ci_total_c, ci_total_t]
+    bars = axes[1, 1].bar(
+        [f"Control\nn={len(ctrl):,}", f"Test\nn={len(test):,}"],
+        total_vals, color=[CTRL_COLOR, TEST_COLOR], width=0.45, zorder=3,
     )
-
-    means_rpu, cis_rpu = _bar_panel(
-        axes[1], ctrl["revenue"], test["revenue"],
-        "Avg Revenue Per User (USD)",
-        f"Revenue Per User (RPU)\nNot significant — p = {p_rpu:.3f}",
-        val_fmt="${:.2f}", rng=rng,
+    axes[1, 1].errorbar(
+        [0, 1], total_vals,
+        yerr=[[v - ci[0] for v, ci in zip(total_vals, total_cis)],
+              [ci[1] - v for v, ci in zip(total_vals, total_cis)]],
+        fmt="none", color="#222", capsize=7, linewidth=1.8, zorder=4,
     )
-    axes[1].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:.0f}"))
+    for bar, val, ci in zip(bars, total_vals, total_cis):
+        axes[1, 1].text(
+            bar.get_x() + bar.get_width() / 2,
+            ci[1] + max(total_vals) * 0.04,
+            f"${val:,.0f}", ha="center", va="bottom", fontsize=13, fontweight="bold",
+        )
+    axes[1, 1].set_ylabel("Total Revenue (USD)", fontsize=11)
+    axes[1, 1].set_title(f"Total Revenue\np = {p_arpu:.3f} (same test as ARPU)", fontsize=11, pad=10)
+    axes[1, 1].set_ylim(0, max(ci[1] for ci in total_cis) * 1.3)
+    axes[1, 1].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
 
     fig.tight_layout()
-    fig.subplots_adjust(bottom=0.16)
+    fig.subplots_adjust(bottom=0.06)
     fig.text(
         0.5, 0.01,
-        "Error bars = 95% bootstrap CI.  "
-        "PPU captures both conversion and repeat purchases (denominator = all users).  "
-        "RPU includes non-payers.",
+        "Error bars = 95% bootstrap CI.  PPU & ARPU: all users.  ARPPU: payers only.",
         ha="center", fontsize=8.5, color=ANNOTATION_COLOR, style="italic",
     )
     save(fig, "01_primary_metrics.png")
 
 
-# ── Chart 02+03: Amount Distribution + Daily Timeseries ──────────────────────
+# ── Chart 02a: Cumulative Revenue Curve (single panel) ───────────────────────
 
-def chart02_03_amount_trend(ab, df):
-    ctrl_payers = ab[(ab["split_group"] == 0) & (ab["revenue"] > 0)]["revenue"]
-    test_payers = ab[(ab["split_group"] == 1) & (ab["revenue"] > 0)]["revenue"]
-    _, p_arpp = stats.mannwhitneyu(test_payers, ctrl_payers, alternative="greater")
+def _lorenz_data(revenues):
+    """Cumulative % of revenue vs % of payers (sorted desc by revenue)."""
+    sorted_rev = np.sort(revenues)[::-1]
+    cumrev = np.cumsum(sorted_rev)
+    n = len(sorted_rev)
+    pct_payers = np.linspace(0, 100, n + 1)
+    pct_revenue = np.concatenate([[0], cumrev / cumrev[-1] * 100])
+    return pct_payers, pct_revenue
 
+
+def chart02_cumulative(ab):
+    ctrl_payers = ab[(ab["split_group"] == 0) & (ab["revenue"] > 0)]["revenue"].values
+    test_payers = ab[(ab["split_group"] == 1) & (ab["revenue"] > 0)]["revenue"].values
+
+    fig, ax = plt.subplots(figsize=(8, 7))
+
+    px_c, py_c = _lorenz_data(ctrl_payers)
+    px_t, py_t = _lorenz_data(test_payers)
+
+    ax.plot(px_c, py_c, color=CTRL_COLOR, linewidth=2.5,
+            label=f"Control ({len(ctrl_payers):,} payers)")
+    ax.plot(px_t, py_t, color=TEST_COLOR, linewidth=2.5,
+            label=f"Test ({len(test_payers):,} payers)")
+    ax.axline((0, 0), (100, 100), color="#bbb", linestyle="--", linewidth=1,
+              label="Perfect equality")
+
+    # 75% revenue marker — show what % of payers generates 75% of revenue
+    x_75_c = float(np.interp(75.0, py_c[1:], px_c[1:]))
+    x_75_t = float(np.interp(75.0, py_t[1:], px_t[1:]))
+    ax.axhline(75, color="#888", linestyle=":", linewidth=1.2, alpha=0.7)
+    ax.axvline(x_75_c, color=CTRL_COLOR, linestyle=":", linewidth=1.5, alpha=0.8)
+    ax.axvline(x_75_t, color=TEST_COLOR, linestyle=":", linewidth=1.5, alpha=0.8)
+    ax.annotate(
+        f"75% of revenue:\nCtrl — top {x_75_c:.0f}% of payers\nTest — top {x_75_t:.0f}% of payers",
+        xy=(max(x_75_c, x_75_t), 75),
+        xytext=(min(x_75_c, x_75_t) + 10, 54),
+        fontsize=9.5, color=ANNOTATION_COLOR,
+        arrowprops=dict(arrowstyle="->", color="#aaa", lw=0.9),
+        bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.85),
+    )
+
+    ax.set_xlabel("Top X% of Payers (ranked by revenue, high→low)", fontsize=11)
+    ax.set_ylabel("Cumulative % of Total Revenue", fontsize=11)
+    ax.set_title("Revenue Concentration — Whale Model\n(top payers dominate)", fontsize=12, pad=10)
+    ax.legend(fontsize=10, framealpha=0.9)
+    ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:.0f}%"))
+    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:.0f}%"))
+    ax.grid(axis="both", alpha=0.3, linestyle="--")
+
+    fig.tight_layout()
+    save(fig, "02_cumulative_revenue.png")
+
+
+# ── Chart 02b: Daily Payment Count + Daily Revenue ───────────────────────────
+
+def chart02_daily_trend(ab, df):
     n_c = int((ab["split_group"] == 0).sum())
     n_t = int((ab["split_group"] == 1).sum())
     ab_ids = set(ab["id_user"])
 
-    # Daily conversion series
     post = df[
         df["id_user"].isin(ab_ids)
         & df["date_payment"].notna()
-        & (df["date_payment"] >= TEST_START)
+        & (df["date_payment"] >= PAYMENT_START)
         & (df["successful_payment"] == 1)
     ].copy()
     post["date"] = post["date_payment"].dt.date
-    daily = (
-        post.groupby(["date", "split_group"])["id_user"]
-        .nunique()
-        .unstack(fill_value=0)
-    )
-    daily.columns = daily.columns.astype(int)
+
+    daily_pay = post.groupby(["date", "split_group"]).size().unstack(fill_value=0)
+    daily_pay.columns = daily_pay.columns.astype(int)
     for col in [0, 1]:
-        if col not in daily.columns:
-            daily[col] = 0
-    daily["cr_ctrl"] = daily[0] / n_c * 100
-    daily["cr_test"] = daily[1] / n_t * 100
+        if col not in daily_pay.columns:
+            daily_pay[col] = 0
 
-    fig, axes = plt.subplots(
-        1, 2, figsize=(17, 5),
-        gridspec_kw={"width_ratios": [2, 3]},
-    )
-    fig.suptitle("Payment Amount Distribution & Daily Conversion Trend",
-                 fontsize=13, y=1.02)
+    daily_rev = post.groupby(["date", "split_group"])["amount"].sum().unstack(fill_value=0)
+    daily_rev.columns = daily_rev.columns.astype(int)
+    for col in [0, 1]:
+        if col not in daily_rev.columns:
+            daily_rev[col] = 0
 
-    # ── Left: key percentile bars (log scale) ──
-    ax = axes[0]
-    labels = ["P25", "Median", "P75", "P90", "P95"]
-    qs     = [0.25, 0.50, 0.75, 0.90, 0.95]
-    ctrl_vals = [ctrl_payers.quantile(q) for q in qs]
-    test_vals  = [test_payers.quantile(q) for q in qs]
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    fig.suptitle("Daily Payment Count & Daily Revenue by Group", fontsize=13, y=1.02)
 
-    x = np.arange(len(labels))
-    w = 0.35
-    bars_c = ax.bar(x - w / 2, ctrl_vals, w,
-                    label=f"Control ({len(ctrl_payers):,} payers)",
-                    color=CTRL_COLOR, zorder=3)
-    bars_t = ax.bar(x + w / 2, test_vals, w,
-                    label=f"Test ({len(test_payers):,} payers)",
-                    color=TEST_COLOR, zorder=3)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=10)
-    ax.set_yscale("log")
-    ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"${v:,.0f}"))
-    ax.set_ylabel("Amount (USD, log scale)", fontsize=10)
-    ax.set_title(
-        f"Payment Amount Percentiles — Payers Only\nMann-Whitney U: p = {p_arpp:.3f} (not significant)",
-        fontsize=11, pad=10,
-    )
-    ax.legend(fontsize=9, framealpha=0.9)
-    ax.grid(axis="y", alpha=0.35, linestyle="--")
-    ax.grid(axis="x", visible=False)
-
-    # ── Right: daily timeseries ──
-    ax2 = axes[1]
-    ax2.plot(daily.index, daily["cr_ctrl"], color=CTRL_COLOR,
-             label=f"Control (n={n_c:,})", linewidth=2, zorder=3)
-    ax2.plot(daily.index, daily["cr_test"], color=TEST_COLOR,
-             label=f"Test (n={n_t:,})", linewidth=2, zorder=3)
-    ax2.fill_between(daily.index, daily["cr_ctrl"], daily["cr_test"],
-                     alpha=0.08, color="#888")
-    ax2.set_ylabel("Daily Conversion Rate (%)", fontsize=11)
-    ax2.set_title("Daily Conversion Rate by Group\n(July 23 – Aug 21, 2021)",
-                  fontsize=11, pad=10)
-    ax2.legend(fontsize=10, framealpha=0.9)
-    ax2.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:.2f}%"))
-    ax2.grid(axis="y", alpha=0.35, linestyle="--")
-    ax2.grid(axis="x", visible=False)
-    fig.autofmt_xdate(rotation=30, ha="right")
+    for ax, data, ylabel, title, fmt in [
+        (axes[0], daily_pay, "Successful Payments per Day",
+         "Daily Payment Count\n(July 24 – end of experiment)", None),
+        (axes[1], daily_rev, "Daily Revenue (USD)",
+         "Daily Revenue\n(July 24 – end of experiment)",
+         mticker.FuncFormatter(lambda v, _: f"${v:,.0f}")),
+    ]:
+        ax.plot(data.index, data[0], color=CTRL_COLOR,
+                label=f"Control (n={n_c:,})", linewidth=2, zorder=3)
+        ax.plot(data.index, data[1], color=TEST_COLOR,
+                label=f"Test (n={n_t:,})", linewidth=2, zorder=3)
+        ax.fill_between(data.index, data[0], data[1], alpha=0.08, color="#888")
+        ax.set_ylabel(ylabel, fontsize=11)
+        ax.set_title(title, fontsize=11, pad=10)
+        ax.legend(fontsize=10, framealpha=0.9)
+        ax.grid(axis="y", alpha=0.35, linestyle="--")
+        ax.grid(axis="x", visible=False)
+        ax.tick_params(axis="x", rotation=30)
+        if fmt:
+            ax.yaxis.set_major_formatter(fmt)
 
     fig.tight_layout()
-    fig.subplots_adjust(bottom=0.18)
-    fig.text(
-        0.5, 0.02,
-        "Left: log scale used due to heavy right skew (whale model).  "
-        "Right: daily % of A/B cohort with ≥1 successful payment — no consistent trend visible.",
-        ha="center", fontsize=8.5, color=ANNOTATION_COLOR, style="italic",
-    )
-    save(fig, "02_amount_and_trend.png")
+    save(fig, "02_daily_trend.png")
 
 
-# ── Chart 05: Conversion Rate by Country Group ────────────────────────────────
+# ── Chart 05: PPU by Segment — 2+2+1 layout (age_group full-width at bottom) ─
 
-def chart05_country_heatmap(ab):
-    col = "country_group"
-    if col not in ab.columns or ab[col].nunique() < 2:
-        print(f"  SKIP chart05: '{col}' has <2 unique values")
+def chart05_segment_ppu(ab):
+    from matplotlib.gridspec import GridSpec
+
+    # age_group at bottom (biggest observed difference); others in 2×2
+    preferred_order = ["gender", "country_group", "id_traffic_source", "system", "age_group"]
+    dims = [d for d in preferred_order if d in ab.columns and ab[d].nunique() > 1]
+    if not dims:
+        print("  SKIP chart05: no segmentation columns found")
         return
 
-    seg = (
-        ab.groupby([col, "split_group"])
-        .agg(conv=("revenue", lambda x: (x > 0).sum()), n=("revenue", "count"))
-        .reset_index()
+    bottom_dim = "age_group" if "age_group" in dims else dims[-1]
+    top_dims = [d for d in dims if d != bottom_dim][:4]
+    plot_dims = top_dims + [bottom_dim]
+
+    n_top_rows = (len(top_dims) + 1) // 2
+    fig = plt.figure(figsize=(20, 7 * n_top_rows + 9))
+    gs = GridSpec(n_top_rows + 1, 2, figure=fig, hspace=0.5, wspace=0.35)
+    fig.suptitle(
+        "Payments Per User (PPU) by Segment: Test vs Control\n"
+        "Error bars = 95% bootstrap CI (mean PPU)",
+        fontsize=14, y=1.01,
     )
-    seg["cr"]    = seg["conv"] / seg["n"]
-    seg["ci_lo"] = seg.apply(lambda r: _prop_ci(r["conv"], r["n"])[0], axis=1)
-    seg["ci_hi"] = seg.apply(lambda r: _prop_ci(r["conv"], r["n"])[1], axis=1)
 
-    ctrl = seg[seg["split_group"] == 0].set_index(col)
-    test = seg[seg["split_group"] == 1].set_index(col)
-    groups = sorted(set(ctrl.index) | set(test.index),
-                    key=lambda g: ctrl.loc[g, "cr"] if g in ctrl.index else 0)
+    axes_list = [fig.add_subplot(gs[i // 2, i % 2]) for i in range(len(top_dims))]
+    axes_list.append(fig.add_subplot(gs[n_top_rows, :]))
 
-    fig, ax = plt.subplots(figsize=(11, max(4, len(groups) * 0.8 + 2)))
-    x = np.arange(len(groups))
-    w = 0.35
+    for ax, dim in zip(axes_list, plot_dims):
+        categories = _canonical_cats(ab[dim].dropna().unique().tolist(), dim)
+        rng_loc = np.random.default_rng(42)
 
-    for i, g in enumerate(groups):
-        for offset, src, color, label in [
-            (w / 2, ctrl, CTRL_COLOR, "Control"),
-            (-w / 2, test, TEST_COLOR, "Test"),
-        ]:
-            if g not in src.index:
-                continue
-            row = src.loc[g]
-            cr_pct = row["cr"] * 100
-            xerr_lo = (row["cr"] - row["ci_lo"]) * 100
-            xerr_hi = (row["ci_hi"] - row["cr"]) * 100
-            ax.barh(i + offset, cr_pct, w, color=color, alpha=0.88,
-                    label=label if i == 0 else "_", zorder=3)
-            ax.errorbar(cr_pct, i + offset,
-                        xerr=[[xerr_lo], [xerr_hi]],
-                        fmt="none", color="#222", capsize=4, linewidth=1.4, zorder=4)
+        x = np.arange(len(categories))
+        w = 0.35
+        legend_added = {0: False, 1: False}
+        for i, cat in enumerate(categories):
+            for offset, grp, color, label in [
+                (w / 2,  0, CTRL_COLOR, "Control"),
+                (-w / 2, 1, TEST_COLOR, "Test"),
+            ]:
+                vals = ab.loc[
+                    (ab[dim] == cat) & (ab["split_group"] == grp), "payment_count"
+                ].values
+                if len(vals) == 0:
+                    continue
+                mean_val = float(vals.mean())
+                bar_label = label if not legend_added[grp] else "_"
+                legend_added[grp] = True
+                ax.barh(i + offset, mean_val, w, color=color, alpha=0.88,
+                        label=bar_label, zorder=3)
+                if len(vals) >= 2:
+                    ci_lo, ci_hi = _bootstrap_ci(vals, rng=rng_loc)
+                    ax.errorbar(mean_val, i + offset,
+                                xerr=[[mean_val - ci_lo], [ci_hi - mean_val]],
+                                fmt="none", color="#222", capsize=3, linewidth=1.2, zorder=4)
 
-    x_max = max(
-        max(ctrl.loc[g, "cr"] if g in ctrl.index else 0 for g in groups),
-        max(test.loc[g, "cr"] if g in test.index else 0 for g in groups),
-    ) * 100
+        ax.set_yticks(x)
+        ax.set_yticklabels([str(c) for c in categories], fontsize=9)
+        ax.set_xlabel("Payments Per User (PPU)", fontsize=10, labelpad=6)
+        is_bottom = (dim == bottom_dim)
+        ax.set_title(dim.replace("_", " ").title(),
+                     fontsize=14 if is_bottom else 12, pad=8,
+                     fontweight="bold" if is_bottom else "normal")
+        ax.legend(fontsize=8.5, loc="lower right", framealpha=0.9)
+        ax.grid(axis="x", alpha=0.35, linestyle="--")
+        ax.grid(axis="y", visible=False)
 
-    for i, g in enumerate(groups):
-        if g in ctrl.index and g in test.index:
-            diff = (test.loc[g, "cr"] - ctrl.loc[g, "cr"]) * 100
-            color = TEST_COLOR if diff > 0 else CTRL_COLOR
-            ax.text(x_max * 1.03, i, f"{diff:+.2f} pp",
-                    va="center", fontsize=9, fontweight="bold", color=color)
-
-    ax.set_yticks(x)
-    ax.set_yticklabels([f"Group {g}" for g in groups], fontsize=11)
-    ax.set_xlabel("Conversion Rate (%)", fontsize=11, labelpad=8)
-    ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:.1f}%"))
-    ax.set_title(
-        "Conversion Rate by Country Group: Test vs Control\n"
-        "Error bars = 95% Wilson CI (overlapping CIs → not significant)",
-        fontsize=12, pad=12,
-    )
-    ax.legend(fontsize=10, loc="lower right", framealpha=0.9)
-    ax.set_xlim(0, x_max * 1.2)
-    ax.grid(axis="x", alpha=0.35, linestyle="--")
-    ax.grid(axis="y", visible=False)
-
-    fig.subplots_adjust(bottom=0.17)
-    fig.text(
-        0.5, 0.03,
-        "Numbers to the right = Test − Control in pp.  "
-        "Overlapping CIs indicate the difference is not statistically significant.",
-        ha="center", fontsize=8.5, color=ANNOTATION_COLOR, style="italic",
-    )
-    save(fig, "05_country_heatmap.png")
+    save(fig, "05_segment_ppu.png")
 
 
 # ── Chart 06: Whale Segment — share of payers + avg revenue ──────────────────
@@ -395,11 +462,14 @@ def chart06_whale_analysis(ab):
     save(fig, "06_whale_analysis.png")
 
 
-# ── Chart 07: Sanity Checks — 2×2 grid ───────────────────────────────────────
+# ── Chart 07: Sanity Checks — 2+2+1 layout (country_group full-width at bottom)
 
 def chart07_sanity_combined(ab):
-    dims = [d for d in ["gender", "age_group", "country_group", "id_traffic_source"]
-            if d in ab.columns and ab[d].nunique() > 1]
+    from matplotlib.gridspec import GridSpec
+
+    # country_group at bottom (shows the notable imbalance); others in 2×2
+    preferred_order = ["gender", "age_group", "id_traffic_source", "system", "country_group"]
+    dims = [d for d in preferred_order if d in ab.columns and ab[d].nunique() > 1]
     if not dims:
         print("  SKIP chart07: no multi-level attribute columns found")
         return
@@ -407,30 +477,38 @@ def chart07_sanity_combined(ab):
     n_c = int((ab["split_group"] == 0).sum())
     n_t = int((ab["split_group"] == 1).sum())
 
-    fig, axes = plt.subplots(2, 2, figsize=(16, 11))
+    bottom_dim = "country_group" if "country_group" in dims else dims[-1]
+    top_dims = [d for d in dims if d != bottom_dim][:4]
+    plot_dims = top_dims + [bottom_dim]
+
+    n_top_rows = (len(top_dims) + 1) // 2
+    fig = plt.figure(figsize=(20, 7 * n_top_rows + 9))
+    gs = GridSpec(n_top_rows + 1, 2, figure=fig, hspace=0.45, wspace=0.3)
     fig.suptitle(
         "Sanity Checks: Group Balance on Invariant Metrics\n"
         "Overlapping confidence intervals = no significant imbalance",
         fontsize=14, y=1.01,
     )
-    axes_flat = axes.flatten()
 
-    for ax, dim in zip(axes_flat, dims):
+    axes_list = [fig.add_subplot(gs[i // 2, i % 2]) for i in range(len(top_dims))]
+    axes_list.append(fig.add_subplot(gs[n_top_rows, :]))
+
+    for ax, dim in zip(axes_list, plot_dims):
         raw    = pd.crosstab(ab[dim], ab["split_group"])
         raw.columns = raw.columns.astype(int)
         ct_pct = raw.div(raw.sum(axis=0)) * 100
-        ct_pct = ct_pct.sort_values(0, ascending=True)
-        raw    = raw.loc[ct_pct.index]
+        cats_ordered = _canonical_cats(ct_pct.index.tolist(), dim)
+        ct_pct = ct_pct.loc[cats_ordered]
+        raw    = raw.loc[cats_ordered]
 
         x = np.arange(len(ct_pct))
         w = 0.35
-
         for i, cat in enumerate(ct_pct.index):
             for offset, grp_col, color, label in [
                 (w / 2,  0, CTRL_COLOR, f"Control (n={n_c:,})"),
                 (-w / 2, 1, TEST_COLOR,  f"Test (n={n_t:,})"),
             ]:
-                count = raw.loc[cat, grp_col]
+                count = raw.loc[cat, grp_col] if grp_col in raw.columns else 0
                 total = n_c if grp_col == 0 else n_t
                 pct   = count / total * 100
                 ci_lo, ci_hi = _prop_ci(count, total)
@@ -444,15 +522,14 @@ def chart07_sanity_combined(ab):
         ax.set_yticklabels(ct_pct.index.astype(str), fontsize=9)
         ax.set_xlabel("% of group", fontsize=10, labelpad=6)
         ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:.0f}%"))
-        ax.set_title(dim.replace("_", " ").title(), fontsize=12, pad=8)
+        is_bottom = (dim == bottom_dim)
+        ax.set_title(dim.replace("_", " ").title(),
+                     fontsize=14 if is_bottom else 12, pad=8,
+                     fontweight="bold" if is_bottom else "normal")
         ax.legend(fontsize=8.5, loc="lower right", framealpha=0.9)
         ax.grid(axis="x", alpha=0.35, linestyle="--")
         ax.grid(axis="y", visible=False)
 
-    for ax in axes_flat[len(dims):]:
-        ax.set_visible(False)
-
-    fig.tight_layout()
     save(fig, "07_sanity_combined.png")
 
 
@@ -526,11 +603,11 @@ def main():
     ab = _ab_with_attrs(df)
 
     chart01_primary_metrics(ab)
-    chart02_03_amount_trend(ab, df)
-    chart05_country_heatmap(ab)
+    chart02_cumulative(ab)
+    chart02_daily_trend(ab, df)
+    chart05_segment_ppu(ab)
     chart06_whale_analysis(ab)
     chart07_sanity_combined(ab)
-    chart07b_os_distribution(ab)
     print(f"\nDone. All charts saved to: {CHARTS_DIR}")
 
 

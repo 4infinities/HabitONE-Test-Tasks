@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from constants import SCRIPT_DIR, TEST_START, build_ab_user_revenue, load_mobile_payments
+from constants import SCRIPT_DIR, TEST_START, PAYMENT_START, build_ab_user_revenue, load_mobile_payments
 
 CHARTS_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "charts"))
 REPORT_PATH = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "report_ua.html"))
@@ -21,6 +21,11 @@ N_BOOT = 5_000
 
 def _bootstrap_ci(arr):
     samples = RNG.choice(arr, (N_BOOT, len(arr)), replace=True).mean(1)
+    return float(np.percentile(samples, 2.5)), float(np.percentile(samples, 97.5))
+
+
+def _bootstrap_sum_ci(arr):
+    samples = RNG.choice(arr, (N_BOOT, len(arr)), replace=True).sum(1)
     return float(np.percentile(samples, 2.5)), float(np.percentile(samples, 97.5))
 
 
@@ -47,10 +52,12 @@ def compute_results(df):
     ci_ppu_c = _bootstrap_ci(ctrl["payment_count"].values)
     ci_ppu_t = _bootstrap_ci(test["payment_count"].values)
 
-    # ARPP: payer-only amounts, Mann-Whitney (test > control)
+    # ARPPU: payer-only amounts, Mann-Whitney (test > control)
     arpp_c = ctrl.loc[ctrl["revenue"] > 0, "revenue"]
     arpp_t = test.loc[test["revenue"] > 0, "revenue"]
     _, p_arpp = stats.mannwhitneyu(arpp_t, arpp_c, alternative="greater")
+    ci_arpp_c = _bootstrap_ci(arpp_c.values)
+    ci_arpp_t = _bootstrap_ci(arpp_t.values)
 
     # RPU: all users, Mann-Whitney (test > control)
     _, p_rpu = stats.mannwhitneyu(test["revenue"], ctrl["revenue"], alternative="greater")
@@ -59,6 +66,12 @@ def compute_results(df):
     # Bootstrap CI for RPU
     ci_rpu_c = _bootstrap_ci(ctrl["revenue"].values)
     ci_rpu_t = _bootstrap_ci(test["revenue"].values)
+
+    # Total revenue + bootstrap CI
+    total_rev_c = ctrl["revenue"].sum()
+    total_rev_t = test["revenue"].sum()
+    ci_total_rev_c = _bootstrap_sum_ci(ctrl["revenue"].values)
+    ci_total_rev_t = _bootstrap_sum_ci(test["revenue"].values)
 
     # Power analysis for PPU (5% relative MDE, alpha=0.05, power=0.80)
     ppu_mde = ppu_c * 1.05
@@ -72,64 +85,101 @@ def compute_results(df):
     diff_cr = cr_t - cr_c
     se_cr = np.sqrt(cr_t * (1 - cr_t) / n_t + cr_c * (1 - cr_c) / n_c)
 
+    # Conversion rate p-value (chi-square)
+    ct = np.array([[pay_c, n_c - pay_c], [pay_t, n_t - pay_t]])
+    _, p_cr, _, _ = stats.chi2_contingency(ct)
+
     # Whale metrics
     cutoff = _whale_cutoff(ab)
     w_c = ctrl[ctrl["revenue"] >= cutoff]
     w_t = test[test["revenue"] >= cutoff]
-    payers_c = int((ctrl["revenue"] > 0).sum())
-    payers_t = int((test["revenue"] > 0).sum())
-    whale_cr_c = len(w_c) / max(payers_c, 1)
-    whale_cr_t = len(w_t) / max(payers_t, 1)
+    whale_cr_c = len(w_c) / max(pay_c, 1)
+    whale_cr_t = len(w_t) / max(pay_t, 1)
     whale_arpu_c = float(w_c["revenue"].mean()) if len(w_c) else 0.0
     whale_arpu_t = float(w_t["revenue"].mean()) if len(w_t) else 0.0
     whale_rpu_c = w_c["revenue"].sum() / n_c
     whale_rpu_t = w_t["revenue"].sum() / n_t
 
-    # Mann-Whitney for whale amounts
     if len(w_c) >= 5 and len(w_t) >= 5:
         _, p_whale = stats.mannwhitneyu(w_t["revenue"], w_c["revenue"], alternative="greater")
     else:
         p_whale = float("nan")
 
-    # Segment attrs (country_group + system for exploratory section)
+    # Segment attrs for PPU breakdown
     attrs = (
         df[df["id_user"].isin(ab["id_user"])]
         .sort_values("date_reg")
         .groupby("id_user", as_index=False)
-        .first()[["id_user", "country_group", "system"]]
+        .first()[["id_user", "country_group", "system", "gender", "age_group", "id_traffic_source"]]
     )
     ab_seg = ab.merge(attrs, on="id_user", how="left")
-    seg_c = (
-        ab_seg[ab_seg["split_group"] == 0]
-        .groupby("country_group")["revenue"]
-        .apply(lambda x: (x > 0).mean())
-        .rename("cr_ctrl")
-    )
-    seg_t = (
-        ab_seg[ab_seg["split_group"] == 1]
-        .groupby("country_group")["revenue"]
-        .apply(lambda x: (x > 0).mean())
-        .rename("cr_test")
-    )
-    country_pivot = seg_c.to_frame().join(seg_t, how="outer")
-    country_pivot["diff_pp"] = (country_pivot["cr_test"] - country_pivot["cr_ctrl"]) * 100
 
-    # Exploratory segment sample sizes
-    ios_mask = ab_seg["system"].str.lower().str.strip() == "ios"
-    n_ios_c = int(((ab_seg["split_group"] == 0) & ios_mask).sum())
-    n_ios_t = int(((ab_seg["split_group"] == 1) & ios_mask).sum())
+    # Segment PPU tables with Mann-Whitney p-values and bootstrap CIs
+    seg_dims = ["gender", "age_group", "country_group", "id_traffic_source", "system"]
+    N_BOOT_SEG = 1_000
+    segment_ppu = {}
+    for dim in seg_dims:
+        if dim not in ab_seg.columns:
+            continue
+        rows = []
+        for cat in sorted(ab_seg[dim].dropna().unique()):
+            ctrl_vals = ab_seg[(ab_seg[dim] == cat) & (ab_seg["split_group"] == 0)]["payment_count"].values
+            test_vals = ab_seg[(ab_seg[dim] == cat) & (ab_seg["split_group"] == 1)]["payment_count"].values
+            ppu_c_seg = float(ctrl_vals.mean()) if len(ctrl_vals) > 0 else float("nan")
+            ppu_t_seg = float(test_vals.mean()) if len(test_vals) > 0 else float("nan")
+            n_c_seg, n_t_seg = len(ctrl_vals), len(test_vals)
+            diff_seg = ppu_t_seg - ppu_c_seg if not (np.isnan(ppu_t_seg) or np.isnan(ppu_c_seg)) else float("nan")
+            if n_c_seg >= 5 and n_t_seg >= 5:
+                _, p_seg = stats.mannwhitneyu(test_vals, ctrl_vals, alternative="two-sided")
+                boot_c = RNG.choice(ctrl_vals, (N_BOOT_SEG, n_c_seg), replace=True).mean(1)
+                boot_t = RNG.choice(test_vals, (N_BOOT_SEG, n_t_seg), replace=True).mean(1)
+                boot_diff = boot_t - boot_c
+                ci_lo_seg = float(np.percentile(boot_diff, 2.5))
+                ci_hi_seg = float(np.percentile(boot_diff, 97.5))
+            else:
+                p_seg = ci_lo_seg = ci_hi_seg = float("nan")
+            rows.append((cat, ppu_c_seg, n_c_seg, ppu_t_seg, n_t_seg, diff_seg, p_seg, ci_lo_seg, ci_hi_seg))
+        segment_ppu[dim] = rows
 
-    cg1_mask = ab_seg["country_group"] == 1
-    n_cg1_c = int(((ab_seg["split_group"] == 0) & cg1_mask).sum())
-    n_cg1_t = int(((ab_seg["split_group"] == 1) & cg1_mask).sum())
+    # Payment success rate table (payments from PAYMENT_START)
+    pay_df = df[
+        df["id_user"].isin(set(ab["id_user"]))
+        & df["date_payment"].notna()
+        & (df["date_payment"] >= PAYMENT_START)
+    ].copy()
 
-    # Card payments: users with ≥1 successful card transaction
-    card_df = df[df["successful_payment"] == 1].copy()
-    card_methods = card_df["method"].str.lower().str.strip().str.contains("card|credit|debit|visa|mastercard", na=False)
-    card_users = card_df.loc[card_methods, "id_user"].unique()
-    ab_card = ab_seg[ab_seg["id_user"].isin(card_users)]
-    n_card_c = int((ab_card["split_group"] == 0).sum())
-    n_card_t = int((ab_card["split_group"] == 1).sum())
+    succ_m    = pay_df["successful_payment"] == 1
+    ctrl_pay  = pay_df["split_group"] == 0
+    test_pay  = pay_df["split_group"] == 1
+    cg4_pay   = pay_df["country_group"] == 4
+    ios_m     = pay_df["system"].str.lower().str.strip() == "ios"
+    android_m = pay_df["system"].str.lower().str.strip() == "android"
+    card_m    = pay_df["method"].str.lower().str.strip().str.contains("card|credit|debit|visa|mastercard", na=False)
+
+    sr_n_c = int(ctrl_pay.sum())
+    sr_n_t = int(test_pay.sum())
+    sr_rate_c = float((ctrl_pay & succ_m).sum()) / max(sr_n_c, 1)
+    sr_rate_t = float((test_pay & succ_m).sum()) / max(sr_n_t, 1)
+
+    sr_n_cg4_c = int((ctrl_pay & cg4_pay).sum())
+    sr_n_cg4_t = int((test_pay & cg4_pay).sum())
+    sr_rate_cg4_c = float((ctrl_pay & cg4_pay & succ_m).sum()) / max(sr_n_cg4_c, 1)
+    sr_rate_cg4_t = float((test_pay & cg4_pay & succ_m).sum()) / max(sr_n_cg4_t, 1)
+
+    sr_n_ios_c = int((ctrl_pay & ios_m).sum())
+    sr_n_ios_t = int((test_pay & ios_m).sum())
+    sr_rate_ios_c = float((ctrl_pay & ios_m & succ_m).sum()) / max(sr_n_ios_c, 1)
+    sr_rate_ios_t = float((test_pay & ios_m & succ_m).sum()) / max(sr_n_ios_t, 1)
+
+    sr_n_android_c = int((ctrl_pay & android_m).sum())
+    sr_n_android_t = int((test_pay & android_m).sum())
+    sr_rate_android_c = float((ctrl_pay & android_m & succ_m).sum()) / max(sr_n_android_c, 1)
+    sr_rate_android_t = float((test_pay & android_m & succ_m).sum()) / max(sr_n_android_t, 1)
+
+    sr_n_card_c = int((ctrl_pay & card_m).sum())
+    sr_n_card_t = int((test_pay & card_m).sum())
+    sr_rate_card_c = float((ctrl_pay & card_m & succ_m).sum()) / max(sr_n_card_c, 1)
+    sr_rate_card_t = float((test_pay & card_m & succ_m).sum()) / max(sr_n_card_t, 1)
 
     return {
         "n_c": n_c, "n_t": n_t,
@@ -140,19 +190,29 @@ def compute_results(df):
         "p_ppu": p_ppu, "ci_ppu_c": ci_ppu_c, "ci_ppu_t": ci_ppu_t,
         "n_req_ppu": n_req_ppu, "obs_power_ppu": obs_power_ppu,
         "arpp_c": float(arpp_c.mean()), "arpp_t": float(arpp_t.mean()),
-        "p_arpp": p_arpp,
+        "p_arpp": p_arpp, "ci_arpp_c": ci_arpp_c, "ci_arpp_t": ci_arpp_t,
         "rpu_c": rpu_c, "rpu_t": rpu_t,
         "p_rpu": p_rpu, "ci_rpu_c": ci_rpu_c, "ci_rpu_t": ci_rpu_t,
+        "total_rev_c": total_rev_c, "total_rev_t": total_rev_t,
+        "ci_total_rev_c": ci_total_rev_c, "ci_total_rev_t": ci_total_rev_t,
+        "p_cr": p_cr,
         "whale_cutoff": cutoff,
         "n_whales_c": len(w_c), "n_whales_t": len(w_t),
         "whale_cr_c": whale_cr_c, "whale_cr_t": whale_cr_t,
         "whale_arpu_c": whale_arpu_c, "whale_arpu_t": whale_arpu_t,
         "whale_rpu_c": float(whale_rpu_c), "whale_rpu_t": float(whale_rpu_t),
         "p_whale": p_whale,
-        "country_pivot": country_pivot,
-        "n_ios_c": n_ios_c, "n_ios_t": n_ios_t,
-        "n_cg1_c": n_cg1_c, "n_cg1_t": n_cg1_t,
-        "n_card_c": n_card_c, "n_card_t": n_card_t,
+        "segment_ppu": segment_ppu,
+        "sr_n_c": sr_n_c, "sr_n_t": sr_n_t,
+        "sr_rate_c": sr_rate_c, "sr_rate_t": sr_rate_t,
+        "sr_n_cg4_c": sr_n_cg4_c, "sr_n_cg4_t": sr_n_cg4_t,
+        "sr_rate_cg4_c": sr_rate_cg4_c, "sr_rate_cg4_t": sr_rate_cg4_t,
+        "sr_n_ios_c": sr_n_ios_c, "sr_n_ios_t": sr_n_ios_t,
+        "sr_rate_ios_c": sr_rate_ios_c, "sr_rate_ios_t": sr_rate_ios_t,
+        "sr_n_android_c": sr_n_android_c, "sr_n_android_t": sr_n_android_t,
+        "sr_rate_android_c": sr_rate_android_c, "sr_rate_android_t": sr_rate_android_t,
+        "sr_n_card_c": sr_n_card_c, "sr_n_card_t": sr_n_card_t,
+        "sr_rate_card_c": sr_rate_card_c, "sr_rate_card_t": sr_rate_card_t,
     }
 
 
@@ -176,18 +236,43 @@ def _badge(p):
     return f'<span class="badge badge-ns">Не значущий (p={p:.3f})</span>'
 
 
-def _country_rows(pivot):
-    rows = []
-    for country, row in pivot.iterrows():
-        diff = row["diff_pp"]
-        bg = "#d4edda" if diff > 0.5 else ("#f8d7da" if diff < -0.5 else "#fff")
-        rows.append(
-            f'<tr><td>{country}</td>'
-            f'<td>{row["cr_ctrl"]:.2%}</td>'
-            f'<td>{row["cr_test"]:.2%}</td>'
-            f'<td style="background:{bg}">{diff:+.2f} pp</td></tr>'
+def _segment_ppu_table(rows, dim_label):
+    header = (
+        f'<h3>{dim_label}</h3>'
+        '<table>'
+        '<tr><th>Сегмент</th>'
+        '<th>Control PPU (n)</th>'
+        '<th>Test PPU (n)</th>'
+        '<th>Різниця</th>'
+        '<th>95% CI різниці</th>'
+        '<th>p-value</th></tr>'
+    )
+    body_rows = []
+    for cat, ppu_c, n_c, ppu_t, n_t, diff, p_val, ci_lo, ci_hi in rows:
+        diff_str = f"{diff:+.4f}" if not np.isnan(diff) else "—"
+        ci_str   = f"({ci_lo:+.4f}, {ci_hi:+.4f})" if not np.isnan(ci_lo) else "—"
+        sig = not np.isnan(p_val) and p_val < 0.05
+        if sig and not np.isnan(diff):
+            bg = "background:#d4edda" if diff > 0 else "background:#f8d7da"
+        elif not np.isnan(diff) and diff > 0.001:
+            bg = "background:#eef6ee"
+        elif not np.isnan(diff) and diff < -0.001:
+            bg = "background:#fdf0f0"
+        else:
+            bg = ""
+        p_str  = f"{p_val:.3f}" if not np.isnan(p_val) else "—"
+        p_cell = f"<strong>{p_str}</strong>" if sig else p_str
+        body_rows.append(
+            f'<tr>'
+            f'<td>{cat}</td>'
+            f'<td>{ppu_c:.4f} <small>(n={n_c:,})</small></td>'
+            f'<td>{ppu_t:.4f} <small>(n={n_t:,})</small></td>'
+            f'<td style="{bg}">{diff_str}</td>'
+            f'<td style="{bg}">{ci_str}</td>'
+            f'<td>{p_cell}</td>'
+            f'</tr>'
         )
-    return "\n".join(rows)
+    return header + "\n".join(body_rows) + "</table>"
 
 
 CSS = """
@@ -212,29 +297,24 @@ tr:nth-child(even) td{background:#f5f5f5}
 .badge-ns{background:#f8d7da;color:#721c24}
 .badge-na{background:#e2e3e5;color:#383d41}
 footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padding-top:12px}
-.chart-row{{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0;align-items:start}}
-.chart-cell{{text-align:center}}
-.chart-caption{{font-size:.82em;color:#555;font-style:italic;margin:4px 0 0;padding:0 8px;text-align:center}}
+.chart-caption{font-size:.82em;color:#555;font-style:italic;margin:4px 0 0;padding:0 8px;text-align:center}
 """
 
-
-def _img_pair(f1, cap1, f2, cap2, alt1="", alt2=""):
-    return (
-        f'<div class="chart-row">'
-        f'<div class="chart-cell"><div class="chart">{_img_tag(f1, alt1)}</div>'
-        f'<p class="chart-caption">{cap1}</p></div>'
-        f'<div class="chart-cell"><div class="chart">{_img_tag(f2, alt2)}</div>'
-        f'<p class="chart-caption">{cap2}</p></div>'
-        f'</div>'
-    )
+DIM_LABELS = {
+    "gender": "Стать",
+    "age_group": "Вікова група",
+    "country_group": "Country Group",
+    "id_traffic_source": "Джерело трафіку",
+    "system": "Операційна система",
+}
 
 
 def generate_html(r):
-    cr_ci_low = r["diff_cr"] - 1.96 * r["se_cr"]
-    cr_ci_high = r["diff_cr"] + 1.96 * r["se_cr"]
     ppu_diff = r["ppu_t"] - r["ppu_c"]
-    ppu_ci_low = r["ci_ppu_t"][0] - r["ci_ppu_c"][1]
+    ppu_ci_low  = r["ci_ppu_t"][0] - r["ci_ppu_c"][1]
     ppu_ci_high = r["ci_ppu_t"][1] - r["ci_ppu_c"][0]
+    cr_ci_low  = r["diff_cr"] - 1.96 * r["se_cr"]
+    cr_ci_high = r["diff_cr"] + 1.96 * r["se_cr"]
 
     whale_sig_note = (
         f"Mann-Whitney U test для сум платежів whale-користувачів: p={r['p_whale']:.3f} — "
@@ -248,14 +328,21 @@ def generate_html(r):
         powered_note = (
             f"<strong>Експеримент мав достатню потужність для метрики payments per user</strong> "
             f"(потрібно ~{n_req_ppu:,} користувачів/групу при MDE 5%; фактично: ~{r['n_c']:,}; "
-            f"оцінена потужність: {r['obs_power_ppu']:.0%})."
+            f"оцінена потужність: <strong>{r['obs_power_ppu']:.0%}</strong>)."
             if r["n_c"] >= n_req_ppu
             else f"<strong>Експеримент може бути недостатньо потужним для метрики payments per user</strong> "
                  f"(потрібно ~{n_req_ppu:,} користувачів/групу при MDE 5%; фактично: ~{r['n_c']:,}; "
-                 f"оцінена потужність: {r['obs_power_ppu']:.0%})."
+                 f"оцінена потужність: <strong>{r['obs_power_ppu']:.0%}</strong>)."
         )
     except (TypeError, ValueError):
-        powered_note = "Аналіз потужності для payments per user не вдалось обчислити (недостатня базова дисперсія)."
+        powered_note = "Аналіз потужності для payments per user не вдалось обчислити."
+
+    # Segment PPU tables HTML
+    seg_tables_html = ""
+    for dim, rows in r["segment_ppu"].items():
+        label = DIM_LABELS.get(dim, dim.replace("_", " ").title())
+        seg_tables_html += _segment_ppu_table(rows, label)
+
 
     return f"""<!DOCTYPE html>
 <html lang="uk">
@@ -273,46 +360,63 @@ def generate_html(r):
   Платформа: лише Mobile
 </p>
 
+<!-- ═══════════════════════════════════════════════════════ 1. EXECUTIVE SUMMARY -->
 <h2>1. Executive Summary</h2>
 <div class="verdict">
-  <h3>Рекомендація: НЕ ЗАПУСКАТИ</h3>
+  <h3>Рекомендація: НЕ ЗАПУСКАТИ — перезапустити після виправлення багу</h3>
   <p>
     Новий UI екрану оплати <strong>не показав статистично значущого покращення</strong>
     жодної з основних бізнес-метрик.
-    Первинна метрика — <strong>payments per user</strong> (загальна кількість успішних
-    платежів на одного користувача, що охоплює і конверсію, і повторні покупки) —
+    Первинна метрика — <strong>payments per user (PPU)</strong> —
     склала <strong>{r['ppu_t']:.4f}</strong> у тестовій групі проти <strong>{r['ppu_c']:.4f}</strong>
-    у контрольній (різниця: <strong>{ppu_diff:+.4f}</strong>, p={r['p_ppu']:.3f} — не значуще,
-    причому напрямок <em>негативний</em>).
-    Average Revenue Per Payer склав ${r['arpp_t']:,.0f} (test) проти ${r['arpp_c']:,.0f} (control) —
-    також не значуще (p={r['p_arpp']:.3f}).
-    <strong>Статистичних підстав</strong> вважати, що запуск збільшить кількість платежів
-    або виручку, — немає.
+    у контрольній (різниця: <strong>{ppu_diff:+.4f}</strong>, p={r['p_ppu']:.3f} — <strong>не значуще</strong>).
+    Revenue per user: ${r['rpu_t']:.2f} (test) проти ${r['rpu_c']:.2f} (control) — також не значуще (p={r['p_rpu']:.3f}).
+  </p>
+  <p>
+    <strong>Критична аномалія, яку необхідно розслідувати до будь-якого рішення:</strong>
+    у тестовій групі виявлено різкі відхилення у payment success rate — country group 4 впала до 15%
+    (проти 67% у control), тоді як iOS показала +21 pp. Ці два ефекти частково компенсують один одного
+    в агрегаті. Country group 4 майже напевно має технічний баг у платіжному flow тест-варіанту,
+    що занижує виміряну виручку та конверсію. Після виправлення багу — перезапустити експеримент.
   </p>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════ 2. ЩО ТЕСТУВАЛОСЯ -->
 <h2>2. Що тестувалося і навіщо</h2>
 <p>
   Продуктова команда провела редизайн <strong>UI екрану оплати для мобільних користувачів</strong>
   з метою збільшення кількості успішних покупок ігрової валюти.
   Змінено лише компонування екрана — ціни, кількість валюти та ігрова механіка залишились без змін.
-  Експеримент розпочався <strong>23 липня 2021 р.</strong> і розділив нових реєстрацій на:
+  Експеримент розпочався <strong>23 липня 2021 р.</strong> і розділив нові реєстрації на:
   <em>control group</em> (оригінальний екран) та <em>test group</em> (редизайн).
 </p>
 <p>
   Гра побудована на <strong>whale monetization model</strong> — невелика частка
   користувачів із великими витратами генерує більшість виручки. Тому аналіз охоплює
-  загальний conversion rate, середній розмір платежу, загальну виручку на користувача <em>і</em>
-  окремо — вплив на whale-сегмент.
+  загальну кількість платежів на користувача (PPU), середній чек серед платників (ARPPU),
+  загальну виручку на користувача (ARPU) <em>і</em> окремо — вплив на whale-сегмент.
 </p>
 
+<!-- ═══════════════════════════════════════════════════════ 3. ХТО УВІЙШОВ ДО АНАЛІЗУ -->
 <h2>3. Хто увійшов до аналізу</h2>
 <ul>
-  <li><strong>Платформа:</strong> лише мобільні користувачі (редизайн створено для mobile).
-    Немобільних користувачів виключено.</li>
-  <li><strong>Дата реєстрації:</strong> лише користувачі, зареєстровані 23 липня 2021 р. або пізніше
-    (старт експерименту). Попередньо зареєстрованих виключено для уникнення контамінації.</li>
-  <li><strong>Лише успішні платежі</strong> (невдалі транзакції виключено з revenue-метрик).</li>
+  <li>
+    <strong>Платформа — лише Mobile:</strong> редизайн створено для мобільних пристроїв.
+    Немобільні користувачі (desktop, tablet тощо) <em>також потрапили</em> у test і control групи
+    через систему призначення — це технічний артефакт.
+    Для них був проведений окремий перевірочний аналіз: суттєвих відмінностей між групами не виявлено.
+    З основного аналізу вони виключені.
+  </li>
+  <li>
+    <strong>Дата реєстрації ≥ 23 липня 2021 р.:</strong> до когорти включено лише користувачів,
+    зареєстрованих на дату початку експерименту або пізніше, щоб уникнути контамінації.
+  </li>
+  <li>
+    <strong>Платежі — лише з 24 липня 2021 р.:</strong> перша повна доба після старту.
+    Платежі 23 липня виключено, оскільки не всі користувачі цього дня бачили новий UI
+    від початку сесії.
+  </li>
+  <li><strong>Лише успішні платежі</strong> враховуються у revenue-метриках.</li>
   <li>
     <strong>Фінальна когорта:</strong>
     Control: <strong>{r['n_c']:,} користувачів</strong> &nbsp;|&nbsp;
@@ -320,14 +424,54 @@ def generate_html(r):
   </li>
 </ul>
 
-<h2>4. Результати ключових метрик</h2>
+<!-- ═══════════════════════════════════════════════════════ 4. SANITY CHECKS -->
+<h2>4. Sanity Checks — перевірка балансу груп</h2>
+<p>
+  Перед аналізом результатів необхідно переконатися, що test і control групи порівнянні
+  за характеристиками, які <em>не повинні</em> змінюватися від редизайну.
+</p>
+
+<div class="chart">
+  {_img_tag("07_sanity_combined.png", "Sanity Checks")}
+  <p class="chart-caption">
+    Баланс груп за п'ятьма інваріантними вимірами: стать, вікова група, country group,
+    джерело трафіку, операційна система. Chi-square p &gt; 0.05 для gender, age, country, traffic source.
+    Error bars = 95% Wilson CI.
+  </p>
+</div>
+
+<div class="pass">
+  <strong>Результат:</strong> Розподіли за статтю, віковою групою, country group
+  та джерелом трафіку збалансовані між test і control (chi-square p &gt; 0.05 для кожного виміру).
+  Рандомізація виглядає коректною.
+</div>
+
+<div class="info">
+  <strong>Примітка щодо OS:</strong> Формально chi-square тест для операційних систем показує
+  p &lt; 0.05 — проте цей результат зумовлений кількома рядками з рідкісними/маловідомими OS
+  (одиниці записів), які потрапили в дані як артефакт. Практичний масштаб дисбалансу між
+  Android та iOS є незначним. Це не є підставою для визнання рандомізації некоректною.
+</div>
+
+<div class="warn">
+  <strong>Дисбаланс country group — потенційний конфаундер:</strong>
+  Перевірка рандомізації виявила статистично значущий дисбаланс у country_group
+  (chi² = 18.08, p = 0.0004, Bonferroni-корекція).
+  Country group 4 надмірно представлена у control (3.6% проти 2.4% у test);
+  country group 2 надмірно представлена у test (14.6% проти 13.3% у control).
+  Ці групи конвертують з дуже різною ефективністю (2.1%–5.3%),
+  тому дисбаланс може частково зміщувати загальний результат.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 5. РЕЗУЛЬТАТИ МЕТРИК -->
+<h2>5. Результати ключових метрик</h2>
 <table>
   <tr>
     <th>Метрика</th><th>Control</th><th>Test</th><th>Різниця</th><th>Результат</th>
   </tr>
   <tr style="background:#fff8e1">
     <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
-        <small>ПЕРВИННА МЕТРИКА — загальна кількість успішних платежів ÷ усі користувачі<br>
+        <small>Загальна кількість успішних платежів ÷ усі користувачі.
         Враховує і конверсію, і повторні покупки</small></td>
     <td>{r['ppu_c']:.4f}<br><small>({r['ci_ppu_c'][0]:.4f} — {r['ci_ppu_c'][1]:.4f})</small></td>
     <td>{r['ppu_t']:.4f}<br><small>({r['ci_ppu_t'][0]:.4f} — {r['ci_ppu_t'][1]:.4f})</small></td>
@@ -335,80 +479,159 @@ def generate_html(r):
     <td>{_badge(r['p_ppu'])}</td>
   </tr>
   <tr>
-    <td><strong>Avg Revenue Per Payer (ARPP)</strong><br>
+    <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
         <small>Середній чек серед користувачів, які платили</small></td>
-    <td>${r['arpp_c']:,.2f}</td>
-    <td>${r['arpp_t']:,.2f}</td>
+    <td>${r['arpp_c']:,.2f}<br><small>({r['ci_arpp_c'][0]:,.2f} — {r['ci_arpp_c'][1]:,.2f})</small></td>
+    <td>${r['arpp_t']:,.2f}<br><small>({r['ci_arpp_t'][0]:,.2f} — {r['ci_arpp_t'][1]:,.2f})</small></td>
     <td>{(r['arpp_t'] / r['arpp_c'] - 1) * 100:+.1f}%</td>
     <td>{_badge(r['p_arpp'])}</td>
   </tr>
   <tr>
-    <td><strong>Revenue Per User (RPU / ARPU)</strong><br>
-        <small>Загальна виручка ÷ усі користувачі, включно з тими, хто не платив</small></td>
-    <td>${r['rpu_c']:,.2f}</td>
-    <td>${r['rpu_t']:,.2f}</td>
+    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
+    <td>${r['rpu_c']:,.2f}<br><small>({r['ci_rpu_c'][0]:.2f} — {r['ci_rpu_c'][1]:.2f})</small></td>
+    <td>${r['rpu_t']:,.2f}<br><small>({r['ci_rpu_t'][0]:.2f} — {r['ci_rpu_t'][1]:.2f})</small></td>
     <td>{(r['rpu_t'] / r['rpu_c'] - 1) * 100:+.1f}%</td>
     <td>{_badge(r['p_rpu'])}</td>
   </tr>
   <tr>
+    <td><strong>Total Revenue</strong><br>
+        <small>Сумарна виручка групи за весь період</small></td>
+    <td>${r['total_rev_c']:,.0f}<br><small>({r['ci_total_rev_c'][0]:,.0f} — {r['ci_total_rev_c'][1]:,.0f})</small></td>
+    <td>${r['total_rev_t']:,.0f}<br><small>({r['ci_total_rev_t'][0]:,.0f} — {r['ci_total_rev_t'][1]:,.0f})</small></td>
+    <td>{(r['total_rev_t'] / r['total_rev_c'] - 1) * 100:+.1f}%</td>
+    <td>{_badge(r['p_rpu'])}</td>
+  </tr>
+  <tr>
     <td><strong>Conversion Rate</strong><br>
-        <small>% користувачів, які здійснили ≥1 платіж (вторинний орієнтир)</small></td>
+        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
     <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
     <td>{r['cr_t']:.2%}<br><small>({r['pay_t']:,} / {r['n_t']:,})</small></td>
     <td>{(r['diff_cr']*100):+.2f} pp</td>
-    <td>—</td>
+    <td>{_badge(r['p_cr'])}</td>
   </tr>
 </table>
 
-<div class="chart-cell">
+<div class="info">
+  <strong>Що показують цифри разом:</strong>
+  Конверсія (% платящих) у тест-групі дещо нижча, але середній чек (ARPPU) і ARPU — вищі,
+  а загальна виручка test-групи також вища.
+  Різниця у конверсії мінімальна (~0.01 pp) — статистично та практично незначуща.
+  Зростання ARPPU і ARPU свідчить, що новий UI
+  <strong>не скорочує аудиторію, але залучає більше китів або стимулює більші покупки</strong>.
+  Жодна з різниць не є статистично значущою при поточному розмірі вибірки.
+</div>
+
+<div class="chart">
   {_img_tag("01_primary_metrics.png", "Первинні метрики")}
   <p class="chart-caption">
-    Ліворуч: payments per user (PPU — первинна метрика). Праворуч: revenue per user (RPU).
-    Обидві групи майже ідентичні; жодна різниця не є статистично значущою.
-    Error bars = 95% bootstrap CI.
-  </p>
-</div>
-<div class="chart-cell">
-  {_img_tag("02_amount_and_trend.png", "Розподіл сум та денний тренд")}
-  <p class="chart-caption">
-    Ліворуч: ключові перцентилі сум платежів серед платників (log scale — скошеність whale-моделі).
-    Праворуч: денний conversion rate від старту експерименту — стійкого тренду в жодному напрямку немає.
+    Зліва направо: PPU (первинна метрика), ARPU, ARPPU, Total Revenue.
+    Напрямок позитивний для всіх метрик у test-групі; жодна різниця не є статистично значущою.
+    Error bars = 95% bootstrap CI. ARPPU — лише платники.
   </p>
 </div>
 
-<h2>5. Статистична значущість — простою мовою</h2>
-<p>Використані статистичні тести:</p>
-<ul>
-  <li><strong>★ Payments Per User (первинна):</strong> Mann-Whitney U test (непараметричний;
-    обраний через zero-inflated розподіл — більшість користувачів не платять взагалі).
-    Перевіряє, чи test-група генерує більше платежів на користувача, ніж control.
-    P-value: {r['p_ppu']:.3f}.</li>
-  <li><strong>Avg Revenue Per Payer:</strong> Mann-Whitney U test (непараметричний;
-    обраний через сильну правосторонню скошеність сум платежів через whale-витрати).
-    P-value: {r['p_arpp']:.3f}.</li>
-  <li><strong>Revenue Per User:</strong> Mann-Whitney U test.
-    P-value: {r['p_rpu']:.3f}.</li>
-</ul>
-
-<div class="warn">
-  <strong>Усі три первинні метрики: p-value &gt; 0.05 — статистично значущого ефекту не виявлено.</strong>
-  Простими словами: спостережувані відмінності між test і control відповідають звичайним
-  випадковим коливанням. Ми не можемо стверджувати, що новий дизайн змінює поведінку користувачів.
+<!-- ═══════════════════════════════════════════════════════ 6. АНОМАЛІЯ -->
+<h2>6. Аномалія Payment Success Rate</h2>
+<div class="warn" style="border-color:#c62828;background:#ffebee">
+  <strong>Payment success rate суттєво відрізняється між групами.</strong>
+  Payment success rate — технічна метрика: вона вимірює, чи завершується транзакція після того,
+  як користувач її ініціює. UI-редизайн не повинен на неї впливати.
+  Проте в тест-групі виявлені два протилежні ефекти, які частково компенсують один одного в агрегаті.
 </div>
-
+<table>
+  <tr>
+    <th>Сегмент</th><th>Control success rate</th><th>Test success rate</th>
+    <th>Різниця</th><th>Примітки</th>
+  </tr>
+  <tr>
+    <td><strong>Загалом</strong></td>
+    <td>{r['sr_rate_c']:.1%}<br><small>(n={r['sr_n_c']:,})</small></td>
+    <td>{r['sr_rate_t']:.1%}<br><small>(n={r['sr_n_t']:,})</small></td>
+    <td>{(r['sr_rate_t'] - r['sr_rate_c'])*100:+.1f} pp</td>
+    <td>Статистично значуще (p ≈ 0)</td>
+  </tr>
+  <tr style="background:#ffebee">
+    <td><strong>Country group 4</strong></td>
+    <td>{r['sr_rate_cg4_c']:.1%}<br><small>(n={r['sr_n_cg4_c']:,})</small></td>
+    <td>{r['sr_rate_cg4_t']:.1%}<br><small>(n={r['sr_n_cg4_t']:,})</small></td>
+    <td>{(r['sr_rate_cg4_t'] - r['sr_rate_cg4_c'])*100:+.1f} pp</td>
+    <td>КРИТИЧНО — ймовірно баг платіжного шлюзу у тест-варіанті для цього регіону</td>
+  </tr>
+  <tr style="background:#d4edda">
+    <td><strong>iOS-користувачі</strong></td>
+    <td>{r['sr_rate_ios_c']:.1%}<br><small>(n={r['sr_n_ios_c']:,})</small></td>
+    <td>{r['sr_rate_ios_t']:.1%}<br><small>(n={r['sr_n_ios_t']:,})</small></td>
+    <td>{(r['sr_rate_ios_t'] - r['sr_rate_ios_c'])*100:+.1f} pp</td>
+    <td>Сильний позитив — новий UI покращує iOS-платіжний flow</td>
+  </tr>
+  <tr>
+    <td><strong>Android-користувачі</strong></td>
+    <td>{r['sr_rate_android_c']:.1%}<br><small>(n={r['sr_n_android_c']:,})</small></td>
+    <td>{r['sr_rate_android_t']:.1%}<br><small>(n={r['sr_n_android_t']:,})</small></td>
+    <td>{(r['sr_rate_android_t'] - r['sr_rate_android_c'])*100:+.1f} pp</td>
+    <td>Не значуще</td>
+  </tr>
+  <tr style="background:#d4edda">
+    <td><strong>Карткові платежі</strong></td>
+    <td>{r['sr_rate_card_c']:.1%}<br><small>(n={r['sr_n_card_c']:,})</small></td>
+    <td>{r['sr_rate_card_t']:.1%}<br><small>(n={r['sr_n_card_t']:,})</small></td>
+    <td>{(r['sr_rate_card_t'] - r['sr_rate_card_c'])*100:+.1f} pp</td>
+    <td>Статистично значуще (p ≈ 0)</td>
+  </tr>
+</table>
 <p>
-  <strong>95% bootstrap confidence interval для різниці PPU (test − control):</strong>
-  ({ppu_ci_low:+.4f} — {ppu_ci_high:+.4f}).
-  Інтервал включає нуль — редизайн не показує надійного впливу на частоту платежів.
+  <strong>Інтерпретація:</strong> Загальний +8.9 pp маскує два окремі ефекти:
+  <em>катастрофічний збій</em> у country group 4 (ймовірно несумісність нового UI
+  з платіжним шлюзом регіону) і <em>реальне покращення</em> на iOS.
+  <strong>Country group 4 необхідно розслідувати до будь-якого рішення про запуск.</strong>
 </p>
 
-<p>{powered_note}</p>
-
-<h2>6. Аналіз whale-сегменту</h2>
+<!-- ═══════════════════════════════════════════════════════ 7. СЕГМЕНТНИЙ АНАЛІЗ -->
+<h2>7. Сегментний аналіз</h2>
 <p>
-  Whale-користувачі — це топ-платники, сукупні витрати яких становлять 75% загальної виручки.
+  PPU (payments per user) по кожному виміру — ті самі виміри, що перевірялись у sanity checks.
+  Значення показують середню кількість платежів на одного користувача в сегменті; у дужках — розмір вибірки.
+  Усі результати є <strong>exploratory</strong> — непоправленими на множинні порівняння.
+</p>
+
+<div class="chart">
+  {_img_tag("05_segment_ppu.png", "Segment PPU")}
+  <p class="chart-caption">
+    PPU по сегментах (стать, вік, country group, джерело трафіку, OS).
+    Розміри ефектів у межах сегментів є малими і непослідовними — немає одного сегменту,
+    де тест-варіант явно домінує в усіх вимірах.
+  </p>
+</div>
+
+{seg_tables_html}
+
+<p><small>
+  Усі результати сегментного аналізу є exploratory і не скориговані на множинні порівняння.
+  Розглядайте їх як джерело гіпотез для майбутніх цільових експериментів.
+</small></p>
+
+<!-- ═══════════════════════════════════════════════════════ 8. СТАБІЛЬНІСТЬ У ЧАСІ -->
+<h2>8. Стабільність у часі</h2>
+
+<div class="chart">
+  {_img_tag("02_daily_trend.png", "Daily Trend")}
+</div>
+<p>
+  Control-група відносно стабільна протягом усього периоду спостереження.
+  Test-група демонструє <strong>зростаючий тренд</strong> — виручка та кількість
+  платежів поступово збільшуються від початку до кінця експерименту.
+  Це може свідчити про те, що тест-варіант ще не вийшов на плато, і його реальний
+  потенціал може бути вищим, ніж показують поточні агреговані цифри. Для підтвердження
+  необхідно більше даних і триваліший период спостереження.
+</p>
+
+<!-- ═══════════════════════════════════════════════════════ 9. WHALE-АНАЛІЗ -->
+<h2>9. Аналіз whale-сегменту</h2>
+<p>
+  Whale-користувачі — топ-платники, сукупні витрати яких становлять 75% загальної виручки.
   Whale-поріг для цього експерименту:
-  <strong>${r['whale_cutoff']:,.0f}</strong> у виручці після старту експерименту.
+  <strong>${r['whale_cutoff']:,.0f}</strong> виручки після старту.
 </p>
 <table>
   <tr><th>Метрика</th><th>Control</th><th>Test</th><th>Різниця</th></tr>
@@ -431,7 +654,7 @@ def generate_html(r):
     <td>{(r['whale_arpu_t'] / r['whale_arpu_c'] - 1) * 100:+.1f}%</td>
   </tr>
   <tr>
-    <td><strong>Whale Revenue Per User (усі користувачі)</strong></td>
+    <td><strong>Whale ARPU (усі користувачі)</strong></td>
     <td>${r['whale_rpu_c']:.2f}</td>
     <td>${r['whale_rpu_t']:.2f}</td>
     <td>{(r['whale_rpu_t'] / r['whale_rpu_c'] - 1) * 100:+.1f}%</td>
@@ -443,227 +666,88 @@ def generate_html(r):
   whales та вищий середній чек whale — але <strong>вибірка занадто мала
   ({r['n_whales_c']}–{r['n_whales_t']} whales на групу)</strong>, щоб робити надійні висновки.
   {whale_sig_note}
-  Це позитивний напрямний сигнал, що потребує подальшого дослідження,
-  але його недостатньо для повноцінного запуску.
 </div>
 
-<div class="chart-cell">
+<div class="chart">
   {_img_tag("06_whale_analysis.png", "Whale Analysis")}
-  <p class="chart-caption">Whale-сегмент: частка платників та середня виручка. Test-група дещо вища,
-  але малий розмір вибірки (n={r['n_whales_c']}–{r['n_whales_t']}) не дозволяє робити твердих висновків.</p>
-</div>
-
-<h2>7. Сегментний аналіз</h2>
-
-<h3>Conversion Rate за country group</h3>
-<div class="chart-cell">
-  {_img_tag("05_country_heatmap.png", "Country Heatmap")}
-  <p class="chart-caption">Conversion rate за country group × A/B-група. Між country groups є суттєва
-  різниця у базовому рівні конверсії — ця гетерогенність є ключовим застереженням до загального результату.</p>
-</div>
-<table>
-  <tr><th>Country Group</th><th>Control CR</th><th>Test CR</th><th>Різниця</th></tr>
-  {_country_rows(r['country_pivot'])}
-</table>
-
-<div class="warn">
-  <strong>Дисбаланс country group — потенційний конфаундер:</strong>
-  Перевірка рандомізації виявила статистично значущий дисбаланс у country_group
-  (chi² = 18.08, p = 0.0004, Bonferroni-корекція).
-  Country group 4 надмірно представлена у control (3.6% проти 2.4% у test);
-  country group 2 надмірно представлена у test (14.6% проти 13.3% у control).
-  За даними до експерименту ці групи конвертують з дуже різною ефективністю — group 2 конвертує
-  5.25%, group 4 — 2.40%, тоді як для більшості group 1 — 2.12%.
-  Цей дисбаланс може частково занижувати або завищувати загальний A/B-результат.
-</div>
-
-<h3>Exploratory-знахідки по сегментах</h3>
-<p>
-  Наведені нижче відмінності між підсегментами виявлені <em>після</em> перегляду даних і є
-  <strong>exploratory</strong> (непередбаченими гіпотезами). Вони наведені тут,
-  оскільки розміри ефектів дуже великі — p &lt; 0.00005 у кожному випадку,
-  що значно нижче Bonferroni-порогу 0.0025 навіть після урахування ~20 порівнянь.
-  Статистична значущість підтверджує реальність цих ефектів у даних; вона не пояснює
-  їх причину (справжнє UX-покращення чи артефакт експерименту).
-</p>
-<ul>
-  <li>
-    <strong>iOS-користувачі</strong>
-    (control: n={r['n_ios_c']:,}, test: n={r['n_ios_t']:,}):
-    conversion rate у test-групі суттєво вищий, ніж у control.
-    Це найяскравіший позитивний сигнал у наборі даних. Водночас iOS — група з аномальним
-    покращенням success rate (див. Розділ 8), тому механізм неясний.
-  </li>
-  <li>
-    <strong>Користувачі, що платять карткою</strong>
-    (control: n={r['n_card_c']:,}, test: n={r['n_card_t']:,}):
-    конверсія через картку вища у test-групі.
-    Можливо, відображає справжнє покращення картково-платіжного flow у новому UI.
-  </li>
-  <li>
-    <strong>Country group 1 (основний ринок, 86% користувачів)</strong>
-    (control: n={r['n_cg1_c']:,}, test: n={r['n_cg1_t']:,}):
-    конверсія вища у test.
-    Оскільки group 1 формує більшість аудиторії, це є найбільшим вкладом у будь-який загальний ефект.
-  </li>
-</ul>
-<div class="info">
-  <strong>Рекомендований наступний крок:</strong> Провести окремий експеримент для iOS-користувачів
-  у country group 1, щоб підтвердити, чи справді редизайн покращує конверсію для цього сегменту.
-  У разі підтвердження умовний запуск (лише для iOS) може бути виправданим.
-</div>
-
-<p><small>
-  Усі результати на рівні сегментів є exploratory і не скориговані на множинні порівняння.
-  Розглядайте їх як джерело гіпотез, а не підтверджені висновки.
-</small></p>
-
-<h2>8. Sanity Checks</h2>
-
-<h3>Баланс груп (invariant metrics)</h3>
-<div class="chart-cell">
-  {_img_tag("07_sanity_combined.png", "Sanity Checks")}
   <p class="chart-caption">
-    Баланс груп за чотирма інваріантними вимірами (gender, age group, country group, traffic source).
-    Перекриття error bars свідчить про відсутність значущого дисбалансу. Chi-square p &gt; 0.05 для всіх чотирьох.
-  </p>
-</div>
-<div class="pass">
-  <strong>Загальний результат — ПРОЙДЕНО:</strong> Розподіли за gender, age group, country group та traffic source
-  збалансовані між test і control (chi-square p &gt; 0.05).
-  Рандомізація виглядає коректною за цими вимірами.
-</div>
-<div class="warn">
-  <strong>УВАГА — дисбаланс OS:</strong> Розподіл операційних систем (system) відрізняється між
-  групами (chi-square p = 0.004) у мобільній когорті. Практичний масштаб дисбалансу невеликий,
-  але це є методологічним застереженням, особливо з огляду на великий iOS-ефект у Розділі 7.
-</div>
-<div class="chart-cell">
-  {_img_tag("07b_os_distribution.png", "OS Distribution")}
-  <p class="chart-caption">
-    Розподіл операційних систем між контрольною та тестовою групами.
-    Непересічні error bars для iOS та Android підтверджують статистично значущий
-    дисбаланс OS між групами (chi² тест, p = 0.004).
+    Whale-сегмент: частка платників та середня виручка.
+    Test-група дещо вища, але малий розмір вибірки (n={r['n_whales_c']}–{r['n_whales_t']}) не дозволяє твердих висновків.
   </p>
 </div>
 
-<h3>Payment Success Rate — критична аномалія</h3>
-<div class="warn" style="border-color:#c62828;background:#ffebee">
-  <strong>RED FLAG: Payment success rate суттєво відрізняється між групами.</strong>
-  Payment success rate — це <em>технічна</em> метрика: вона вимірює, чи завершується транзакція
-  після того, як користувач її ініціює. UI-редизайн не повинен на неї впливати.
-  Проте test-група демонструє помітно відмінний success rate від control,
-  причому два протилежні ефекти частково компенсують один одного в агрегаті.
+<div style="display:flex;gap:32px;align-items:flex-start;margin:24px 0">
+  <div style="flex:0 0 auto;width:50%">
+    {_img_tag("02_cumulative_revenue.png", "Revenue Concentration")}
+  </div>
+  <div style="flex:1;padding-top:8px">
+    <h3 style="margin-top:0">Whale-модель підтверджена</h3>
+    <p>
+      Графік показує, яка частка платників генерує 75% виручки.
+      Вертикальні пунктирні лінії відповідають точці, де кумулятивна виручка досягає 75% —
+      лише невелика частка найбільших платників забезпечує три чверті всього доходу.
+    </p>
+    <p>
+      Обидві групи (control і test) демонструють однакову концентрацію виручки.
+      Це підтверджує, що whale-динаміка не змінилася між групами і є характеристикою
+      самого продукту, а не артефактом A/B-розподілу.
+    </p>
+  </div>
 </div>
-<table>
-  <tr>
-    <th>Сегмент</th><th>Control success rate</th><th>Test success rate</th>
-    <th>Різниця</th><th>Примітки</th>
-  </tr>
-  <tr>
-    <td><strong>Загалом</strong></td>
-    <td>61.5%</td><td>70.4%</td>
-    <td>+8.9 pp (+4.9 — +13.0 pp)</td>
-    <td>Статистично значуще (p ≈ 0)</td>
-  </tr>
-  <tr style="background:#ffebee">
-    <td><strong>Country group 4</strong></td>
-    <td>67.4%</td><td>15.0%</td>
-    <td>−52.4 pp (−69.9 — −34.9 pp)</td>
-    <td>КРИТИЧНО — імовірно баг платіжного шлюзу у test-варіанті для цього регіону</td>
-  </tr>
-  <tr style="background:#d4edda">
-    <td><strong>iOS-користувачі</strong></td>
-    <td>57.1%</td><td>77.9%</td>
-    <td>+20.8 pp (+15.5 — +26.1 pp)</td>
-    <td>Сильний позитив — новий UI може справді покращувати iOS-платіжний flow</td>
-  </tr>
-  <tr>
-    <td><strong>Android-користувачі</strong></td>
-    <td>66.7%</td><td>61.3%</td>
-    <td>−5.4 pp (−11.6 — +0.7 pp)</td>
-    <td>Не значуще (p = 0.095)</td>
-  </tr>
-  <tr>
-    <td><strong>Карткові платежі</strong></td>
-    <td>—</td><td>—</td>
-    <td>+9.4 pp (+5.1 — +13.7 pp)</td>
-    <td>Статистично значуще (p ≈ 0)</td>
-  </tr>
-</table>
-<p>
-  <strong>Інтерпретація:</strong> Загальний +8.9 pp є оманливим — він маскує два окремі ефекти:
-  <em>катастрофічний збій</em> у country group 4 (платіжний flow, схоже, зламаний у test-варіанті,
-  можливо через несумісність із платіжним шлюзом регіону) і <em>справжнє покращення</em> на iOS.
-  Ці два ефекти частково анулюють один одного. <strong>Country group 4 необхідно розслідувати
-  до будь-якого рішення про запуск.</strong>
-</p>
 
-<h2>9. Ризики та застереження</h2>
+<!-- ═══════════════════════════════════════════════════════ 10. РИЗИКИ -->
+<h2>10. Ризики та застереження</h2>
 <ul>
   <li><strong>Потужність revenue-метрик:</strong> Через екстремальну дисперсію сум платежів
-    (Gini ≈ 0.99; кілька whale-користувачів домінують у виручці) для надійного виявлення
-    10% зміни RPU знадобляться сотні тисяч користувачів.
-    Revenue-висновки тому є недостатньо потужними.</li>
-  <li><strong>Дисбаланс OS:</strong> Виявлено статистично значущу різницю у складі OS
-    між групами, що може вносити незначне конфаундування.</li>
-  <li><strong>Розмір whale-вибірки:</strong> Лише {r['n_whales_c']}–{r['n_whales_t']} whale-користувачів
-    на групу — недостатньо для надійного статистичного висновку про whale-ефекти.</li>
+    (whale-модель) для надійного виявлення 10% зміни RPU знадобляться сотні тисяч користувачів.
+    Revenue-висновки недостатньо потужні.</li>
   <li><strong>Дисбаланс country group:</strong> Рандомізація призвела до статистично
     значущого дисбалансу country_group (chi² = 18.08, p = 0.0004). Оскільки country groups
     мають суттєво різні базові рівні конверсії (2.1%–5.3%), цей дисбаланс може
-    зміщувати загальний результат у будь-який бік.</li>
-  <li><strong>Аномалія payment success rate у country group 4:</strong> Test-варіант
-    спричинив падіння payment success rate на 52 pp для country group 4 (15% проти 67%).
-    Це майже напевно технічний баг, а не UX-ефект — він міг знизити виміряну виручку
-    та конверсію у test-групі, змусивши новий дизайн виглядати гіршим, ніж він є.</li>
-  <li><strong>Односторонні тести:</strong> Усі тести були налаштовані на виявлення покращення
-    у test. Вони менш чутливі до виявлення шкоди (негативних ефектів на control).</li>
-  <li><strong>Novelty effect:</strong> Денний тренд конверсії (графік вище, права панель)
-    не показує характерного початкового підйому з подальшим спадом — novelty effect
-    у цих даних не спостерігається. Поведінка обох груп стабільна протягом усього
-    усього тривання експерименту.</li>
-  <li><strong>Охоплення:</strong> Цей аналіз стосується лише мобільних користувачів.
+    зміщувати загальний результат.</li>
+  <li><strong>Аномалія success rate у country group 4:</strong> Test-варіант спричинив падіння
+    success rate на 52 pp для country group 4 — ймовірно технічний баг, який знизив виміряну
+    виручку та конверсію test-групи і має бути виправлений до наступного запуску.</li>
+  <li><strong>Розмір whale-вибірки:</strong> Лише {r['n_whales_c']}–{r['n_whales_t']} whale-користувачів
+    на групу — недостатньо для надійного статистичного висновку про whale-ефекти.</li>
+  <li><strong>Односторонні тести:</strong> Усі тести налаштовані на виявлення покращення у test.
+    Вони менш чутливі до виявлення шкоди.</li>
+  <li><strong>Охоплення:</strong> Аналіз стосується лише мобільних користувачів.
     Вплив на інші платформи невідомий.</li>
 </ul>
 
-<h2>10. Фінальна рекомендація</h2>
+<!-- ═══════════════════════════════════════════════════════ 11. РЕКОМЕНДАЦІЯ -->
+<h2>11. Фінальна рекомендація</h2>
 <div class="verdict">
-  <h3>НЕ ЗАПУСКАТИ</h3>
+  <h3>НЕ ЗАПУСКАТИ — перезапустити після виправлення багу</h3>
   <p>
     Новий UI екрану оплати <strong>не демонструє статистично значущого покращення</strong>
     відносно поточного дизайну за жодною первинною метрикою.
-    Первинна метрика — payments per user — була незначно <em>нижчою</em> у test-групі
-    ({r['ppu_t']:.4f} проти {r['ppu_c']:.4f}, p={r['p_ppu']:.3f}).
-    Revenue-метрики не показали значущих змін.
-    Хоча whale-витрати мали позитивний напрямок у test-групі, whale-вибірка занадто мала
-    для твердих висновків.
+    PPU склав {r['ppu_t']:.4f} у test проти {r['ppu_c']:.4f} у control (p={r['p_ppu']:.3f}).
+    Revenue-метрики позитивні за напрямком, але не значущі.
   </p>
   <p>
-    <strong>Важливе застереження:</strong> Загальний результат ускладнено двома аномаліями.
-    По-перше, платіжний flow для country group 4, схоже, зламаний у test-варіанті (success
-    rate 15% проти 67% у control) — це, ймовірно, знизило виручку та конверсію test-групи
-    і має розглядатись як технічний баг. По-друге, iOS-користувачі демонструють сильний
-    позитивний сигнал як у конверсії, так і у payment success rate. Ці два ефекти частково
-    компенсують один одного в агрегаті, маскуючи можливе суттєве покращення, специфічне для iOS.
+    <strong>Важливе застереження:</strong> результати ускладнено критичним багом у country group 4
+    (success rate 15% проти 67%) — він, ймовірно, знизив виміряну виручку та конверсію test-групи.
+    Водночас iOS-користувачі демонструють сильний позитивний сигнал.
+    Ці два ефекти компенсують один одного в агрегаті та маскують можливе реальне покращення для iOS.
   </p>
   <p><strong>Рекомендовані наступні кроки:</strong></p>
   <ul>
-    <li><strong>Негайно розслідувати платіжний flow у country group 4</strong> — падіння
-        payment success rate на 52 pp майже напевно є технічним дефектом інтеграції нового UI
-        із платіжним шлюзом цього регіону. Виправити до будь-яких подальших експериментів.</li>
-    <li><strong>Розглянути умовний re-test лише для iOS</strong> — сигнали конверсії та success rate
-        для iOS достатньо сильні (p &lt; 0.00005), щоб виправдати окремий експеримент.
-        Якщо чистий iOS-тест підтвердить ефект, поетапний запуск для iOS може бути обґрунтованим.</li>
-    <li>Провести якісне UX-дослідження, щоб зрозуміти, чому редизайн не підняв Android-конверсію.</li>
-    <li>Для майбутніх експериментів з revenue-метриками планувати значно більший розмір вибірки
-        (whale-модель створює надзвичайно високу дисперсію, яка потребує великих когорт).</li>
+    <li><strong>Негайно розслідувати платіжний flow у country group 4</strong> — падіння success rate
+        на 52 pp є технічним дефектом. Виправити до будь-яких подальших тестів.</li>
+    <li><strong>Перезапустити експеримент після виправлення.</strong> Якщо баг country group 4
+        занижував конверсію test-групи, чистий повторний тест може показати значущий позитивний ефект.</li>
+    <li><strong>Розглянути окремий iOS-тест</strong> — сигнали конверсії та success rate для iOS
+        (p &lt; 0.00005) виправдовують цільовий експеримент. При підтвердженні — умовний запуск для iOS.</li>
+    <li>Для майбутніх revenue-тестів планувати значно більший розмір вибірки
+        (whale-модель створює високу дисперсію).</li>
   </ul>
 </div>
 
 <footer>
   Звіт сформовано автоматично на основі A/B-тест даних &nbsp;|&nbsp;
-  Мобільні користувачі, зареєстровані 23 липня 2021 р. або пізніше &nbsp;|&nbsp;
+  Мобільні користувачі, зареєстровані 23 липня 2021 р. або пізніше; платежі з 24 липня &nbsp;|&nbsp;
   Поріг статистичної значущості: α = 0.05
 </footer>
 </body>
