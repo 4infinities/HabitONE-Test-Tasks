@@ -4,3 +4,5 @@
 __pycache__/
 Task_3/data/raw/*.csv
 Task_3/data/processed/*.csv
+node_modules/
+**/archive/

@@ -49,3 +49,91 @@ Call log:
 2026-05-20 20:51:52,230 | Pella Nutrition | https://mypellanutrition.com/collections/all | no product links found (playwright)
 2026-05-21 02:02:00,905 | Ryze | https://ryzesuperfoods.com/products/diner-mug-chair | 403 Client Error: Forbidden for url: https://ryzesuperfoods.com/products/diner-mug-chair
 2026-05-21 02:02:07,913 | Ryze | https://ryzesuperfoods.com/products/ryze-ritual-set-dark-roast | 403 Client Error: Forbidden for url: https://ryzesuperfoods.com/products/ryze-ritual-set-dark-roast
+2026-05-23 02:09:45,134 | rasa | timeout | https://wearerasa.com/products/magnificent-mushrooms-1oz
+2026-05-23 02:18:02,615 | rasa | timeout | https://wearerasa.com/products/magnificent-mushrooms-1oz
+2026-05-23 02:50:03,378 | clevr | timeout | https://clevrblends.com/products/chai-8-serv
+2026-05-23 02:50:52,261 | clevr | timeout | https://clevrblends.com/products/coffee-superlatte
+2026-05-23 02:52:13,236 | clevr | timeout | https://clevrblends.com/products/golden-superlatte
+2026-05-23 02:54:37,438 | clevr | timeout | https://clevrblends.com/products/strawberry-lemonade-supertea
+2026-05-23 02:55:19,245 | clevr | timeout | https://clevrblends.com/products/mango-green-supertea
+2026-05-23 02:55:59,921 | clevr | timeout | https://clevrblends.com/products/milk-frother-for-perfect-latte-prep
+2026-05-23 12:03:26,807 | iqbar | no price | https://www.eatiqbar.com/products/iqjoe-original-variety-40-sticks
+2026-05-23 12:03:35,501 | iqbar | no price | https://www.eatiqbar.com/products/iqjoe-original-variety-16-sticks
+2026-05-23 18:42:41,389 | mudwtr | product.json | 30-serving-mushroom-boost | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:42:45,505 | mudwtr | product.json | 90-serving-mushroom-boost | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:42:49,579 | mudwtr | product.json | mud-whip | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:42:52,564 | mudwtr | product.json | trends-w-benefits-newspaper | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:42:56,017 | mudwtr | product.json | mug-1 | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:00,510 | mudwtr | product.json | unisex-hoodie | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:03,760 | mudwtr | product.json | unisex-hoodie-1 | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:07,063 | mudwtr | product.json | mud-dad-hat | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:09,744 | mudwtr | product.json | sunrise-hat-2 | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:14,066 | mudwtr | product.json | rise-cacao-latte-kit | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:17,720 | mudwtr | product.json | black-glossy-mug | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:21,911 | mudwtr | product.json | unlearn-relearn-vintage-cotton-cap | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:24,696 | mudwtr | product.json | unisex-eco-raglan-hoodie | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:28,978 | mudwtr | product.json | mud-wtr-beanie | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:32,792 | mudwtr | product.json | organic-t-shirt | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:35,288 | mudwtr | product.json | ribbed-knit-beanie | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:38,549 | mudwtr | product.json | b2b-of-90-serving-creamer | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:41,832 | mudwtr | product.json | b2b-of-90-serving-rise | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:45,679 | mudwtr | product.json | b2b-of-90-serving-sweetener | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:49,386 | mudwtr | product.json | b2b-of-90-serving-mushroom-boost | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:53,113 | mudwtr | product.json | b2b-of-afternoon-ritual-starter-kit | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:43:57,285 | mudwtr | product.json | b2b-of-evening-ritual-starter-kit | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:01,822 | mudwtr | product.json | b2b-of-morning-ritual-starter-kit | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:04,533 | mudwtr | product.json | b2b-of-mud-whip | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:07,967 | mudwtr | product.json | short-sleeve-t-shirt | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:11,883 | mudwtr | product.json | leary-short-sleeve-t-shirt | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:14,891 | mudwtr | product.json | original-x-manukora-starter-kit | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:19,181 | mudwtr | product.json | hot-cacao-bag | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:44:21,801 | mudwtr | product.json | mud-shaker | Expecting value: line 1 column 1 (char 0)
+2026-05-23 18:45:08,505 | nootrum | product fetch capsules-3-months-1-free-copy \u2192 503
+2026-05-23 18:45:36,066 | nootrum | product fetch nootrum-chaga-truffles \u2192 503
+2026-05-23 18:49:36,160 | mudwtr | 403 | collection page 1
+2026-05-23 18:50:12,143 | mudwtr | 403 | coffee-30-serving.json
+2026-05-23 18:50:53,514 | mudwtr | 403 | coffee-90-serving.json
+2026-05-23 18:54:35,757 | mudwtr | HTTP 404 | coffee-90-serving.json
+2026-05-23 18:58:11,232 | mudwtr | HTTP 404 | coffee-90-serving.json
+2026-05-23 20:56:48,815 | everyday_dose | product fetch 30-servings-of-coffee-free-starter-kit-productivity-planner \u2192 503
+2026-05-23 20:57:15,941 | everyday_dose | product fetch mushroom-coffee-adhd \u2192 503
+2026-05-23 22:00:09,027 | laird | product fetch antioxidant-daily-reds -> 503
+2026-05-23 22:00:09,212 | laird | product fetch lairds-favorites-bundle -> 503
+2026-05-23 22:02:53,633 | laird | product fetch prebiotic-daily-greens -> 503
+2026-05-23 22:02:53,811 | laird | product fetch protein-creamer -> 503
+2026-05-23 22:02:53,987 | laird | product fetch protein-instant-latte -> 503
+2026-05-23 22:02:54,164 | laird | product fetch pumpkin-spice-instant-latte -> 503
+2026-05-23 22:02:54,345 | laird | product fetch pumpkin-spice-superfood-creamer -> 503
+2026-05-23 22:02:54,523 | laird | product fetch holiday-bundle -> 503
+2026-05-23 22:02:54,700 | laird | product fetch reduced-sugar-instant-latte-with-adaptogens -> 503
+2026-05-23 22:02:54,877 | laird | product fetch reduced-sugar-superfood-creamer -> 503
+2026-05-23 22:02:55,054 | laird | product fetch shawn-ryan-bundle -> 503
+2026-05-23 22:02:55,235 | laird | product fetch protein-bar-variety-pack-10pck -> 503
+2026-05-23 22:02:55,413 | laird | product fetch laird-superfood-creamer-sampler-pack -> 503
+2026-05-23 22:02:55,590 | laird | product fetch laird-superfood-creamer-sampler-4-pack -> 503
+2026-05-23 22:02:55,768 | laird | product fetch single-serve-sweet-and-creamy-instant-latte-with-adaptogens -> 503
+2026-05-23 22:02:55,948 | laird | product fetch sweet-creamy-protein-coffee -> 503
+2026-05-23 22:02:56,122 | laird | product fetch superfood-creamer-sweet-and-creamy -> 503
+2026-05-23 22:02:56,299 | laird | product fetch superfood-creamer-sweet-and-creamy-with-adaptogens -> 503
+2026-05-23 22:02:56,476 | laird | product fetch sweet-and-creamy-instant-latte-with-adaptogens -> 503
+2026-05-23 22:02:56,658 | laird | product fetch the-leveled-up-coffee-bundle -> 503
+2026-05-23 22:02:56,842 | laird | product fetch the-perfect-cup-bundle -> 503
+2026-05-23 22:02:57,021 | laird | product fetch superfood-creamer-turmeric -> 503
+2026-05-23 22:02:57,197 | laird | product fetch unsweetened-protein-coffee -> 503
+2026-05-23 22:02:57,375 | laird | product fetch vanilla-instant-latte -> 503
+2026-05-23 22:02:57,551 | laird | product fetch vanilla-protein-coffee -> 503
+2026-05-23 22:02:57,732 | laird | product fetch vanilla-superfood-creamer -> 503
+2026-05-24 21:37:34,094 | Clevr Blends | Fetch attempt 1 failed for https://www.amazon.com/dp/B0GKGRKNBV: Failed to scrape after 1 attempts: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.amazon.com/dp/B0GKGRKNBV", waiting until "domcontentloaded"
+
+2026-05-24 21:37:34,979 | Strong Coffee Company | Fetch attempt 1 failed for https://www.amazon.com/dp/B0BHXKRW7Y: Failed to scrape after 1 attempts: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.amazon.com/dp/B0BHXKRW7Y", waiting until "domcontentloaded"
+
+2026-05-24 23:44:32,364 | IQBAR | collection page=1 status=503
+2026-05-25 00:31:03,411 | Ryze | product copy-of-ryze-day-night-bundle-coffee-cocoa status=503
+2026-05-25 00:52:40,801 | Ryze | product ryze-bundle-add-on status=503
+2026-05-25 00:52:41,008 | Ryze | product superfood-creamer status=503
+2026-05-25 00:52:41,218 | Ryze | product ryze-mushroom-coffee status=503
+2026-05-25 00:54:29,268 | Ryze | product ube-latte-carton status=503

@@ -10,7 +10,11 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from constants import SCRIPT_DIR, TEST_START, PAYMENT_START, build_ab_user_revenue, load_mobile_payments
+from constants import (
+    SCRIPT_DIR, TEST_START, PAYMENT_START,
+    build_ab_user_revenue, load_mobile_payments,
+    user_table, successful_payments,
+)
 
 CHARTS_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "charts"))
 REPORT_PATH = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "report_ua.html"))
@@ -216,6 +220,95 @@ def compute_results(df):
     }
 
 
+def compute_aa_results(df):
+    """Compare pre-experiment cohort vs A/B control group.
+
+    Pre-cohort window: same number of days as A/B payment window, ending at TEST_START.
+    Users: registered in [pre_start, TEST_START). Payments: same window.
+    Control group CIs are taken from r (compute_results) to guarantee identity.
+    """
+    ab = build_ab_user_revenue(df)
+    ctrl = ab[ab["split_group"] == 0].copy()
+
+    # Determine A/B payment window duration
+    ab_pay = df[
+        df["id_user"].isin(set(ab["id_user"])) &
+        df["date_payment"].notna() &
+        (df["successful_payment"] == 1) &
+        (df["date_payment"] >= PAYMENT_START)
+    ]
+    max_pay_date = ab_pay["date_payment"].max().normalize()
+    n_days = int((max_pay_date - PAYMENT_START.normalize()).days) + 1
+
+    # Pre-cohort window: same duration, ending just before TEST_START
+    pre_end = TEST_START       # exclusive upper bound
+    pre_start = TEST_START - pd.Timedelta(days=n_days)
+
+    # Users registered in the pre-cohort window
+    ut = user_table(df)
+    pre_ids = set(ut[
+        (ut["date_reg"] >= pre_start) & (ut["date_reg"] < pre_end)
+    ]["id_user"])
+
+    # Payments within the same pre-cohort window
+    pay_pre = successful_payments(df, user_ids=pre_ids, payment_start=pre_start, payment_end=pre_end)
+    pre_df = pd.DataFrame({"id_user": list(pre_ids)})
+    pre_df["revenue"] = pre_df["id_user"].map(
+        pay_pre.groupby("id_user")["amount"].sum()
+    ).fillna(0.0)
+    pre_df["payment_count"] = pre_df["id_user"].map(
+        pay_pre.groupby("id_user").size()
+    ).fillna(0).astype(int)
+
+    n_pre = len(pre_df)
+    n_ctrl = len(ctrl)
+
+    # PPU — Mann-Whitney two-sided
+    _, p_ppu = stats.mannwhitneyu(
+        pre_df["payment_count"], ctrl["payment_count"], alternative="two-sided"
+    )
+    ci_ppu_pre = _bootstrap_ci(pre_df["payment_count"].values)
+
+    # ARPU (all users) — Mann-Whitney two-sided
+    _, p_arpu = stats.mannwhitneyu(
+        pre_df["revenue"], ctrl["revenue"], alternative="two-sided"
+    )
+    ci_arpu_pre = _bootstrap_ci(pre_df["revenue"].values)
+
+    # ARPPU (payers only) — Mann-Whitney two-sided
+    arppu_pre_vals = pre_df.loc[pre_df["revenue"] > 0, "revenue"].values
+    arppu_ctrl_vals = ctrl.loc[ctrl["revenue"] > 0, "revenue"].values
+    if len(arppu_pre_vals) >= 5 and len(arppu_ctrl_vals) >= 5:
+        _, p_arppu = stats.mannwhitneyu(arppu_pre_vals, arppu_ctrl_vals, alternative="two-sided")
+    else:
+        p_arppu = float("nan")
+    ci_arppu_pre = _bootstrap_ci(arppu_pre_vals) if len(arppu_pre_vals) > 0 else (0.0, 0.0)
+
+    # CR — chi-square
+    pay_pre_n = int((pre_df["revenue"] > 0).sum())
+    pay_ctrl_n = int((ctrl["revenue"] > 0).sum())
+    ct = np.array([[pay_pre_n, n_pre - pay_pre_n], [pay_ctrl_n, n_ctrl - pay_ctrl_n]])
+    _, p_cr, _, _ = stats.chi2_contingency(ct)
+
+    return {
+        "n_pre": n_pre, "n_ctrl": n_ctrl,
+        "n_days": n_days,
+        "pre_start": pre_start,
+        "ppu_pre": float(pre_df["payment_count"].mean()),
+        "ci_ppu_pre": ci_ppu_pre,
+        "p_ppu": p_ppu,
+        "arpu_pre": float(pre_df["revenue"].mean()),
+        "ci_arpu_pre": ci_arpu_pre,
+        "p_arpu": p_arpu,
+        "arppu_pre": float(arppu_pre_vals.mean()) if len(arppu_pre_vals) > 0 else 0.0,
+        "ci_arppu_pre": ci_arppu_pre,
+        "p_arppu": p_arppu,
+        "cr_pre": pay_pre_n / n_pre,
+        "pay_pre_n": pay_pre_n, "pay_ctrl_n": pay_ctrl_n,
+        "p_cr": p_cr,
+    }
+
+
 def _img_tag(fname, alt=""):
     path = os.path.join(CHARTS_DIR, fname)
     if not os.path.exists(path):
@@ -309,7 +402,7 @@ DIM_LABELS = {
 }
 
 
-def generate_html(r):
+def generate_html(r, aa):
     ppu_diff = r["ppu_t"] - r["ppu_c"]
     ppu_ci_low  = r["ci_ppu_t"][0] - r["ci_ppu_c"][1]
     ppu_ci_high = r["ci_ppu_t"][1] - r["ci_ppu_c"][0]
@@ -463,8 +556,72 @@ def generate_html(r):
   тому дисбаланс може частково зміщувати загальний результат.
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ 5. РЕЗУЛЬТАТИ МЕТРИК -->
-<h2>5. Результати ключових метрик</h2>
+<!-- ═══════════════════════════════════════════════════════ 5. A/A-ТЕСТ -->
+<h2>5. A/A-тест — відповідність когорти до початку тесту та контрольній групі</h2>
+<p>
+  A/A-тест порівнює <strong>когорту до 23 липня</strong> (мобільні користувачі, зареєстровані
+  з {aa['pre_start'].strftime('%d.%m.%Y')} до 22.07.2021 включно — {aa['n_days']} днів,
+  n={aa['n_pre']:,}; платежі враховуються в той самий {aa['n_days']}-денний період)
+  із <strong>контрольною групою</strong> A/B-тесту (зареєстровані 23 липня або пізніше,
+  split_group=0, n={r['n_c']:,}; платежі з 24 липня). Обидві групи бачили оригінальний
+  екран оплати. Суттєва різниця між групами може свідчити про сезонні ефекти або зміни
+  у складі аудиторії, що ускладнюють інтерпретацію A/B-результатів.
+</p>
+<table>
+  <tr>
+    <th>Метрика</th><th>Pre-Test</th><th>Control</th><th>Різниця</th><th>Результат</th>
+  </tr>
+  <tr style="background:#fff8e1">
+    <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
+        <small>Загальна кількість успішних платежів ÷ усі користувачі.
+        Враховує і конверсію, і повторні покупки</small></td>
+    <td>{aa['ppu_pre']:.4f}<br><small>({aa['ci_ppu_pre'][0]:.4f} — {aa['ci_ppu_pre'][1]:.4f})</small></td>
+    <td>{r['ppu_c']:.4f}<br><small>({r['ci_ppu_c'][0]:.4f} — {r['ci_ppu_c'][1]:.4f})</small></td>
+    <td>{r['ppu_c'] - aa['ppu_pre']:+.4f}<br><small>({(r['ppu_c'] / aa['ppu_pre'] - 1) * 100 if aa['ppu_pre'] else 0:+.1f}%)</small></td>
+    <td>{_badge(aa['p_ppu'])}</td>
+  </tr>
+  <tr>
+    <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
+        <small>Середній чек серед користувачів, які платили</small></td>
+    <td>${aa['arppu_pre']:,.2f}<br><small>({aa['ci_arppu_pre'][0]:,.2f} — {aa['ci_arppu_pre'][1]:,.2f})</small></td>
+    <td>${r['arpp_c']:,.2f}<br><small>({r['ci_arpp_c'][0]:,.2f} — {r['ci_arpp_c'][1]:,.2f})</small></td>
+    <td>{(r['arpp_c'] / aa['arppu_pre'] - 1) * 100 if aa['arppu_pre'] else 0:+.1f}%</td>
+    <td>{_badge(aa['p_arppu'])}</td>
+  </tr>
+  <tr>
+    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
+    <td>${aa['arpu_pre']:,.2f}<br><small>({aa['ci_arpu_pre'][0]:.2f} — {aa['ci_arpu_pre'][1]:.2f})</small></td>
+    <td>${r['rpu_c']:,.2f}<br><small>({r['ci_rpu_c'][0]:.2f} — {r['ci_rpu_c'][1]:.2f})</small></td>
+    <td>{(r['rpu_c'] / aa['arpu_pre'] - 1) * 100 if aa['arpu_pre'] else 0:+.1f}%</td>
+    <td>{_badge(aa['p_arpu'])}</td>
+  </tr>
+  <tr>
+    <td><strong>Conversion Rate</strong><br>
+        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
+    <td>{aa['cr_pre']:.2%}<br><small>({aa['pay_pre_n']:,} / {aa['n_pre']:,})</small></td>
+    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
+    <td>{(r['cr_c'] - aa['cr_pre']) * 100:+.2f} pp</td>
+    <td>{_badge(aa['p_cr'])}</td>
+  </tr>
+</table>
+<div class="info">
+  <strong>Що показує цей A/A-тест:</strong>
+  Контрольна група конвертується краще за передтестову когорту —
+  Conversion Rate {r['cr_c']:.2%} (Control) проти {aa['cr_pre']:.2%} (Pre-Test),
+  {(r['cr_c'] - aa['cr_pre']) * 100:+.2f} pp, p={aa['p_cr']:.3f}.
+  Саме ця різниця у конверсії і пояснює підвищені PPU та ARPU в контрольній групі:
+  більше користувачів платить → більше платежів на юзера (PPU {r['ppu_c']:.4f} проти {aa['ppu_pre']:.4f})
+  і вищий середній дохід на користувача (ARPU ${r['rpu_c']:.2f} проти ${aa['arpu_pre']:.2f}).
+  При цьому середній чек серед тих, хто платить (ARPPU), змінився незначно
+  (${r['arpp_c']:.2f} проти ${aa['arppu_pre']:.2f}, {(r['arpp_c'] / aa['arppu_pre'] - 1) * 100 if aa['arppu_pre'] else 0:+.1f}%) —
+  платять ті самі за типом користувачі, просто їх більше в контрольній групі.
+  Це пояснюється сезонним ефектом: нові реєстрації у липні конвертуються
+  активніше, ніж у червні.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 6. РЕЗУЛЬТАТИ МЕТРИК -->
+<h2>6. Результати ключових метрик</h2>
 <table>
   <tr>
     <th>Метрика</th><th>Control</th><th>Test</th><th>Різниця</th><th>Результат</th>
@@ -531,8 +688,8 @@ def generate_html(r):
   </p>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ 6. АНОМАЛІЯ -->
-<h2>6. Аномалія Payment Success Rate</h2>
+<!-- ═══════════════════════════════════════════════════════ 7. АНОМАЛІЯ -->
+<h2>7. Аномалія Payment Success Rate</h2>
 <div class="warn" style="border-color:#c62828;background:#ffebee">
   <strong>Payment success rate суттєво відрізняється між групами.</strong>
   Payment success rate — технічна метрика: вона вимірює, чи завершується транзакція після того,
@@ -587,8 +744,8 @@ def generate_html(r):
   <strong>Country group 4 необхідно розслідувати до будь-якого рішення про запуск.</strong>
 </p>
 
-<!-- ═══════════════════════════════════════════════════════ 7. СЕГМЕНТНИЙ АНАЛІЗ -->
-<h2>7. Сегментний аналіз</h2>
+<!-- ═══════════════════════════════════════════════════════ 8. СЕГМЕНТНИЙ АНАЛІЗ -->
+<h2>8. Сегментний аналіз</h2>
 <p>
   PPU (payments per user) по кожному виміру — ті самі виміри, що перевірялись у sanity checks.
   Значення показують середню кількість платежів на одного користувача в сегменті; у дужках — розмір вибірки.
@@ -611,23 +768,23 @@ def generate_html(r):
   Розглядайте їх як джерело гіпотез для майбутніх цільових експериментів.
 </small></p>
 
-<!-- ═══════════════════════════════════════════════════════ 8. СТАБІЛЬНІСТЬ У ЧАСІ -->
-<h2>8. Стабільність у часі</h2>
+<!-- ═══════════════════════════════════════════════════════ 9. СТАБІЛЬНІСТЬ У ЧАСІ -->
+<h2>9. Стабільність у часі</h2>
 
 <div class="chart">
   {_img_tag("02_daily_trend.png", "Daily Trend")}
 </div>
 <p>
-  Control-група відносно стабільна протягом усього периоду спостереження.
+  Control-група відносно стабільна протягом усього періоду спостереження.
   Test-група демонструє <strong>зростаючий тренд</strong> — виручка та кількість
   платежів поступово збільшуються від початку до кінця експерименту.
   Це може свідчити про те, що тест-варіант ще не вийшов на плато, і його реальний
   потенціал може бути вищим, ніж показують поточні агреговані цифри. Для підтвердження
-  необхідно більше даних і триваліший период спостереження.
+  необхідно більше даних і триваліший період спостереження.
 </p>
 
-<!-- ═══════════════════════════════════════════════════════ 9. WHALE-АНАЛІЗ -->
-<h2>9. Аналіз whale-сегменту</h2>
+<!-- ═══════════════════════════════════════════════════════ 10. WHALE-АНАЛІЗ -->
+<h2>10. Аналіз whale-сегменту</h2>
 <p>
   Whale-користувачі — топ-платники, сукупні витрати яких становлять 75% загальної виручки.
   Whale-поріг для цього експерименту:
@@ -695,8 +852,8 @@ def generate_html(r):
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ 10. РИЗИКИ -->
-<h2>10. Ризики та застереження</h2>
+<!-- ═══════════════════════════════════════════════════════ 11. РИЗИКИ -->
+<h2>11. Ризики та застереження</h2>
 <ul>
   <li><strong>Потужність revenue-метрик:</strong> Через екстремальну дисперсію сум платежів
     (whale-модель) для надійного виявлення 10% зміни RPU знадобляться сотні тисяч користувачів.
@@ -716,8 +873,8 @@ def generate_html(r):
     Вплив на інші платформи невідомий.</li>
 </ul>
 
-<!-- ═══════════════════════════════════════════════════════ 11. РЕКОМЕНДАЦІЯ -->
-<h2>11. Фінальна рекомендація</h2>
+<!-- ═══════════════════════════════════════════════════════ 12. РЕКОМЕНДАЦІЯ -->
+<h2>12. Фінальна рекомендація</h2>
 <div class="verdict">
   <h3>НЕ ЗАПУСКАТИ — перезапустити після виправлення багу</h3>
   <p>
@@ -759,8 +916,9 @@ def main():
     df = load_mobile_payments()
     print("Computing results...")
     r = compute_results(df)
+    aa = compute_aa_results(df)
     print("Rendering HTML...")
-    html = generate_html(r)
+    html = generate_html(r, aa)
     with open(REPORT_PATH, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"Report saved: {REPORT_PATH}")
