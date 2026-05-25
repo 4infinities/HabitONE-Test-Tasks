@@ -1,0 +1,29 @@
+product_id;brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+1;Ryze;Mushroom Hot Cocoa (20 servings);instant;;20;;45;0;2.25;reishi;own_site;https://www.ryzesuperfoods.com/products/mushroom-hot-cocoa;25.05.2026;single
+1;Ryze;Mushroom Hot Cocoa (20 servings);instant;;20;;36;20;1.8;reishi;own_site;https://www.ryzesuperfoods.com/products/mushroom-hot-cocoa;25.05.2026;subscription
+1;Ryze;Mushroom Hot Cocoa (20 servings);instant;;20;222.5;44.99;0;2.2495;reishi;amazon;https://www.amazon.com/dp/B0DFRX59R2;25.05.2026;single
+1;Ryze;Mushroom Hot Cocoa (20 servings);instant;;20;222.5;40.49;10;2.0245;reishi;amazon;https://www.amazon.com/dp/B0DFRX59R2;25.05.2026;subscription
+2;Ryze;Mushroom Coffee (30 Servings);instant;;30;;45;0;1.5;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee;25.05.2026;single
+2;Ryze;Mushroom Coffee (30 Servings);instant;;30;;36;20;1.2;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee;25.05.2026;subscription
+2;Ryze;Mushroom Coffee (30 Servings);instant;;30;178.6;44.99;0;1.4997;mushroom blend;amazon;https://www.amazon.com/dp/B0FSGHP1FC;25.05.2026;single
+2;Ryze;Mushroom Coffee (30 Servings);instant;;30;178.6;40.49;10;1.3497;mushroom blend;amazon;https://www.amazon.com/dp/B0FSGHP1FC;25.05.2026;subscription
+3;Ryze;Mushroom Coffee Dark Roast Starter Kit (60 servings);bundle;;60;;80;0;1.33;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings;25.05.2026;single
+3;Ryze;Mushroom Coffee Dark Roast Starter Kit (60 servings);bundle;;60;;66;17.5;1.1;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings;25.05.2026;subscription
+3;Ryze;Mushroom Coffee Dark Roast Starter Kit (60 servings);bundle;;60;360;74.99;0;1.2498;mushroom blend;amazon;https://www.amazon.com/dp/B0FWVWZFW1;25.05.2026;single
+3;Ryze;Mushroom Coffee Dark Roast Starter Kit (60 servings);bundle;;60;360;67.49;10;1.1248;mushroom blend;amazon;https://www.amazon.com/dp/B0FWVWZFW1;25.05.2026;subscription
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;instant;;30;;45;0;1.5;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-30-servings;25.05.2026;single
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;instant;;30;;36;20;1.2;mushroom;own_site;https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-30-servings;25.05.2026;subscription
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;instant;;30;178.6;44.99;0;1.4997;mushroom blend;amazon;https://www.amazon.com/dp/B0FRVXJTW2;25.05.2026;single
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;instant;;30;178.6;40.49;10;1.3497;mushroom blend;amazon;https://www.amazon.com/dp/B0FRVXJTW2;25.05.2026;subscription
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;bundle;;30;389.8;89.98;0;2.9993;mushroom blend;amazon;https://www.amazon.com/dp/B0G8TGQSTC;25.05.2026;single
+4;Ryze;Mushroom Coffee Dark Roast: 30 Servings;bundle;;30;389.8;80.98;10;2.6993;mushroom blend;amazon;https://www.amazon.com/dp/B0G8TGQSTC;25.05.2026;subscription
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;;;72;0;;mushroom;own_site;https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer-1;25.05.2026;single
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;;;60;16.67;;mushroom;own_site;https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer-1;25.05.2026;subscription
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;30;389.8;64.99;0;2.1663;mushroom blend;amazon;https://www.amazon.com/dp/B0FWZZTTNB;25.05.2026;single
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;30;389.8;58.49;10;1.9497;mushroom blend;amazon;https://www.amazon.com/dp/B0FWZZTTNB;25.05.2026;subscription
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;20;389.8;74.98;0;3.749;mushroom blend;amazon;https://www.amazon.com/dp/B0G8WTWB7N;25.05.2026;single
+5;Ryze;RYZE n Shine Bundle: Coffee + Creamer;bundle;;20;389.8;74.98;0;3.749;mushroom blend;amazon;https://www.amazon.com/dp/B0G8WTWB7N;25.05.2026;subscription
+6;Ryze;Probiotic Creamer (30 Servings);creamer;;30;;30;0;1;mushroom;own_site;https://www.ryzesuperfoods.com/products/superfood-creamer;25.05.2026;single
+6;Ryze;Probiotic Creamer (30 Servings);creamer;;30;;25;16.67;0.83;mushroom;own_site;https://www.ryzesuperfoods.com/products/superfood-creamer;25.05.2026;subscription
+6;Ryze;Probiotic Creamer (30 Servings);creamer;;30;222.5;34.99;0;1.1663;reishi;amazon;https://www.amazon.com/dp/B0DFRL7P77;25.05.2026;single
+6;Ryze;Probiotic Creamer (30 Servings);creamer;;30;222.5;34.99;0;1.1663;reishi;amazon;https://www.amazon.com/dp/B0DFRL7P77;25.05.2026;subscription

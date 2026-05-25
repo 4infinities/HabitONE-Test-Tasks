@@ -1,85 +1,49 @@
 brand,product_name,format,serving_size_g,serving_count,volume_g,price_usd,discount_pct,serving_price,key_ingredient,channel,url,date_collected,purchase_type
-Ryze,Ultimate Ritual Set Dark Roast,bundle,,,,130.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ritual-set-dark-roast,2026-05-25,single
-Ryze,Ultimate Ritual Set Dark Roast,bundle,,,,66.0,49.23,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ritual-set-dark-roast,2026-05-25,subscription
-Ryze,Ube Vanilla Coffee Latte Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ube-latte-carton,2026-05-25,single
-Ryze,Ultimate RYZE Vanilla Latte Bundle (Vanilla Creamer + Coffee),bundle,,,,60.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ryze-vanilla-latte-bundle,2026-05-25,single
-Ryze,Ultimate RYZE Vanilla Latte Bundle (Vanilla Creamer + Coffee),bundle,,,,48.0,20.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ryze-vanilla-latte-bundle,2026-05-25,subscription
-Ryze,Mushroom Coffee Starter Kit 60 Servings,bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit,2026-05-25,single
-Ryze,Mushroom Coffee Starter Kit 60 Servings,bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit,2026-05-25,subscription
-Ryze,Mushroom Coffee Starter Kit 60 Serving,bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/starter-kit,2026-05-25,single
-Ryze,Mushroom Coffee Starter Kit 60 Serving,bundle,,60,,70.0,12.5,1.17,mushroom,own_site,https://www.ryzesuperfoods.com/products/starter-kit,2026-05-25,subscription
-Ryze,Ultimate Ritual Set,bundle,,,,130.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ritual-set,2026-05-25,single
-Ryze,Ultimate Ritual Set,bundle,,,,66.0,49.23,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ritual-set,2026-05-25,subscription
-Ryze,Ritual Set,bundle,,,,115.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-ritual-set,2026-05-25,single
-Ryze,Ritual Set,bundle,,,,84.0,26.96,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-ritual-set,2026-05-25,subscription
-Ryze,RYZE Essentials Kit,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-essentials-kit,2026-05-25,single
-Ryze,RYZE Essentials Kit,bundle,,,,70.0,12.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-essentials-kit,2026-05-25,subscription
-Ryze,Mushroom Coffee Bright Blend 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-30-servings,2026-05-25,single
-Ryze,Mushroom Coffee Bright Blend 30 Servings,instant,,30,,38.0,15.55,1.27,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-30-servings,2026-05-25,subscription
-Ryze,Mushroom Coffee House Blend Ritual Set,bundle,,,,100.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-house-blend-ritual-set,2026-05-25,single
-Ryze,Mushroom Coffee House Blend Ritual Set,bundle,,,,66.0,34.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-house-blend-ritual-set,2026-05-25,subscription
-Ryze,RYZE Ritual Kit,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-kit,2026-05-25,single
-Ryze,RYZE Ritual Kit,bundle,,,,70.0,12.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-kit,2026-05-25,subscription
-Ryze,Mushroom Coffee House Blend 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-house-blend-30-servings,2026-05-25,single
-Ryze,Mushroom Coffee House Blend 30 Servings,instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-house-blend-30-servings,2026-05-25,subscription
-Ryze,Dark Roast Mushroom Coffee Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/dark-roast-mushroom-coffee-carton,2026-05-25,single
-Ryze,Medium Roast Mushroom Coffee Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/medium-roast-mushroom-coffee-carton,2026-05-25,single
-Ryze,Caramel Coffee Latte Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/caramel-coffee-latte,2026-05-25,single
-Ryze,Mocha Coffee Latte Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mocha-coffee-latte,2026-05-25,single
-Ryze,Vanilla Coffee Latte Carton,rtd,,,,9.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/vanilla-coffee-latte,2026-05-25,single
-Ryze,Dark Roast Instant Coffee Bag,instant,,,,17.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/dark-roast-instant-coffee,2026-05-25,single
-Ryze,Medium Roast Instant Coffee Bag,instant,,,,17.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/medium-roast-instant-coffee,2026-05-25,single
-Ryze,Mushroom Coffee Ritual Set,bundle,,,,100.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-ritual-set-dr,2026-05-25,single
-Ryze,Mushroom Coffee Ritual Set,bundle,,,,84.0,16.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-ritual-set-dr,2026-05-25,subscription
-Ryze,RYZE Complete Kit,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-complete-kit,2026-05-25,single
-Ryze,RYZE Complete Kit,bundle,,,,70.0,12.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-complete-kit,2026-05-25,subscription
-Ryze,Mushroom Coffee 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-30-servings-dr,2026-05-25,single
-Ryze,Mushroom Coffee 30 Servings,instant,,30,,38.0,15.55,1.27,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-30-servings-dr,2026-05-25,subscription
-Ryze,RYZE Ritual Set + Creamer,bundle,,,,100.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-creamer,2026-05-25,single
-Ryze,RYZE Ritual Set + Creamer,bundle,,,,84.0,16.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-creamer,2026-05-25,subscription
-Ryze,RYZE Ritual Set Dark Roast + Creamer,bundle,,,,100.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-dark-roast-creamer,2026-05-25,single
-Ryze,RYZE Ritual Set Dark Roast + Creamer,bundle,,,,84.0,16.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-dark-roast-creamer,2026-05-25,subscription
-Ryze,RYZE Lovers Gift Set: 2 Coffees + 2 Creamers,bundle,,,,105.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-lovers-gift-set-2-coffees-2-creamers,2026-05-25,single
-Ryze,RYZE Lovers Gift Set: 2 Coffees + 2 Creamers,bundle,,,,94.5,10.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-lovers-gift-set-2-coffees-2-creamers,2026-05-25,subscription
-Ryze,Mushroom Coffee: 90 Servings,instant,,90,,115.0,0,1.28,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-90-servings-1,2026-05-25,single
-Ryze,Coffee Duo: Dark + Medium Roast,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/coffee-duo-dark-medium-roast-1,2026-05-25,single
-Ryze,Coffee Duo: Dark + Medium Roast,bundle,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/coffee-duo-dark-medium-roast-1,2026-05-25,subscription
+Ryze,Mushroom Hot Cocoa (20 servings),instant,,20,,45.0,0,2.25,reishi,own_site,https://www.ryzesuperfoods.com/products/mushroom-hot-cocoa,2026-05-25,single
+Ryze,Mushroom Hot Cocoa (20 servings),instant,,20,,36.0,20.0,1.8,reishi,own_site,https://www.ryzesuperfoods.com/products/mushroom-hot-cocoa,2026-05-25,subscription
+Ryze,Day + Night Bundle (Coffee + Cocoa),bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/day-night-bundle-coffee-cocoa,2026-05-25,single
+Ryze,Day + Night Bundle (Coffee + Cocoa),bundle,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/day-night-bundle-coffee-cocoa,2026-05-25,subscription
+Ryze,RYZE Ritual Set (Cocoa + Coffee),bundle,,,,115.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-cocoa-coffee,2026-05-25,single
+Ryze,RYZE Ritual Set (Cocoa + Coffee),bundle,,,,66.0,42.61,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-cocoa-coffee,2026-05-25,subscription
+Ryze,RYZE & Rest (Dark Roast + Cocoa),instant,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-rest-dark-roast-cocoa,2026-05-25,single
+Ryze,RYZE & Rest (Dark Roast + Cocoa),instant,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-rest-dark-roast-cocoa,2026-05-25,subscription
+Ryze,Chocolate Indulgence Bundle,bundle,,,,64.28,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/chocolate-indulgence-bundle,2026-05-25,single
+Ryze,Ultimate Indulgence Bundle,bundle,,,,85.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-indulgence-bundle,2026-05-25,single
+Ryze,Mushroom Cocoa (60 Servings),instant,,60,,115.0,0,1.92,reishi,own_site,https://www.ryzesuperfoods.com/products/mushroom-cocoa-60-servings,2026-05-25,single
+Ryze,Mushroom Cocoa (60 Servings),instant,,60,,78.0,32.17,1.3,reishi,own_site,https://www.ryzesuperfoods.com/products/mushroom-cocoa-60-servings,2026-05-25,subscription
+Ryze,Mushroom Coffee (30 Servings),instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee,2026-05-25,single
+Ryze,Mushroom Coffee (30 Servings),instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee,2026-05-25,subscription
+Ryze,Mushroom Coffee Starter Kit (60 servings),bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/double-ryze-mushroom-coffee,2026-05-25,single
+Ryze,Mushroom Coffee Starter Kit (60 servings),bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/double-ryze-mushroom-coffee,2026-05-25,subscription
+Ryze,Mushroom Coffee Dark Roast Starter Kit (60 servings),bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings,2026-05-25,single
+Ryze,Mushroom Coffee Dark Roast Starter Kit (60 servings),bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings,2026-05-25,subscription
+Ryze,Mushroom Coffee (90 Servings),instant,,90,,115.0,0,1.28,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-90-servings,2026-05-25,single
+Ryze,Mushroom Coffee (90 Servings),instant,,90,,90.0,21.74,1.0,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-90-servings,2026-05-25,subscription
 Ryze,Mushroom Coffee Dark Roast: 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-30-servings,2026-05-25,single
 Ryze,Mushroom Coffee Dark Roast: 30 Servings,instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-30-servings,2026-05-25,subscription
-Ryze,Mushroom Coffee Dark Roast Starter Kit: 60 Servings,bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings-1,2026-05-25,single
-Ryze,Mushroom Coffee Dark Roast Starter Kit: 60 Servings,bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings-1,2026-05-25,subscription
 Ryze,RYZE n Shine Bundle: Coffee + Creamer,bundle,,,,72.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer-1,2026-05-25,single
 Ryze,RYZE n Shine Bundle: Coffee + Creamer,bundle,,,,60.0,16.67,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer-1,2026-05-25,subscription
-Ryze,Mushroom Coffee: 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-30-servings-1,2026-05-25,single
-Ryze,Mushroom Coffee: 30 Servings,instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-30-servings-1,2026-05-25,subscription
-Ryze,Mushroom Coffee Starter Kit: 60 Servings,bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/starter-kit-60-servings,2026-05-25,single
-Ryze,Mushroom Coffee Starter Kit: 60 Servings,bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/starter-kit-60-servings,2026-05-25,subscription
-Ryze,RYZE Ritual Set Original Blend,bundle,,,,100.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-original-blend,2026-05-25,single
-Ryze,RYZE Ritual Set Original Blend,bundle,,,,80.0,20.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-original-blend,2026-05-25,subscription
-Ryze,Mushroom Coffee Starter Kit Original Blend,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit-original-blend,2026-05-25,single
-Ryze,Mushroom Coffee Starter Kit Original Blend,bundle,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit-original-blend,2026-05-25,subscription
 Ryze,Mushroom Coffee Original Blend,instant,,,,45.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-original-blend,2026-05-25,single
 Ryze,Mushroom Coffee Original Blend,instant,,,,36.0,20.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-original-blend,2026-05-25,subscription
 Ryze,Coffee Duo (Dark + Medium Roast),bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/coffee-duo-dark-medium-roast,2026-05-25,single
 Ryze,Coffee Duo (Dark + Medium Roast),bundle,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/coffee-duo-dark-medium-roast,2026-05-25,subscription
-Ryze,Mushroom Coffee Dark Roast (30 Servings),instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/dark-roast,2026-05-25,single
-Ryze,Mushroom Coffee Dark Roast (30 Servings),instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/dark-roast,2026-05-25,subscription
-Ryze,RYZE Ritual Set Dark Roast,bundle,,,,115.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-dark-roast,2026-05-25,single
-Ryze,RYZE Ritual Set Dark Roast,bundle,,,,66.0,42.61,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set-dark-roast,2026-05-25,subscription
-Ryze,Mushroom Coffee Dark Roast Starter Kit (60 servings),bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings,2026-05-25,single
-Ryze,Mushroom Coffee Dark Roast Starter Kit (60 servings),bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-dark-roast-starter-kit-60-servings,2026-05-25,subscription
-Ryze,RYZE Ritual Set,bundle,,,,115.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set,2026-05-25,single
-Ryze,RYZE Ritual Set,bundle,,,,66.0,42.61,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-ritual-set,2026-05-25,subscription
-Ryze,Mushroom Coffee Starter Kit (60 servings),bundle,,60,,80.0,0,1.33,mushroom,own_site,https://www.ryzesuperfoods.com/products/double-ryze-mushroom-coffee,2026-05-25,single
-Ryze,Mushroom Coffee Starter Kit (60 servings),bundle,,60,,66.0,17.5,1.1,mushroom,own_site,https://www.ryzesuperfoods.com/products/double-ryze-mushroom-coffee,2026-05-25,subscription
-Ryze,Mushroom Coffee (30 Servings),instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee,2026-05-25,single
-Ryze,Mushroom Coffee (30 Servings),instant,,30,,36.0,20.0,1.2,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee,2026-05-25,subscription
-Ryze,RYZE n Shine Bundle (Coffee + Creamer),bundle,,,,72.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer,2026-05-25,single
-Ryze,RYZE n Shine Bundle (Coffee + Creamer),bundle,,,,60.0,16.67,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-n-shine-bundle-coffee-creamer,2026-05-25,subscription
-Ryze,Mushroom Coffee (90 Servings),instant,,90,,115.0,0,1.28,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-90-servings,2026-05-25,single
-Ryze,Mushroom Coffee (90 Servings),instant,,90,,90.0,21.74,1.0,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-90-servings,2026-05-25,subscription
-Ryze,RYZE Bundle (2 Coffee + 1 Creamer),bundle,,,,76.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-bundle-2-coffee-1-creamer,2026-05-25,single
-Ryze,RYZE Bundle (2 Coffee + 2 Creamer),bundle,,,,94.5,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-bundle-2-coffee-2-creamer,2026-05-25,single
 Ryze,RYZE Lovers Gift Set (2 Coffees + 2 Creamers),bundle,,,,105.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-power-bundle-2-coffee-2-creamer,2026-05-25,single
 Ryze,RYZE Lovers Gift Set (2 Coffees + 2 Creamers),bundle,,,,94.5,10.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-power-bundle-2-coffee-2-creamer,2026-05-25,subscription
-Ryze,RYZE Starter Gift Set (2 Coffees + 1 Creamer),bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-gift-bundle-2-coffee-1-creamer,2026-05-25,single
+Ryze,Mushroom Coffee Starter Kit Original Blend,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit-original-blend,2026-05-25,single
+Ryze,Mushroom Coffee Starter Kit Original Blend,bundle,,,,66.0,17.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-starter-kit-original-blend,2026-05-25,subscription
+Ryze,RYZE Gift Set,bundle,,,,60.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-gift-set,2026-05-25,single
+Ryze,RYZE Bundle (2 Coffee + 1 Creamer),bundle,,,,76.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-bundle-2-coffee-1-creamer,2026-05-25,single
+Ryze,RYZE Bundle (2 Coffee + 2 Creamer),bundle,,,,94.5,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-bundle-2-coffee-2-creamer,2026-05-25,single
+Ryze,RYZE Essentials Kit,bundle,,,,80.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-essentials-kit,2026-05-25,single
+Ryze,RYZE Essentials Kit,bundle,,,,70.0,12.5,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ryze-essentials-kit,2026-05-25,subscription
+Ryze,Ultimate RYZE Vanilla Latte Bundle (Vanilla Creamer + Coffee),bundle,,,,60.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ryze-vanilla-latte-bundle,2026-05-25,single
+Ryze,Ultimate RYZE Vanilla Latte Bundle (Vanilla Creamer + Coffee),bundle,,,,48.0,20.0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/ultimate-ryze-vanilla-latte-bundle,2026-05-25,subscription
+Ryze,Mushroom Coffee Bright Blend 30 Servings,instant,,30,,45.0,0,1.5,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-30-servings,2026-05-25,single
+Ryze,Mushroom Coffee Bright Blend 30 Servings,instant,,30,,38.0,15.55,1.27,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coffee-bright-blend-30-servings,2026-05-25,subscription
+Ryze,Probiotic Creamer (30 Servings),creamer,,30,,30.0,0,1.0,mushroom,own_site,https://www.ryzesuperfoods.com/products/superfood-creamer,2026-05-25,single
+Ryze,Probiotic Creamer (30 Servings),creamer,,30,,25.0,16.67,0.83,mushroom,own_site,https://www.ryzesuperfoods.com/products/superfood-creamer,2026-05-25,subscription
+Ryze,Probiotic Creamer (90 Servings),creamer,,90,,81.0,0,0.9,mushroom,own_site,https://www.ryzesuperfoods.com/products/mushroom-coconut-creamer-3-pack,2026-05-25,single
+Ryze,Superfood Creamer (30 Servings),creamer,,30,,30.0,0,1.0,mushroom,own_site,https://www.ryzesuperfoods.com/products/superfood-creamer-30-servings,2026-05-25,single
+Ryze,Superfood Creamer (30 Servings),creamer,,30,,25.0,16.67,0.83,mushroom,own_site,https://www.ryzesuperfoods.com/products/superfood-creamer-30-servings,2026-05-25,subscription
+Ryze,Vanilla Creamer 3-Pack,creamer,,,,35.0,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/vanilla-creamer-3-pack,2026-05-25,single
+Ryze,Vanilla Creamer 3-Pack,creamer,,,,30.0,14.29,,mushroom,own_site,https://www.ryzesuperfoods.com/products/vanilla-creamer-3-pack,2026-05-25,subscription

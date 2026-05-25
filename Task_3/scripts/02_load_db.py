@@ -1,19 +1,30 @@
 #!/usr/bin/env python3
 """
-02_load_db.py — Loads all CSVs from data/raw/ into db/competitors.db.
+02_load_db.py — Loads processed CSVs into db/competitors.db.
+
+Reads from:
+  data/processed/all_brands_ids.csv   (auto-matched rows)
+  data/processed/unmatched_review.csv (manually reviewed + auto-filled rows)
+
+Both files carry brand_id and product_id already assigned by
+05_assign_ids.py + 06_fill_unmatched_ids.py — these are used directly.
 
 Safe to re-run — drops and recreates all tables each time.
-amazon_manual.csv uses the same CSV schema and is loaded alongside brand CSVs.
 """
 
 import csv
 import sqlite3
 from pathlib import Path
 
-ROOT = Path(__file__).parent.parent
-RAW_DIR = ROOT / "data" / "raw"
-DB_PATH = ROOT / "db" / "competitors.db"
+ROOT          = Path(__file__).parent.parent
+PROCESSED_DIR = ROOT / "data" / "processed"
+DB_PATH       = ROOT / "db" / "competitors.db"
 DB_PATH.parent.mkdir(exist_ok=True)
+
+SOURCES = [
+    PROCESSED_DIR / "all_brands_ids.csv",
+    PROCESSED_DIR / "unmatched_review.csv",
+]
 
 SCHEMA = """
 CREATE TABLE brands (
@@ -40,6 +51,8 @@ CREATE TABLE prices (
     volume_g       REAL,
     price_usd      REAL NOT NULL,
     discount_pct   REAL DEFAULT 0,
+    serving_price  REAL,
+    purchase_type  TEXT,
     channel        TEXT NOT NULL,
     date_collected TEXT NOT NULL,
     source_url     TEXT
@@ -47,116 +60,151 @@ CREATE TABLE prices (
 """
 
 BRAND_META: dict[str, dict] = {
-    "HabitONE":          {"website": "habitone.co",              "is_habitone": 1},
-    "Four Sigmatic":     {"website": "foursigmatic.com",         "is_habitone": 0},
-    "Ryze":              {"website": "ryzesuperfoods.com",        "is_habitone": 0},
-    "MudWtr":            {"website": "mudwtr.com",               "is_habitone": 0},
-    "Everyday Dose":     {"website": "everydaydose.com",         "is_habitone": 0},
-    "Shroomi":           {"website": "drinkshroomi.com",         "is_habitone": 0},
-    "Rasa":              {"website": "rasacoffee.com",           "is_habitone": 0},
-    "Om Mushrooms":      {"website": "ommushrooms.com",          "is_habitone": 0},
-    "BodyBrain Coffee":  {"website": "bodybraincoffee.com",      "is_habitone": 0},
-    "IQJOE":             {"website": "eatiqbar.com",             "is_habitone": 0},
-    "Clevr Blends":      {"website": "clevrblends.com",          "is_habitone": 0},
-    "Strong Coffee Co.": {"website": "strongcoffeecompany.com",  "is_habitone": 0},
-    "La Republica":      {"website": "larepublicacoffee.com",    "is_habitone": 0},
-    "Renude":            {"website": "drinkrenude.com",          "is_habitone": 0},
-    "North Spore":       {"website": "northspore.com",           "is_habitone": 0},
-    "Nootrum":           {"website": "nootrum.com",              "is_habitone": 0},
-    "Pella Nutrition":   {"website": "mypellanutrition.com",     "is_habitone": 0},
+    "HabitONE":          {"website": "habitone.co",             "is_habitone": 1},
+    "Four Sigmatic":     {"website": "foursigmatic.com",        "is_habitone": 0},
+    "Ryze":              {"website": "ryzesuperfoods.com",      "is_habitone": 0},
+    "MudWtr":            {"website": "mudwtr.com",              "is_habitone": 0},
+    "Everyday Dose":     {"website": "everydaydose.com",        "is_habitone": 0},
+    "Shroomi":           {"website": "drinkshroomi.com",        "is_habitone": 0},
+    "Rasa":              {"website": "rasacoffee.com",          "is_habitone": 0},
+    "Om Mushrooms":      {"website": "ommushrooms.com",         "is_habitone": 0},
+    "BodyBrain Coffee":  {"website": "bodybraincoffee.com",     "is_habitone": 0},
+    "IQJOE":             {"website": "eatiqbar.com",            "is_habitone": 0},
+    "Clevr Blends":      {"website": "clevrblends.com",         "is_habitone": 0},
+    "Strong Coffee Co.": {"website": "strongcoffeecompany.com", "is_habitone": 0},
+    "La Republica":      {"website": "larepublicacoffee.com",   "is_habitone": 0},
+    "Renude":            {"website": "drinkrenude.com",         "is_habitone": 0},
+    "North Spore":       {"website": "northspore.com",          "is_habitone": 0},
+    "Nootrum":           {"website": "nootrum.com",             "is_habitone": 0},
+    "Pella Nutrition":   {"website": "mypellanutrition.com",    "is_habitone": 0},
+    "Laird Superfood":   {"website": "lairdsuper.com",          "is_habitone": 0},
+    "Max Fit Wellness":  {"website": "maxfitwellness.com",      "is_habitone": 0},
+    "Bunkell":           {"website": "amazon.com",              "is_habitone": 0},
+    "Taoters":           {"website": "amazon.com",              "is_habitone": 0},
 }
+
+
+def detect_sep(path: Path) -> str:
+    with open(path, encoding="utf-8", errors="replace") as f:
+        line = f.readline()
+    return ";" if line.count(";") > line.count(",") else ","
 
 
 def _float(val: str) -> float | None:
     try:
-        return float(val) if val else None
+        return float(val) if val and val.strip() else None
     except ValueError:
         return None
 
 
 def _int(val: str) -> int | None:
     try:
-        return int(val) if val else None
+        return int(float(val)) if val and val.strip() else None
     except ValueError:
         return None
 
 
 def load_all(conn: sqlite3.Connection) -> tuple[int, int, int]:
     cur = conn.cursor()
-    cur.executescript("DROP TABLE IF EXISTS prices; DROP TABLE IF EXISTS products; DROP TABLE IF EXISTS brands;")
+    cur.executescript(
+        "DROP TABLE IF EXISTS prices;"
+        "DROP TABLE IF EXISTS products;"
+        "DROP TABLE IF EXISTS brands;"
+    )
     cur.executescript(SCHEMA)
 
-    brand_ids: dict[str, int] = {}
-    product_ids: dict[tuple, int] = {}  # (brand_id, name) -> product.id
+    seen_brands:   dict[int, bool] = {}   # brand_id → inserted
+    seen_products: dict[int, bool] = {}   # product_id → inserted
+    product_serving_count: dict[int, int] = {}  # product_id → serving_count (for sp fallback)
     price_count = 0
 
-    for csv_path in sorted(RAW_DIR.glob("*.csv")):
-        with open(csv_path, newline="", encoding="utf-8") as f:
-            for row in csv.DictReader(f):
-                brand_name = (row.get("brand") or "").strip()
-                if not brand_name:
-                    continue
+    for source in SOURCES:
+        sep = detect_sep(source)
+        with open(source, encoding="utf-8", errors="replace") as f:
+            rows = list(csv.DictReader(f, delimiter=sep))
 
-                if brand_name not in brand_ids:
-                    meta = BRAND_META.get(brand_name, {"website": None, "is_habitone": 0})
-                    cur.execute(
-                        "INSERT OR IGNORE INTO brands (name, website, is_habitone) VALUES (?, ?, ?)",
-                        (brand_name, meta["website"], meta["is_habitone"]),
-                    )
-                    cur.execute("SELECT id FROM brands WHERE name = ?", (brand_name,))
-                    brand_ids[brand_name] = cur.fetchone()[0]
+        for row in rows:
+            brand_id   = _int(row.get("brand_id", ""))
+            product_id = _int(row.get("product_id", ""))
+            brand_name = row.get("brand", "").strip()
 
-                brand_id = brand_ids[brand_name]
-                product_name = (row.get("product_name") or "").strip() or "Unknown"
+            if not brand_id or not product_id or not brand_name:
+                continue
 
-                key = (brand_id, product_name)
-                if key not in product_ids:
-                    cur.execute(
-                        """INSERT INTO products (brand_id, name, format, serving_size_g, serving_count, key_ingredient)
-                           VALUES (?, ?, ?, ?, ?, ?)""",
-                        (
-                            brand_id,
-                            product_name,
-                            row.get("format") or None,
-                            _float(row.get("serving_size_g", "")),
-                            _int(row.get("serving_count", "")),
-                            row.get("key_ingredient") or None,
-                        ),
-                    )
-                    product_ids[key] = cur.lastrowid
-
-                price_usd = _float(row.get("price_usd", ""))
-                if price_usd is None:
-                    continue
-
+            # Insert brand once
+            if brand_id not in seen_brands:
+                meta = BRAND_META.get(brand_name, {"website": None, "is_habitone": 0})
                 cur.execute(
-                    """INSERT INTO prices (product_id, volume_g, price_usd, discount_pct, channel, date_collected, source_url)
+                    "INSERT OR IGNORE INTO brands (id, name, website, is_habitone) VALUES (?, ?, ?, ?)",
+                    (brand_id, brand_name, meta["website"], meta["is_habitone"]),
+                )
+                seen_brands[brand_id] = True
+
+            # Insert product once (use first-seen row for product attributes)
+            if product_id not in seen_products:
+                cur.execute(
+                    """INSERT OR IGNORE INTO products
+                       (id, brand_id, name, format, serving_size_g, serving_count, key_ingredient)
                        VALUES (?, ?, ?, ?, ?, ?, ?)""",
                     (
-                        product_ids[key],
-                        _float(row.get("volume_g", "")),
-                        price_usd,
-                        _float(row.get("discount_pct", "")) or 0,
-                        row.get("channel") or "own_site",
-                        row.get("date_collected") or "",
-                        row.get("url") or None,
+                        product_id,
+                        brand_id,
+                        row.get("product_name", "").strip() or "Unknown",
+                        row.get("format") or None,
+                        _float(row.get("serving_size_g", "")),
+                        _int(row.get("serving_count", "")),
+                        row.get("key_ingredient") or None,
                     ),
                 )
-                price_count += 1
+                seen_products[product_id] = True
+
+            price_usd = _float(row.get("price_usd", ""))
+            if price_usd is None:
+                continue
+
+            serving_price = _float(row.get("serving_price", ""))
+            # Fill serving_price from price_usd / serving_count if missing.
+            # Use row-level sc first; fall back to product-level sc already stored.
+            if serving_price is None:
+                row_sc = _int(row.get("serving_count", ""))
+                if not row_sc or row_sc <= 0:
+                    row_sc = product_serving_count.get(product_id)
+                if row_sc and row_sc > 0:
+                    serving_price = round(price_usd / row_sc, 4)
+
+            cur.execute(
+                """INSERT INTO prices
+                   (product_id, volume_g, price_usd, discount_pct, serving_price,
+                    purchase_type, channel, date_collected, source_url)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    product_id,
+                    _float(row.get("volume_g", "")),
+                    price_usd,
+                    _float(row.get("discount_pct", "")) or 0.0,
+                    serving_price,
+                    row.get("purchase_type") or None,
+                    row.get("channel") or "own_site",
+                    row.get("date_collected") or "",
+                    row.get("url") or None,
+                ),
+            )
+            price_count += 1
 
     conn.commit()
-    return len(brand_ids), len(product_ids), price_count
+    return len(seen_brands), len(seen_products), price_count
 
 
-def main():
-    csv_files = list(RAW_DIR.glob("*.csv"))
-    if not csv_files:
-        print(f"No CSVs found in {RAW_DIR}. Run 01_scrape.py first.")
-        return
-    print(f"Loading {len(csv_files)} CSV(s) from data/raw/ into {DB_PATH.relative_to(ROOT)}")
+def main() -> None:
+    for src in SOURCES:
+        if not src.exists():
+            print(f"ERROR: {src} not found. Run 05_assign_ids.py and 06_fill_unmatched_ids.py first.")
+            return
+
+    print(f"Loading into {DB_PATH.relative_to(ROOT)}")
     with sqlite3.connect(DB_PATH) as conn:
         brands, products, prices = load_all(conn)
-    print(f"Done: {brands} brands, {products} products, {prices} price records")
+    print(f"Done: {brands} brands, {products} products, {prices} price rows")
 
 
 if __name__ == "__main__":

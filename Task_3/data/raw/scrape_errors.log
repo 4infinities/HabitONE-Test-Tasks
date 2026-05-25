@@ -148,3 +148,10 @@ Call log:
 2026-05-25 10:48:51,800 | Laird Superfood | Unexpected response 200 (len=2374) for https://www.amazon.com/s?k=laird+superfood+instafuel&i=grocery-intl-ship
 2026-05-25 10:48:57,688 | Laird Superfood | Unexpected response 200 (len=2374) for https://www.amazon.com/s?k=laird+superfood+instafuel&i=grocery-intl-ship
 2026-05-25 14:44:12,889 | Four Sigmatic | Fetch attempt 1 failed for https://www.amazon.com/dp/B08L45MMQQ: Failed to perform, curl: (7) Failed to connect to www.amazon.com port 443 after 2016 ms: Could not connect to server. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-05-25 19:47:34,712 | Laird Superfood | Unexpected response 200 (len=2333) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 19:47:40,897 | Laird Superfood | Unexpected response 200 (len=2333) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 19:47:42,040 | Laird Superfood | Unexpected response 200 (len=2375) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship&page=2
+2026-05-25 19:47:48,282 | Laird Superfood | Unexpected response 200 (len=2375) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship&page=2
+2026-05-25 19:47:49,533 | Laird Superfood | Unexpected response 200 (len=2370) for https://www.amazon.com/s?k=laird+superfood+creamer&i=grocery-intl-ship
+2026-05-25 19:47:55,731 | Laird Superfood | Unexpected response 200 (len=2370) for https://www.amazon.com/s?k=laird+superfood+creamer&i=grocery-intl-ship
+2026-05-25 19:47:56,941 | Laird Superfood | Unexpected response 200 (len=2375) for https://www.amazon.com/s?k=laird+superfood+instafuel&i=grocery-intl-ship

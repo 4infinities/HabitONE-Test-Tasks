@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """
 ryze_scraper.py — Ryze Superfoods own-site scraper (ryzesuperfoods.com).
-Strategy: Shopify JSON API (/products.json).
-Subscription: ReCharge — two-tier discounts per product via /products/{handle}.js:
-  price_adjustments[0] (order_count=1): first-order rate
-  price_adjustments[1] (order_count=null): recurring rate  ← used here
-If only one adjustment exists, that rate is used regardless of order_count.
-
-Dark Roast and Medium Roast are separate handles (not Shopify variants).
-Bundles (Starter Kit, Ritual Set) have format="bundle".
+Strategy: Shopify collections JSON API.
+Collections scraped:
+  - /collections/main-cocoa-products (paginated until empty)
+  - /collections/mushroom-coffee pages 1–4
+Deduplication:
+  - Primary: Shopify product ID across collections (prevents cross-collection dupes)
+  - Secondary: (normalized title, serving_count, price_usd, purchase_type) on output rows
+    (catches SEO-variant handles that map to the same product content)
+Handles ending in -gs (e.g. mushroom-hot-cocoa-20-servings-gs) are skipped via SKIP_HANDLE_RE
+  as they are URL-only SEO duplicates of canonical handles.
+Subscription: ReCharge — recurring adjustment (order_count=None) preferred over first-order.
 Output: data/raw/ryze_individual.csv
 """
 
@@ -25,17 +28,16 @@ import requests
 class RyzeScraper(ShopifyScraperBase):
     BRAND          = "Ryze"
     BASE           = "https://www.ryzesuperfoods.com"
-    COLLECTION     = "all"         # only used as fallback; overridden below
+    COLLECTION     = "mushroom-coffee"   # used only for base-class display string
     OUT_FILENAME   = "ryze_individual.csv"
     DEFAULT_FORMAT = "instant"
-    # SUB_DISCOUNT_PCT = None → auto-detect per product (varies: 20–50%)
+    DEDUPLICATE    = True
 
-    # Coffee product whitelist — only titles matching these keywords pass build_rows
-    _COFFEE_KW = re.compile(
-        r"coffee|dark roast|medium roast|bright blend|house blend"
-        r"|starter kit|ritual (?:set|kit)|essentials kit|complete kit",
-        re.IGNORECASE,
-    )
+    # Collections to scrape: (slug, page_range or None for auto-paginate)
+    _COLLECTIONS = [
+        ("main-cocoa-products", None),        # paginate until empty
+        ("mushroom-coffee",     range(1, 5)), # pages 1–4 explicit
+    ]
 
     SKIP_HANDLE_RE = re.compile(
         r"^[a-z0-9]{8,12}$|-test$|test-product|^testing-"
@@ -50,11 +52,11 @@ class RyzeScraper(ShopifyScraperBase):
     EXTRA_SKIP_KW = [
         "frother", "shaker", "mug", "tote", "gift card",
         "hoodie", "shirt", "hat", "poster", "sticker", "book",
-        "matcha", "electrolyte", "overnight oats", "hot cocoa",
-        "chicory", "chocolates", "probiotic creamer", "scoop",
+        "matcha", "electrolyte", "overnight oats",
+        "chicory", "probiotic creamer", "scoop",
         "spoon", "bracelet", "socks", "crewneck", "shipping protection",
         "magnet", "coasters", "rebill", "oos product", "reward sticker",
-        "starter bag", "one-time offer", "chai", "cacao", "cocoa",
+        "starter bag", "one-time offer", "chai",
         "apparel", "bag clip", "month plan", "add-on", "oats",
     ]
     EXTRA_FORMAT_KW = {
@@ -72,44 +74,57 @@ class RyzeScraper(ShopifyScraperBase):
             return "rtd"
         return super().infer_format(title)
 
-    # ── Coffee-only whitelist filter ──
-
-    def build_rows(self, handle: str, product: dict,
-                   session: requests.Session) -> list[dict]:
-        title = product.get("title", "")
-        if not self._COFFEE_KW.search(title):
-            print(f"    SKIP (non-coffee): {title}")
-            return []
-        return super().build_rows(handle, product, session)
-
-    # ── Handles via /products.json (Ryze uses custom theme, no /collections/all) ──
-
     def get_handles(self, session: requests.Session) -> list[str]:
+        seen_ids: set[int] = set()
         handles: list[str] = []
-        page_num = 1
-        while True:
-            url = f"{self.BASE}/products.json?limit=250&page={page_num}"
-            try:
-                r = session.get(url, timeout=15)
-                if r.status_code != 200:
-                    self.log.error("products.json page=%d status=%d", page_num, r.status_code)
-                    break
-                products = r.json().get("products", [])
-                if not products:
-                    break
-                for p in products:
-                    h = p.get("handle", "")
-                    if h and not self.SKIP_HANDLE_RE.search(h):
-                        handles.append(h)
-                if len(products) < 250:
-                    break
-                page_num += 1
-            except Exception as e:
-                self.log.error("products.json page=%d: %s", page_num, e)
-                break
-        return list(dict.fromkeys(handles))
 
-    # ── Subscription via ReCharge: use recurring adjustment (order_count=None) ──
+        for collection, pages in self._COLLECTIONS:
+            page_iter = range(1, 100) if pages is None else pages
+            for page in page_iter:
+                url = (
+                    f"{self.BASE}/collections/{collection}"
+                    f"/products.json?limit=250&page={page}"
+                )
+                try:
+                    r = session.get(url, timeout=15)
+                    if r.status_code != 200:
+                        self.log.error(
+                            "collection %s page=%d status=%d",
+                            collection, page, r.status_code,
+                        )
+                        break
+                    products = r.json().get("products", [])
+                    if not products:
+                        break
+                    for p in products:
+                        pid = p.get("id")
+                        h = p.get("handle", "")
+                        if not h or not pid:
+                            continue
+                        if self.SKIP_HANDLE_RE and self.SKIP_HANDLE_RE.search(h):
+                            continue
+                        if pid not in seen_ids:
+                            seen_ids.add(pid)
+                            handles.append(h)
+                    # auto-paginate mode: stop when page is not full
+                    if pages is None and len(products) < 250:
+                        break
+                except Exception as e:
+                    self.log.error("collection %s page=%d: %s", collection, page, e)
+                    break
+
+        return handles
+
+    def _dedup(self, rows: list[dict]) -> list[dict]:
+        seen: set = set()
+        out: list[dict] = []
+        for row in rows:
+            name = re.sub(r"\s+", " ", row["product_name"].lower().strip())
+            key = (name, row["serving_count"], row["price_usd"], row["purchase_type"])
+            if key not in seen:
+                seen.add(key)
+                out.append(row)
+        return out
 
     def get_sub_pct(self, session: requests.Session, handle: str,
                     single_price: float | None = None) -> float | None:
@@ -138,7 +153,6 @@ class RyzeScraper(ShopifyScraperBase):
                 pct = float(recurring["value"])
                 return pct if pct > 0 else None
 
-            # Single adjustment — use it if it's a non-zero percentage
             first = adjustments[0]
             if first.get("value_type") == "percentage":
                 pct = float(first["value"])

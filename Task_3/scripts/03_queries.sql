@@ -94,27 +94,58 @@ WHERE b.is_habitone = 0
 ORDER BY pr.format;
 
 
--- Q7 (bonus): Price spread within each format — useful for positioning
+-- Q7: Average serving price by brand (broader coverage than price/g — 823 vs 583 rows)
 SELECT
-    pr.format,
-    COUNT(*)                                        AS sku_count,
-    ROUND(MIN(p.price_usd / p.volume_g), 4)        AS min_ppg,
-    ROUND(AVG(p.price_usd / p.volume_g), 4)        AS avg_ppg,
-    ROUND(MAX(p.price_usd / p.volume_g), 4)        AS max_ppg
-FROM prices p
-JOIN products pr ON pr.id = p.product_id
-WHERE p.volume_g IS NOT NULL AND p.volume_g > 0
-GROUP BY pr.format
-ORDER BY avg_ppg DESC;
-
-
--- Q8 (bonus): Channel coverage — how many brands have eBay presence vs own-site only
-SELECT
-    p.channel,
-    COUNT(DISTINCT b.id)  AS brand_count,
-    COUNT(*)              AS total_price_records
+    b.name                                    AS brand,
+    ROUND(AVG(p.serving_price), 3)            AS avg_serving_price,
+    COUNT(*)                                  AS n
 FROM prices p
 JOIN products pr ON pr.id = p.product_id
 JOIN brands b    ON b.id  = pr.brand_id
-GROUP BY p.channel
-ORDER BY brand_count DESC;
+WHERE p.serving_price IS NOT NULL
+GROUP BY b.name
+ORDER BY avg_serving_price;
+
+
+-- Q8: Amazon vs own_site average price gap per brand
+SELECT
+    b.name                                                                          AS brand,
+    ROUND(AVG(CASE WHEN p.channel = 'own_site'  THEN p.price_usd END), 2)         AS own_site_avg,
+    ROUND(AVG(CASE WHEN p.channel = 'amazon'    THEN p.price_usd END), 2)         AS amazon_avg,
+    ROUND(AVG(CASE WHEN p.channel = 'amazon'    THEN p.price_usd END)
+        - AVG(CASE WHEN p.channel = 'own_site'  THEN p.price_usd END), 2)         AS gap_amazon_minus_own
+FROM prices p
+JOIN products pr ON pr.id = p.product_id
+JOIN brands b    ON b.id  = pr.brand_id
+GROUP BY b.name
+HAVING own_site_avg IS NOT NULL AND amazon_avg IS NOT NULL
+ORDER BY gap_amazon_minus_own DESC;
+
+
+-- Q9: Subscription discount depth — single vs sub price per brand
+SELECT
+    b.name                                                                                          AS brand,
+    ROUND(AVG(CASE WHEN p.purchase_type = 'single'       THEN p.price_usd END), 2)                AS single_avg,
+    ROUND(AVG(CASE WHEN p.purchase_type = 'subscription' THEN p.price_usd END), 2)                AS sub_avg,
+    ROUND(100.0 * (1 -
+        AVG(CASE WHEN p.purchase_type = 'subscription' THEN p.price_usd END) /
+        AVG(CASE WHEN p.purchase_type = 'single'       THEN p.price_usd END)
+    ), 1)                                                                                           AS sub_discount_pct
+FROM prices p
+JOIN products pr ON pr.id = p.product_id
+JOIN brands b    ON b.id  = pr.brand_id
+GROUP BY b.name
+HAVING single_avg IS NOT NULL AND sub_avg IS NOT NULL
+ORDER BY sub_discount_pct DESC;
+
+
+-- Q10: Total SKU count per brand (catalog breadth)
+SELECT
+    b.name                          AS brand,
+    COUNT(DISTINCT pr.id)           AS product_count,
+    COUNT(DISTINCT p.id)            AS price_row_count
+FROM products pr
+JOIN brands b    ON b.id  = pr.brand_id
+LEFT JOIN prices p ON p.product_id = pr.id
+GROUP BY b.name
+ORDER BY product_count DESC;

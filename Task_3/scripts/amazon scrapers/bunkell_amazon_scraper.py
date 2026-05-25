@@ -11,6 +11,9 @@ Usage:
 
 import re
 import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from bs4 import BeautifulSoup
 from amazon_scraper_template import AmazonScraperBase

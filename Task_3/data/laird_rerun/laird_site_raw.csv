@@ -1,0 +1,125 @@
+brand,product_name,format,serving_size_g,serving_count,volume_g,price_usd,discount_pct,serving_price,key_ingredient,channel,url,date_collected,purchase_type
+Laird Superfood,Blind Box Bundle,bundle,,,,75.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/blind-box-bundle,2026-05-25,single
+Laird Superfood,Blind Box Bundle,bundle,,,,60.0,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/blind-box-bundle,2026-05-25,subscription
+Laird Superfood,Chocolate Lovers Bundle,bundle,,,,63.65,0,,adaptogen,own_site,https://lairdsuperfood.com/products/chocolate-lovers-bundle,2026-05-25,single
+Laird Superfood,Chocolate Lovers Bundle,bundle,,,,50.92,20.0,,adaptogen,own_site,https://lairdsuperfood.com/products/chocolate-lovers-bundle,2026-05-25,subscription
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,340.2,20.0,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,single
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,340.2,16.0,20.0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,subscription
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,1360.8,76.0,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,single
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,1360.8,60.8,20.0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,subscription
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,2041.2,114.0,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,single
+Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,instant,,,2041.2,91.2,20.0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,2026-05-25,subscription
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,340.2,20.0,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,single
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,340.2,16.0,20.0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,subscription
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,1360.8,76.0,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,single
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,1360.8,60.8,20.0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,subscription
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,2041.2,114.0,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,single
+Laird Superfood,FOCUS Medium Roast Ground Coffee,ground,,,2041.2,91.2,20.0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,2026-05-25,subscription
+Laird Superfood,Focused Energy Coffee K-Cups,pods,,,,15.0,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focused-energy-coffee-k-cups,2026-05-25,single
+Laird Superfood,Focused Energy Coffee K-Cups,pods,,,,12.0,20.0,,rhodiola,own_site,https://lairdsuperfood.com/products/focused-energy-coffee-k-cups,2026-05-25,subscription
+Laird Superfood,Functional Mushroom Coffee K-Cups,pods,,,,15.0,0,,chaga,own_site,https://lairdsuperfood.com/products/functional-mushroom-coffee-k-cups-medium-roast,2026-05-25,single
+Laird Superfood,Functional Mushroom Coffee K-Cups,pods,,,,12.0,20.0,,chaga,own_site,https://lairdsuperfood.com/products/functional-mushroom-coffee-k-cups-medium-roast,2026-05-25,subscription
+Laird Superfood,Gabby's Favorites Bundle,bundle,,,,50.35,0,,,own_site,https://lairdsuperfood.com/products/gabbys-favorites-bundle,2026-05-25,single
+Laird Superfood,Gabby's Favorites Bundle,bundle,,,,40.28,20.0,,,own_site,https://lairdsuperfood.com/products/gabbys-favorites-bundle,2026-05-25,subscription
+Laird Superfood,Laird's Favorites Bundle,bundle,,,,107.35,0,,,own_site,https://lairdsuperfood.com/products/lairds-favorites-bundle,2026-05-25,single
+Laird Superfood,Laird's Favorites Bundle,bundle,,,,85.88,20.0,,,own_site,https://lairdsuperfood.com/products/lairds-favorites-bundle,2026-05-25,subscription
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,453.6,24.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,single
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,453.6,19.2,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,subscription
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,226.8,14.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,single
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,226.8,11.2,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,subscription
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,1360.8,68.4,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,single
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,1360.8,54.72,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,subscription
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,907.2,53.2,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,single
+Laird Superfood,Mocha Superfood Creamer®,creamer,,,907.2,42.56,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,2026-05-25,subscription
+Laird Superfood,Organic Decaf Perform Functional Mushroom Ground Medium Roast Coffee,instant,,,340.2,20.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-decaf-perform-functional-mushroom-ground-medium-roast-coffee,2026-05-25,single
+Laird Superfood,Organic Decaf Perform Functional Mushroom Ground Medium Roast Coffee,instant,,,340.2,16.0,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-decaf-perform-functional-mushroom-ground-medium-roast-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,340.2,20.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,340.2,16.0,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,1360.8,76.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,1360.8,60.8,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,2041.2,114.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground,instant,,,2041.2,91.2,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,340.2,20.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,340.2,16.0,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,1360.8,76.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,1360.8,60.8,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,2041.2,114.0,0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,single
+Laird Superfood,Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground,instant,,,2041.2,91.2,20.0,,chaga,own_site,https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee,2026-05-25,subscription
+Laird Superfood,Organic Perform Functional Mushroom Whole Bean Dark Roast Coffee,ground,,,340.2,20.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-dark-roast-coffee,2026-05-25,single
+Laird Superfood,Organic Perform Functional Mushroom Whole Bean Dark Roast Coffee,ground,,,340.2,16.0,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-dark-roast-coffee,2026-05-25,subscription
+Laird Superfood,Organic Perform Functional Mushroom Whole Bean Medium Roast Coffee,ground,,,340.2,20.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-medium-roast-coffee,2026-05-25,single
+Laird Superfood,Organic Perform Functional Mushroom Whole Bean Medium Roast Coffee,ground,,,340.2,16.0,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-medium-roast-coffee,2026-05-25,subscription
+Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,226.8,14.0,0,,,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,2026-05-25,single
+Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,226.8,11.2,20.0,,,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,907.2,53.2,0,,,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,2026-05-25,single
+Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,907.2,42.56,20.0,,,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Protein Creamer,creamer,,,226.8,20.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/protein-creamer,2026-05-25,single
+Laird Superfood,Protein Creamer,creamer,,,226.8,16.0,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/protein-creamer,2026-05-25,subscription
+Laird Superfood,Protein Creamer,creamer,,,,114.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/protein-creamer,2026-05-25,single
+Laird Superfood,Protein Creamer,creamer,,,,91.2,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/protein-creamer,2026-05-25,subscription
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,226.8,14.0,0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,single
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,226.8,11.2,20.0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,453.6,24.0,0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,single
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,453.6,19.2,20.0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,907.2,53.2,0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,single
+Laird Superfood,Pumpkin Spice Superfood Creamer,creamer,,,907.2,42.56,20.0,,,own_site,https://lairdsuperfood.com/products/pumpkin-spice-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,453.6,24.0,0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,single
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,453.6,19.2,20.0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,226.8,14.0,0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,single
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,226.8,11.2,20.0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,1360.8,68.4,0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,single
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,1360.8,54.72,20.0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,907.2,53.2,0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,single
+Laird Superfood,Reduced Sugar Superfood Creamer®,creamer,,,907.2,42.56,20.0,,,own_site,https://lairdsuperfood.com/products/reduced-sugar-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Shawn Ryan Bundle,bundle,,,,78.85,0,,mushroom,own_site,https://lairdsuperfood.com/products/shawn-ryan-bundle,2026-05-25,single
+Laird Superfood,Shawn Ryan Bundle,bundle,,,,63.08,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/shawn-ryan-bundle,2026-05-25,subscription
+Laird Superfood,Superfood Creamer® 3-Pack,creamer,,,453.6,68.4,0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-pack,2026-05-25,single
+Laird Superfood,Superfood Creamer® 3-Pack,creamer,,,453.6,54.72,20.0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-pack,2026-05-25,subscription
+Laird Superfood,Superfood Creamer® 3-Pack,creamer,,,226.8,39.9,0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-pack,2026-05-25,single
+Laird Superfood,Superfood Creamer® 3-Pack,creamer,,,226.8,31.92,20.0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-pack,2026-05-25,subscription
+Laird Superfood,Superfood Creamer® 4-Pack,creamer,,,453.6,91.2,0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-4-pack,2026-05-25,single
+Laird Superfood,Superfood Creamer® 4-Pack,creamer,,,453.6,72.96,20.0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-4-pack,2026-05-25,subscription
+Laird Superfood,Superfood Creamer® 4-Pack,creamer,,,226.8,53.2,0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-4-pack,2026-05-25,single
+Laird Superfood,Superfood Creamer® 4-Pack,creamer,,,226.8,42.56,20.0,,,own_site,https://lairdsuperfood.com/products/laird-superfood-creamer-sampler-4-pack,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy Protein Coffee 5.3oz,instant,,,150.3,19.0,0,,,own_site,https://lairdsuperfood.com/products/sweet-creamy-protein-coffee,2026-05-25,single
+Laird Superfood,Sweet & Creamy Protein Coffee 5.3oz,instant,,,150.3,15.2,20.0,,,own_site,https://lairdsuperfood.com/products/sweet-creamy-protein-coffee,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,453.6,24.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,single
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,453.6,19.2,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,226.8,14.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,single
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,226.8,11.2,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,1360.8,68.4,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,single
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,1360.8,54.72,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,907.2,53.2,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,single
+Laird Superfood,Sweet & Creamy Superfood Creamer®,creamer,,,907.2,42.56,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,453.6,27.0,0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,single
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,453.6,21.6,20.0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,226.8,17.0,0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,single
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,226.8,13.6,20.0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,1360.8,76.95,0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,single
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,1360.8,61.56,20.0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,subscription
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,907.2,64.6,0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,single
+Laird Superfood,Sweet & Creamy with Adaptogens Superfood Creamer®,creamer,,,907.2,51.68,20.0,,chaga,own_site,https://lairdsuperfood.com/products/superfood-creamer-sweet-and-creamy-with-adaptogens,2026-05-25,subscription
+Laird Superfood,The Leveled Up Coffee Bundle,bundle,,,,50.35,0,,adaptogen,own_site,https://lairdsuperfood.com/products/the-leveled-up-coffee-bundle,2026-05-25,single
+Laird Superfood,The Leveled Up Coffee Bundle,bundle,,,,40.28,20.0,,adaptogen,own_site,https://lairdsuperfood.com/products/the-leveled-up-coffee-bundle,2026-05-25,subscription
+Laird Superfood,The Perfect Cup Bundle,bundle,,,,37.05,0,,mushroom,own_site,https://lairdsuperfood.com/products/the-perfect-cup-bundle,2026-05-25,single
+Laird Superfood,The Perfect Cup Bundle,bundle,,,,29.64,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/the-perfect-cup-bundle,2026-05-25,subscription
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,453.6,24.0,0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,single
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,453.6,19.2,20.0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,subscription
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,226.8,14.0,0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,single
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,226.8,11.2,20.0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,subscription
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,1360.8,68.4,0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,single
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,1360.8,54.72,20.0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,subscription
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,907.2,53.2,0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,single
+Laird Superfood,Turmeric Superfood Creamer®,creamer,,,907.2,42.56,20.0,,,own_site,https://lairdsuperfood.com/products/superfood-creamer-turmeric,2026-05-25,subscription
+Laird Superfood,Unsweetened Protein Coffee 5.3oz,instant,,,150.3,19.0,0,,,own_site,https://lairdsuperfood.com/products/unsweetened-protein-coffee,2026-05-25,single
+Laird Superfood,Unsweetened Protein Coffee 5.3oz,instant,,,150.3,15.2,20.0,,,own_site,https://lairdsuperfood.com/products/unsweetened-protein-coffee,2026-05-25,subscription
+Laird Superfood,Vanilla Protein Coffee 5.3oz,instant,,,150.3,19.0,0,,,own_site,https://lairdsuperfood.com/products/vanilla-protein-coffee,2026-05-25,single
+Laird Superfood,Vanilla Protein Coffee 5.3oz,instant,,,150.3,15.2,20.0,,,own_site,https://lairdsuperfood.com/products/vanilla-protein-coffee,2026-05-25,subscription
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,453.6,27.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,single
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,453.6,21.6,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,226.8,17.0,0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,single
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,226.8,13.6,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,1360.8,76.95,0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,single
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,1360.8,61.56,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,subscription
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,907.2,64.6,0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,single
+Laird Superfood,Vanilla Superfood Creamer®,creamer,,,907.2,51.68,20.0,,mushroom,own_site,https://lairdsuperfood.com/products/vanilla-superfood-creamer,2026-05-25,subscription
