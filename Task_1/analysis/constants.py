@@ -101,4 +101,5 @@ def cohort_metrics(df, user_ids, payment_start=None, payment_end=None):
         "conversion_rate": paying_users / cohort_size,
         "arpu_payers": total_revenue / paying_users if paying_users > 0 else float("nan"),
         "payments_per_user": len(payments) / cohort_size,
+        "payments_per_payer": len(payments) / paying_users if paying_users > 0 else float("nan"),
     }

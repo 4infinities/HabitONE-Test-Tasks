@@ -1,0 +1,39 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Om Mushrooms;Brain Fuel Mushroom Capsules;capsule;8;30;240;29.99;0;1;reishi;own_site;https://ommushrooms.com/products/om-brain-fuel-capsules;23.05.2026;single
+Om Mushrooms;Brain Fuel Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;reishi;own_site;https://ommushrooms.com/products/om-brain-fuel-capsules;23.05.2026;subscription
+Om Mushrooms;Chaga Mushroom Capsules;capsule;8;30;240;29.99;0;1;chaga;own_site;https://ommushrooms.com/products/om-chaga-capsules;23.05.2026;single
+Om Mushrooms;Chaga Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;chaga;own_site;https://ommushrooms.com/products/om-chaga-capsules;23.05.2026;subscription
+Om Mushrooms;Cordyceps Mushroom Capsules;capsule;8;30;240;29.99;0;1;cordyceps;own_site;https://ommushrooms.com/products/om-cordyceps-capsules;23.05.2026;single
+Om Mushrooms;Cordyceps Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;cordyceps;own_site;https://ommushrooms.com/products/om-cordyceps-capsules;23.05.2026;subscription
+Om Mushrooms;Lion’s Mane Mushroom Capsules;capsule;8;30;240;29.99;0;1;lion's mane;own_site;https://ommushrooms.com/products/lions-mane-capsules;23.05.2026;single
+Om Mushrooms;Lion’s Mane Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;lion's mane;own_site;https://ommushrooms.com/products/lions-mane-capsules;23.05.2026;subscription
+Om Mushrooms;Lion’s Mane Mushroom Capsules;capsule;8;60;480;49.99;0;0.83;lion's mane;own_site;https://ommushrooms.com/products/lions-mane-capsules;23.05.2026;single
+Om Mushrooms;Lion’s Mane Mushroom Capsules;capsule;8;60;480;42.49;15;0.71;lion's mane;own_site;https://ommushrooms.com/products/lions-mane-capsules;23.05.2026;subscription
+Om Mushrooms;Master Blend Mushroom Capsules;capsule;8;28;224;29.99;0;1.07;cordyceps;own_site;https://ommushrooms.com/products/master-blend-capsules;23.05.2026;single
+Om Mushrooms;Master Blend Mushroom Capsules;capsule;8;28;224;25.49;15;0.91;cordyceps;own_site;https://ommushrooms.com/products/master-blend-capsules;23.05.2026;subscription
+Om Mushrooms;Master Blend Mushroom Capsules;capsule;8;56;448;49.99;0;0.89;cordyceps;own_site;https://ommushrooms.com/products/master-blend-capsules;23.05.2026;single
+Om Mushrooms;Master Blend Mushroom Capsules;capsule;8;56;448;42.49;15;0.76;cordyceps;own_site;https://ommushrooms.com/products/master-blend-capsules;23.05.2026;subscription
+Om Mushrooms;Mushroom Coffee Blend;instant;8;10;80;21.99;0;2.2;cordyceps;own_site;https://ommushrooms.com/products/mushroom-coffee-superfood;23.05.2026;single
+Om Mushrooms;Mushroom Coffee Blend;instant;8;10;80;18.69;15;1.87;cordyceps;own_site;https://ommushrooms.com/products/mushroom-coffee-superfood;23.05.2026;subscription
+Om Mushrooms;Mushroom Coffee Blend;instant;8;30;240;39.99;0;1.33;cordyceps;own_site;https://ommushrooms.com/products/mushroom-coffee-superfood;23.05.2026;single
+Om Mushrooms;Mushroom Coffee Blend;instant;8;30;240;33.99;15;1.13;cordyceps;own_site;https://ommushrooms.com/products/mushroom-coffee-superfood;23.05.2026;subscription
+Om Mushrooms;Mushroom Coffee Latte Blend;instant;8;10;80;21.99;0;2.2;mushroom;own_site;https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend;23.05.2026;single
+Om Mushrooms;Mushroom Coffee Latte Blend;instant;8;10;80;18.69;15;1.87;mushroom;own_site;https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend;23.05.2026;subscription
+Om Mushrooms;Mushroom Coffee Latte Blend;instant;8;30;240;39.99;0;1.33;mushroom;own_site;https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend;23.05.2026;single
+Om Mushrooms;Mushroom Coffee Latte Blend;instant;8;30;240;33.99;15;1.13;mushroom;own_site;https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend;23.05.2026;subscription
+Om Mushrooms;Mushroom Morning Blend;instant;8;10;80;21.99;0;2.2;rhodiola;own_site;https://ommushrooms.com/products/mushroom-morning-blend;23.05.2026;single
+Om Mushrooms;Mushroom Morning Blend;instant;8;10;80;18.69;15;1.87;rhodiola;own_site;https://ommushrooms.com/products/mushroom-morning-blend;23.05.2026;subscription
+Om Mushrooms;Mushroom Morning Blend;instant;8;30;240;39.99;0;1.33;rhodiola;own_site;https://ommushrooms.com/products/mushroom-morning-blend;23.05.2026;single
+Om Mushrooms;Mushroom Morning Blend;instant;8;30;240;33.99;15;1.13;rhodiola;own_site;https://ommushrooms.com/products/mushroom-morning-blend;23.05.2026;subscription
+Om Mushrooms;Mushroom Vanilla Chai Latte Blend;instant;8;10;80;21.99;0;2.2;lion's mane;own_site;https://ommushrooms.com/products/mushroom-vanilla-chai-latte;23.05.2026;single
+Om Mushrooms;Mushroom Vanilla Chai Latte Blend;instant;8;10;80;18.69;15;1.87;lion's mane;own_site;https://ommushrooms.com/products/mushroom-vanilla-chai-latte;23.05.2026;subscription
+Om Mushrooms;Mushroom Vanilla Chai Latte Blend;instant;8;30;240;39.99;0;1.33;lion's mane;own_site;https://ommushrooms.com/products/mushroom-vanilla-chai-latte;23.05.2026;single
+Om Mushrooms;Mushroom Vanilla Chai Latte Blend;instant;8;30;240;33.99;15;1.13;lion's mane;own_site;https://ommushrooms.com/products/mushroom-vanilla-chai-latte;23.05.2026;subscription
+Om Mushrooms;Reishi Mushroom Capsules;capsule;8;30;240;29.99;0;1;reishi;own_site;https://ommushrooms.com/products/om-reishi-capsules;23.05.2026;single
+Om Mushrooms;Reishi Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;reishi;own_site;https://ommushrooms.com/products/om-reishi-capsules;23.05.2026;subscription
+Om Mushrooms;Relax Mushroom Capsules;capsule;8;30;240;29.99;0;1;reishi;own_site;https://ommushrooms.com/products/relax;23.05.2026;single
+Om Mushrooms;Relax Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;reishi;own_site;https://ommushrooms.com/products/relax;23.05.2026;subscription
+Om Mushrooms;Sleep Mushroom Capsules;capsule;8;30;240;29.99;0;1;reishi;own_site;https://ommushrooms.com/products/sleep;23.05.2026;single
+Om Mushrooms;Sleep Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;reishi;own_site;https://ommushrooms.com/products/sleep;23.05.2026;subscription
+Om Mushrooms;Turkey Tail Mushroom Capsules;capsule;8;30;240;29.99;0;1;turkey tail;own_site;https://ommushrooms.com/products/om-turkey-tail;23.05.2026;single
+Om Mushrooms;Turkey Tail Mushroom Capsules;capsule;8;30;240;25.49;15;0.85;turkey tail;own_site;https://ommushrooms.com/products/om-turkey-tail;23.05.2026;subscription

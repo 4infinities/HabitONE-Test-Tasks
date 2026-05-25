@@ -1,6 +1,7 @@
 """
 Step 6: Power analysis for main A/B hypothesis.
-Primary: payments_per_user. Secondary: RPU.
+Metrics: CR (proportion), payments_per_payer (MW), ARPP (MW).
+RPU is descriptive only (CR * ARPP decomposition).
 Alpha=0.05, Power=0.80, MDE=10%.
 """
 
@@ -102,11 +103,12 @@ def run_scenario(df, label):
     ctrl, test = ab[ab["split_group"] == 0], ab[ab["split_group"] == 1]
     ctrl_arpp = ctrl[ctrl["revenue"] > 0]["revenue"]
     test_arpp = test[test["revenue"] > 0]["revenue"]
+    ctrl_ppp = ctrl[ctrl["payment_count"] > 0]["payment_count"]
+    test_ppp = test[test["payment_count"] > 0]["payment_count"]
     rows = [power_row_proportion(label, "conversion_rate", ctrl, test)]
     for mde in MDE_RANGE:
-        rows.append(power_row(label, "PPU", ctrl["payment_count"], test["payment_count"], mde=mde))
+        rows.append(power_row(label, "payments_per_payer", ctrl_ppp, test_ppp, mde=mde))
         rows.append(power_row(label, "ARPP", ctrl_arpp, test_arpp, mde=mde))
-        rows.append(power_row(label, "RPU", ctrl["revenue"], test["revenue"], mde=mde))
     return rows
 
 

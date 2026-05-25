@@ -113,41 +113,56 @@ Confirm the experiment setup is valid by checking that non-target metrics did no
 
 ### Step 2 — Define Evaluation Metrics & Minimum Detectable Effect (MDE)
 
-Primary metrics:
-| Metric | Definition | MDE |
-|---|---|---|
-| Conversion Rate (CR) | % of users who made ≥1 successful payment | Δ ≥ 1 pp |
-| Average Revenue Per Payer (ARPP) | Mean `amount` among payers | Δ ≥ 5% |
-| Total Revenue | Sum of `amount` per group (normalized per user) | Δ ≥ 5% |
+**Why we decompose PPU instead of testing it directly:**
+PPU (payments per user, all users) has ~97% zeros (non-payers). Mann-Whitney on zero-inflated data loses power because ranks are dominated by ties at 0. The metric also conflates two independent effects — whether users start paying and how often payers buy. Instead, decompose:
+
+```
+RPU = CR × ARPP        (descriptive identity, not a test)
+PPU = CR × PPP         (conceptual decomposition)
+```
+
+Primary metrics — each tested with the appropriate method:
+| Metric | Definition | Test | MDE |
+|---|---|---|---|
+| Conversion Rate (CR) | % of users who made ≥1 successful payment | Two-proportion Z-test | Δ ≥ 1 pp |
+| Payments per Payer (PPP) | Mean payment count **among payers only** | Mann-Whitney U | Δ ≥ 10% |
+| ARPP | Mean `amount` among payers | Mann-Whitney U | Δ ≥ 10% |
+
+Descriptive (not tested directly):
+- **RPU** = total revenue / all users = CR × ARPP. Reported as a number, no significance badge.
+- **Total Revenue** — reported as absolute sum with bootstrap CI.
 
 Secondary metrics (whale-specific):
-- Whale conversion rate
+- Whale share among payers
 - Whale average payment amount
+- Whale RPU (whale revenue / all users)
+
+**Why not multi-arm bandit?**
+MAB is a prospective experimental design (routes traffic dynamically during the experiment). It cannot be applied retroactively to fixed-split historical data. Additionally, in a whale model the reward signal is delayed and highly variable — early whale payments create noisy signals that cause MAB to prematurely exploit a suboptimal variant.
 
 ### Step 3 — Statistical Tests
 
-**For Conversion Rate (proportions):**
-- Use **two-proportion Z-test** (or chi-square test)
-- Significance level: α = 0.05
-- One-tailed test (checking if new variant is better)
+**For Conversion Rate (binary outcome):**
+- Use **two-proportion Z-test**, one-tailed (test > control)
+- Significance level: α = 0.05, Bonferroni-corrected threshold: α/3 ≈ 0.0167
 
 ```python
 from statsmodels.stats.proportion import proportions_ztest
-count = [test_conversions, control_conversions]
-nobs = [test_users, control_users]
-stat, pval = proportions_ztest(count, nobs, alternative='larger')
+_, pval = proportions_ztest([test_conversions, ctrl_conversions], [n_test, n_ctrl], alternative='larger')
 ```
 
-**For Payment Amount (continuous):**
-- Data is likely right-skewed (whale model) — do NOT assume normality
-- Use **Mann-Whitney U test**
+**For Payments per Payer and ARPP (continuous, payers only, no zeros):**
+- Use **Mann-Whitney U test** — no normality assumption, robust to whale outliers
+- Bootstrap CI (10 000 iterations) for the difference in means
 
 ```python
 from scipy.stats import mannwhitneyu
-stat, pval = mannwhitneyu(test_amounts, control_amounts, alternative='greater')
+_, pval = mannwhitneyu(test_vals, ctrl_vals, alternative='greater')
 ```
 
-**Compute Confidence Intervals** for the difference in conversion rates and mean amounts.
+**Do NOT use Mann-Whitney for RPU or raw PPU (all users)** — zero-inflation makes ranks uninformative. RPU is descriptive only.
+
+**Compute Confidence Intervals** for the difference in conversion rates (normal approximation) and mean amounts (bootstrap).
 
 ### Step 4 — Effect Size
 - For proportions: compute **Cohen's h** or raw lift (%)

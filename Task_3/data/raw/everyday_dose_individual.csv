@@ -1,0 +1,13 @@
+brand,product_name,format,serving_size_g,serving_count,volume_g,price_usd,discount_pct,serving_price,key_ingredient,channel,url,date_collected,purchase_type
+Everyday Dose,30 Servings Coffee+ Medium Roast,instant,7.3,30,219.0,45.0,0,1.5,,own_site,https://everydaydose.com/products/30-servings-bold-coffee-2,2026-05-25,single
+Everyday Dose,30 Servings Coffee+ Medium Roast,instant,7.3,30,219.0,40.05,11.0,1.33,,own_site,https://everydaydose.com/products/30-servings-bold-coffee-2,2026-05-25,subscription
+Everyday Dose,60 Servings Coffee+ Medium Roast,instant,7.3,60,438.0,90.0,0,1.5,,own_site,https://everydaydose.com/products/60-servings-bold-coffee,2026-05-25,single
+Everyday Dose,60 Servings Coffee+ Medium Roast,instant,7.3,60,438.0,80.1,11.0,1.33,,own_site,https://everydaydose.com/products/60-servings-bold-coffee,2026-05-25,subscription
+Everyday Dose,90 Servings Coffee+ Medium Roast,instant,7.3,90,657.0,135.0,0,1.5,collagen,own_site,https://everydaydose.com/products/90-servings-bold-coffee,2026-05-25,single
+Everyday Dose,90 Servings Coffee+ Medium Roast,instant,7.3,90,657.0,120.15,11.0,1.33,collagen,own_site,https://everydaydose.com/products/90-servings-bold-coffee,2026-05-25,subscription
+Everyday Dose,90 Servings of Coffee+ Medium Roast + FREE Starter Kit,bundle,7.3,90,657.0,155.0,0,1.72,collagen,own_site,https://everydaydose.com/products/90-servings-of-bold-coffee-free-starter-kit,2026-05-25,single
+Everyday Dose,90 Servings of Coffee+ Medium Roast + FREE Starter Kit,bundle,7.3,90,657.0,137.95,11.0,1.53,collagen,own_site,https://everydaydose.com/products/90-servings-of-bold-coffee-free-starter-kit,2026-05-25,subscription
+Everyday Dose,60 Servings of Coffee+ Medium Roast + FREE Starter Kit,bundle,7.3,60,438.0,100.0,0,1.67,,own_site,https://everydaydose.com/products/60-servings-of-bold-coffee-free-starter-kit-special-price,2026-05-25,single
+Everyday Dose,60 Servings of Coffee+ Medium Roast + FREE Starter Kit,bundle,7.3,60,438.0,89.0,11.0,1.48,,own_site,https://everydaydose.com/products/60-servings-of-bold-coffee-free-starter-kit-special-price,2026-05-25,subscription
+Everyday Dose,30 Servings of Coffee+ Medium Roast + FREE Starter Kit + FREE A2 Probiotic Creamer,bundle,7.3,30,219.0,65.0,0,2.17,collagen,own_site,https://everydaydose.com/products/30-servings-of-coffee-medium-roast-free-starter-kit-free-a2-probiotic-creamer,2026-05-25,single
+Everyday Dose,30 Servings of Coffee+ Medium Roast + FREE Starter Kit + FREE A2 Probiotic Creamer,bundle,7.3,30,219.0,57.85,11.0,1.93,collagen,own_site,https://everydaydose.com/products/30-servings-of-coffee-medium-roast-free-starter-kit-free-a2-probiotic-creamer,2026-05-25,subscription

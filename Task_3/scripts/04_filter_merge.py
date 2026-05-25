@@ -82,8 +82,9 @@ def normalise(row: dict) -> dict:
 
 def classify(row: dict) -> str:
     """Return 'keep', 'reject', or 'review'."""
-    name = row["product_name"].lower()
-    fmt  = row["format"].lower()
+    name    = row["product_name"].lower()
+    fmt     = row["format"].lower()
+    channel = row["channel"]
 
     if not row["product_name"]:
         return "review"
@@ -91,13 +92,22 @@ def classify(row: dict) -> str:
     has_keep   = any(k in name for k in KEEP_KW)
     has_reject = any(k in name for k in REJECT_KW) or fmt == "capsule"
 
+    if channel != "amazon":
+        # Site rows: only reject on explicit REJECT_KW; no-signal → review
+        if has_reject:
+            return "reject"
+        if has_keep:
+            return "keep"
+        return "review"
+
+    # Amazon rows: require KEEP_KW to keep
     if has_keep and not has_reject:
         return "keep"
     if has_keep and has_reject:
-        return "review"   # conflicting signals
+        return "review"
     if has_reject:
         return "reject"
-    return "review"       # no clear signal either way
+    return "review"
 
 
 # ── Name matching ─────────────────────────────────────────────────────────────

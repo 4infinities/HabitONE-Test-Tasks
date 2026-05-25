@@ -1,0 +1,571 @@
+brand_id,product_id,brand,product_name,format,serving_size_g,serving_count,volume_g,price_usd,discount_pct,serving_price,key_ingredient,channel,url,date_collected,purchase_type
+1,1,BodyBrain Coffee,BodyBrain Testosterone Boosting Coffee,packet,,30,283.5,44.99,0,,ashwagandha,own_site,https://bodybraincoffee.com/products/bag-of-body-brain-coffee,23.05.2026,single
+1,1,BodyBrain Coffee,BodyBrain Testosterone Boosting Coffee,packet,,30,283.5,35.99,20,,ashwagandha,own_site,https://bodybraincoffee.com/products/bag-of-body-brain-coffee,23.05.2026,subscription
+1,1,BodyBrain Coffee,BodyBrain Testosterone Boosting Coffee,packet,,,283.5,39.99,0,,ashwagandha,amazon,https://www.amazon.com/BodyBrain-Coffee-Testosterone-Ashwagandha-L-Theanine/dp/B0FBZ39C1V/ref=sr_1_1?crid=HENNA1836VXY&dib=eyJ2IjoiMSJ9.ZLYwXPswDMo-dBmjJPSvdtmnqsr7KroUuFiAwIGDpA8uIZPojfKh8WKLtxnPU5x-qcfbd87KuHJJ5T-cjsPgGO_Nt2CkN5rX-EI7u6sw5MS0UKXdIaFYXUhUpcr1wzcn0-czvoT4T_RcSbKgw9yIKURNj2_eNodpD0reH8tsN3ClPk9DUzvPMqubjPoDkIUulYARKcARlj93yh1FmV7VuvU6waTprbe83E0rK0d2w7pi6naZ5T0UvRKok_IqiHicZeleDM-GylnYao3W2q_1I1h3ZRlYkaih6feNT9Pe7R0.reGx1LzHBKD7Wvi-wus8lCNBuhXzwbiIKc7dLX7G0xc&dib_tag=se&keywords=bodybrain+coffee&qid=1779530340&refresh=1&sprefix=bodybrain%2Caps%2C239&sr=8-1,23.05.2026,single
+2,2,Clevr,Chai Superlatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/chai-superlatte,23.05.2026,single
+2,2,Clevr,Chai Superlatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/chai-superlatte,23.05.2026,subscription
+2,3,Clevr,Chill Chai Superlatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/chill-chai-superlatte,23.05.2026,single
+2,3,Clevr,Chill Chai Superlatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/chill-chai-superlatte,23.05.2026,subscription
+2,4,Clevr,Coffee SuperLatte - 8 Servings,instant,,8,,18,0,2.25,,own_site,https://clevrblends.com/products/coffee-superlatte-8-servings,23.05.2026,single
+2,5,Clevr,Honey Lavender Matcha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/honey-lavender-matcha-superlatte,23.05.2026,single
+2,5,Clevr,Honey Lavender Matcha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/honey-lavender-matcha-superlatte,23.05.2026,subscription
+2,6,Clevr,Honey Pistachio Matcha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/pistachio-matcha,23.05.2026,single
+2,6,Clevr,Honey Pistachio Matcha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/pistachio-matcha,23.05.2026,subscription
+2,7,Clevr,Sleeptime SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/sleeptime-superlatte,23.05.2026,single
+2,7,Clevr,Sleeptime SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/sleeptime-superlatte,23.05.2026,subscription
+2,8,Clevr,Salted Caramel Chai SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/salted-caramel-chai,23.05.2026,single
+2,8,Clevr,Salted Caramel Chai SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/salted-caramel-chai,23.05.2026,subscription
+2,9,Clevr,Matcha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/matcha-superlatte,23.05.2026,single
+2,9,Clevr,Matcha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/matcha-superlatte,23.05.2026,subscription
+2,10,Clevr,Iced Strawberry Matcha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/iced-strawberry-matcha-superlatte,23.05.2026,single
+2,10,Clevr,Iced Strawberry Matcha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/iced-strawberry-matcha-superlatte,23.05.2026,subscription
+2,11,Clevr,Honey Vanilla Matcha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/honey-vanilla-matcha-superlatte,23.05.2026,single
+2,11,Clevr,Honey Vanilla Matcha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/honey-vanilla-matcha-superlatte,23.05.2026,subscription
+2,12,Clevr,London Fog SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/london-fog-superlatte,23.05.2026,single
+2,12,Clevr,London Fog SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/london-fog-superlatte,23.05.2026,subscription
+2,13,Clevr,Mocha SuperLatte,instant,,14,,29,0,,adaptogen,own_site,https://clevrblends.com/products/mocha-superlatte,23.05.2026,single
+2,13,Clevr,Mocha SuperLatte,instant,,14,,20.3,30,,adaptogen,own_site,https://clevrblends.com/products/mocha-superlatte,23.05.2026,subscription
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,7.3,30,219.0,45.0,0,1.5,,own_site,https://everydaydose.com/products/30-servings-bold-coffee-2,2026-05-25,single
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,7.3,30,219.0,40.05,11.0,1.33,,own_site,https://everydaydose.com/products/30-servings-bold-coffee-2,2026-05-25,subscription
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,,30,218.3,39.99,0,1.333,chaga,amazon,https://www.amazon.com/dp/B0B53Y7Z7D,25.05.2026,single
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,,30,218.3,35.99,10,1.1997,chaga,amazon,https://www.amazon.com/dp/B0B53Y7Z7D,25.05.2026,subscription
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,,30,255.1,39.99,0,1.333,chaga,amazon,https://www.amazon.com/dp/B0F1DRXXKR,25.05.2026,single
+3,14,Everyday Dose,30 Servings Coffee+ Medium Roast,instant,,30,255.1,35.99,10,1.1997,chaga,amazon,https://www.amazon.com/dp/B0F1DRXXKR,25.05.2026,subscription
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,13,,10,50,0.77,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,subscription
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,26,,20,50,0.77,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,subscription
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,52,,40,50,0.77,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,subscription
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,13,,16,20,1.23,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,single
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,26,,32,20,1.23,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,single
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,52,,64,20,1.23,,own_site,https://us.foursigmatic.com/products/focus-ground-coffee-bag,20.05.2026,single
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,0,340.2,17.99,0.0,,lion's mane,amazon,https://www.amazon.com/dp/B0756D1D39,2026-05-25,single
+4,15,Four Sigmatic,Focus Ground Coffee - Dark,ground,,0,340.2,17.09,5.0,,lion's mane,amazon,https://www.amazon.com/dp/B0756D1D39,2026-05-25,subscription
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,13,,10,50,0.77,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,subscription
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,26,,20,50,0.77,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,subscription
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,52,,40,50,0.77,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,subscription
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,13,,16,20,1.23,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,single
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,26,,32,20,1.23,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,single
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,52,,64,20,1.23,,own_site,https://us.foursigmatic.com/products/balance-half-caf-ground-coffee-bag,20.05.2026,single
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,0,340.2,18.78,0.0,,adaptogen,amazon,https://www.amazon.com/dp/B081R15GB2,2026-05-25,single
+4,16,Four Sigmatic,Balance Half Caf Ground Coffee - Medium,ground,,0,340.2,18.78,0.0,,adaptogen,amazon,https://www.amazon.com/dp/B081R15GB2,2026-05-25,subscription
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,,17.5,50,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,subscription
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,60,,35,50,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,subscription
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,120,,70,50,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,subscription
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,,28,20,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,single
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,60,,56,20,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,single
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,120,,112,20,,,own_site,https://us.foursigmatic.com/products/focus-instant-coffee-multiserve,20.05.2026,single
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,75.1,36.29,0.0,1.2097,lion's mane,amazon,https://www.amazon.com/dp/B0B3YYDP6V,2026-05-25,single
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,75.1,34.48,5.0,1.1493,lion's mane,amazon,https://www.amazon.com/dp/B0B3YYDP6V,2026-05-25,subscription
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,1701.0,21.81,0.0,0.727,lion's mane,amazon,https://www.amazon.com/dp/B08JSS48Z7,2026-05-25,single
+4,17,Four Sigmatic,Focus Instant Coffee Multiserve,instant,,30,1701.0,21.81,0.0,0.727,lion's mane,amazon,https://www.amazon.com/dp/B08JSS48Z7,2026-05-25,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,18,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,48,,36,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,96,,72,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,28.8,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,48,,57.6,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,96,,115.2,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-coffee-pods-box,20.05.2026,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,36.0,0.0,1.5,lion's mane,amazon,https://www.amazon.com/dp/B0883VBNHC,2026-05-25,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,34.2,5.0,1.425,lion's mane,amazon,https://www.amazon.com/dp/B0883VBNHC,2026-05-25,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,36.0,0.0,1.5,chaga,amazon,https://www.amazon.com/dp/B08L45MMQQ,2026-05-25,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,24,,34.2,5.0,1.425,chaga,amazon,https://www.amazon.com/dp/B08L45MMQQ,2026-05-25,subscription
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,48,,72.0,0.0,1.5,lion's mane,amazon,https://www.amazon.com/dp/B0BV7C9FJK,2026-05-25,single
+4,18,Four Sigmatic,Focus Coffee Pods (24ct),pods,,48,,68.4,5.0,1.425,lion's mane,amazon,https://www.amazon.com/dp/B0BV7C9FJK,2026-05-25,subscription
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,24,,18,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,subscription
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,48,,36,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,subscription
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,96,,72,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,subscription
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,24,,28.8,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,single
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,48,,57.6,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,single
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,96,,115.2,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-high-caf-coffee-pods,20.05.2026,single
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,24,,33.99,0.0,1.4163,lion's mane,amazon,https://www.amazon.com/dp/B0BF21NVP5,2026-05-25,single
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,24,,32.29,5.0,1.3454,lion's mane,amazon,https://www.amazon.com/dp/B0BF21NVP5,2026-05-25,subscription
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,48,,67.98,0.0,1.4163,lion's mane,amazon,https://www.amazon.com/dp/B0BV7F7D8X,2026-05-25,single
+4,19,Four Sigmatic,Focus High Caf Coffee Pods (24ct),pods,,48,,64.58,5.0,1.3454,lion's mane,amazon,https://www.amazon.com/dp/B0BV7F7D8X,2026-05-25,subscription
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,24,,18,50,0.75,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,subscription
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,48,,36,50,0.75,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,subscription
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,96,,72,50,0.75,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,subscription
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,24,,28.8,20,1.2,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,single
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,48,,57.6,20,1.2,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,single
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,96,,115.2,20,1.2,,own_site,https://us.foursigmatic.com/products/gut-health-coffee-pods,20.05.2026,single
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,24,265.4,33.99,0.0,1.4163,chaga,amazon,https://www.amazon.com/dp/B08L3ZMZF4,2026-05-25,single
+4,20,Four Sigmatic,Gut Health Coffee Pods (24ct),pods,,24,265.4,32.29,5.0,1.3454,chaga,amazon,https://www.amazon.com/dp/B08L3ZMZF4,2026-05-25,subscription
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,24,,18,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,subscription
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,48,,36,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,subscription
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,96,,72,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,subscription
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,24,,28.8,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,single
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,48,,57.6,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,single
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,96,,115.2,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-decaf-coffee-pods,20.05.2026,single
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,24,308.4,36.0,0.0,1.5,lion's mane,amazon,https://www.amazon.com/dp/B0BXZ3JMMN,2026-05-25,single
+4,21,Four Sigmatic,Focus Decaf Coffee Pods (24ct),pods,,24,308.4,34.2,5.0,1.425,lion's mane,amazon,https://www.amazon.com/dp/B0BXZ3JMMN,2026-05-25,subscription
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,,7.5,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,subscription
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,20,,15,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,subscription
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,40,,30,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,subscription
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,,12,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,20,,24,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,40,,48,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-dark-roast-espresso-pods-10ct,20.05.2026,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,110.6,14.99,25,1.499,lion's mane,amazon,https://www.amazon.com/dp/B0DN7WWV6C,2026-05-25,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,328.9,31.08,0.0,3.108,lion's mane,amazon,https://www.amazon.com/dp/B0GVW61PW1,2026-05-25,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,328.9,29.53,3.0,2.953,lion's mane,amazon,https://www.amazon.com/dp/B0GVW61PW1,2026-05-25,subscription
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,164.4,13.62,0.0,1.362,lion's mane,amazon,https://www.amazon.com/dp/B0C386SD6D,2026-05-25,single
+4,22,Four Sigmatic,Focus Dark Roast Expresso Pods (10ct),pods,,10,164.4,13.62,0.0,1.362,lion's mane,amazon,https://www.amazon.com/dp/B0C386SD6D,2026-05-25,subscription
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,24,,18,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,subscription
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,48,,36,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,subscription
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,96,,72,50,0.75,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,subscription
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,24,,28.8,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,single
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,48,,57.6,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,single
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,96,,115.2,20,1.2,,own_site,https://us.foursigmatic.com/products/focus-half-caf-coffee-pods-24ct,20.05.2026,single
+4,23,Four Sigmatic,Focus Half-Caf Coffee Pods (24ct),pods,,24,,33.99,0.0,1.4163,lion's mane,amazon,https://www.amazon.com/dp/B0DDW958PG,2026-05-25,single
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,15,,10,50,0.67,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,subscription
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,30,,20,50,0.67,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,subscription
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,60,,40,50,0.67,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,subscription
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,15,,16,20,1.07,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,single
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,30,,32,20,1.07,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,single
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,60,,64,20,1.07,,own_site,https://us.foursigmatic.com/products/focus-organic-latte-vanilla,20.05.2026,single
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,15,599.9,29.95,25,1.9967,,amazon,https://www.amazon.com/dp/B08GNB94B9,2026-05-25,single
+4,24,Four Sigmatic,Focus Organic Coffee Latte - Vanilla,instant,,15,599.9,29.95,25.0,1.9967,,amazon,https://www.amazon.com/dp/B08GNB94B9,2026-05-25,subscription
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,15,,7.5,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,subscription
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,30,,15,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,subscription
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,60,,30,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,subscription
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,15,,12,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,single
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,30,,24,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,single
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,60,,48,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-sweet-creamy,20.05.2026,single
+4,25,Four Sigmatic,Focus Creamer - Sweet & Creamy,creamer,,30,119.9,22.99,0.0,0.7663,lion's mane,amazon,https://www.amazon.com/dp/B0GS3SSFMQ,2026-05-25,single
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,15,,7.5,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,subscription
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,30,,15,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,subscription
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,60,,30,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,subscription
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,15,,12,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,single
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,30,,24,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,single
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,60,,48,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-hazelnut,20.05.2026,single
+4,26,Four Sigmatic,Focus Creamer - Hazelnut,creamer,,30,119.9,19.89,0.0,0.663,lion's mane,amazon,https://www.amazon.com/dp/B0GS3CXL5H,2026-05-25,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,15,,7.5,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,subscription
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,,15,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,subscription
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,60,,30,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,subscription
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,15,,12,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,,24,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,60,,48,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-vanilla-coconut,20.05.2026,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,119.9,11.04,0.0,0.368,lion's mane,amazon,https://www.amazon.com/dp/B0BYL72YFX,2026-05-25,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,119.9,10.49,5.0,0.3497,lion's mane,amazon,https://www.amazon.com/dp/B0BYL72YFX,2026-05-25,subscription
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,239.8,22.08,0.0,0.736,lion's mane,amazon,https://www.amazon.com/dp/B0GVVXKRXN,2026-05-25,single
+4,27,Four Sigmatic,Focus Creamer - Vanilla,creamer,,30,239.8,20.98,5.0,0.6993,lion's mane,amazon,https://www.amazon.com/dp/B0GVVXKRXN,2026-05-25,subscription
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,15,,7.5,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,subscription
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,,15,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,subscription
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,60,,30,50,0.5,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,subscription
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,15,,12,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,single
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,,24,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,single
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,60,,48,20,0.8,,own_site,https://us.foursigmatic.com/products/focus-creamer-cacao-coconut,20.05.2026,single
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,119.9,11.04,0.0,0.368,lion's mane,amazon,https://www.amazon.com/dp/B0BYL6K8WR,2026-05-25,single
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,119.9,10.49,5.0,0.3497,lion's mane,amazon,https://www.amazon.com/dp/B0BYL6K8WR,2026-05-25,subscription
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,239.8,22.08,2,0.736,lion's mane,amazon,https://www.amazon.com/dp/B0G4SMXGSW,2026-05-25,single
+4,28,Four Sigmatic,Focus Creamer - Chocolate,creamer,,30,239.8,20.98,2.0,0.6993,lion's mane,amazon,https://www.amazon.com/dp/B0G4SMXGSW,2026-05-25,subscription
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,30,192,28,60,0.93,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235133183,20.05.2026,subscription
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,60,384,54,60,0.90,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235165951,20.05.2026,subscription
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,90,576,78,60,0.87,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235198719,20.05.2026,subscription
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,30,192,45,0,1.50,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235133183,20.05.2026,single
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,60,384,88,0,1.47,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235165951,20.05.2026,single
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,90,576,129,0,1.43,,own_site,https://habitone.co/products/habitone-super-coffee?variant=47108235198719,20.05.2026,single
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,30,191.9,30.08,33,1.0027,mushroom blend,amazon,https://www.amazon.com/dp/B0FQP8H71L,24.05.2026,single
+5,29,HabitONE,FUNCTIONAL Coffee,instant,,30,191.9,29.59,34,0.9863,mushroom blend,amazon,https://www.amazon.com/dp/B0FQP8H71L,24.05.2026,subscription
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,30,141,28,60,0.93,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053346559,20.05.2026,subscription
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,60,282,54,60,0.90,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053379327,20.05.2026,subscription
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,90,423,78,60,0.87,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053412095,20.05.2026,subscription
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,30,141,45,0,1.50,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053346559,20.05.2026,single
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,60,282,88,0,1.47,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053379327,20.05.2026,single
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,90,423,129,0,1.43,,own_site,https://habitone.co/products/magnesium-cocoa?variant=47616053412095,20.05.2026,single
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,30,140.9,24.99,7,0.833,mushroom blend,amazon,https://www.amazon.com/dp/B0G49FLR22,24.05.2026,single
+5,30,HabitONE,MAGNESIUM Cocoa,instant,,30,140.9,19.99,26,0.6663,mushroom blend,amazon,https://www.amazon.com/dp/B0G49FLR22,24.05.2026,subscription
+5,31,HabitONE,COLLAGEN Creamer,creamer,,30,141,28,60,0.93,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673480959,20.05.2026,subscription
+5,31,HabitONE,COLLAGEN Creamer,creamer,,60,282,54,60,0.90,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673513727,20.05.2026,subscription
+5,31,HabitONE,COLLAGEN Creamer,creamer,,90,423,78,60,0.87,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673546495,20.05.2026,subscription
+5,31,HabitONE,COLLAGEN Creamer,creamer,,30,141,45,0,1.50,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673480959,20.05.2026,single
+5,31,HabitONE,COLLAGEN Creamer,creamer,,60,282,88,0,1.47,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673513727,20.05.2026,single
+5,31,HabitONE,COLLAGEN Creamer,creamer,,90,423,129,0,1.43,,own_site,https://habitone.co/products/collagen-creamer?variant=47616673546495,20.05.2026,single
+5,31,HabitONE,COLLAGEN Creamer,creamer,,30,246.1,22,18,0.7333,,amazon,https://www.amazon.com/dp/B0G7KGDPN8,24.05.2026,single
+5,31,HabitONE,COLLAGEN Creamer,creamer,,30,246.1,19.99,26,0.6663,,amazon,https://www.amazon.com/dp/B0G7KGDPN8,24.05.2026,subscription
+7,32,La Republica,Mushroom Coffee 35 Serving (Instant),instant,2,35,70,24.99,0,0.71,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-organic-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,single
+7,32,La Republica,Mushroom Coffee 35 Serving (Instant),instant,2,35,70,21.24,15,0.61,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-organic-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,subscription
+7,32,La Republica,Mushroom Coffee 35 Serving (Instant),instant,,35,70,24.69,0,0.7054,reishi,amazon,https://www.amazon.com/dp/B078XR2R6B,25.05.2026,single
+7,32,La Republica,Mushroom Coffee 35 Serving (Instant),instant,,35,70,20.99,15,0.5997,reishi,amazon,https://www.amazon.com/dp/B078XR2R6B,25.05.2026,subscription
+7,32,La Republica,Mushroom Coffee 35 Serving (Instant),instant,,35,70.9,14.99,0,0.4283,mushroom blend,amazon,https://www.amazon.com/dp/B0C42GTRHJ,25.05.2026,single
+7,33,La Republica,Decaf Mushroom Coffee 35 Serving (Instant),instant,2,35,70,24.99,0,0.71,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-decaf-organic-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,single
+7,33,La Republica,Decaf Mushroom Coffee 35 Serving (Instant),instant,2,35,70,21.24,15,0.61,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-decaf-organic-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,subscription
+7,33,La Republica,Decaf Mushroom Coffee 35 Serving (Instant),instant,,35,60.1,24.99,0,0.714,lion's mane,amazon,https://www.amazon.com/dp/B07PFYMKDC,25.05.2026,single
+7,33,La Republica,Decaf Mushroom Coffee 35 Serving (Instant),instant,,35,70.9,16.99,0,0.4854,,amazon,https://www.amazon.com/dp/B08F3W91GB,25.05.2026,single
+7,33,La Republica,Decaf Mushroom Coffee 35 Serving (Instant),instant,,35,70.9,14.44,15,0.4126,,amazon,https://www.amazon.com/dp/B08F3W91GB,25.05.2026,subscription
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,24.99,0,0.42,lion's mane,own_site,https://larepublicasuperfoods.com/products/la-republica-organic-ground-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,single
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,21.24,15,0.35,lion's mane,own_site,https://larepublicasuperfoods.com/products/la-republica-organic-ground-mushroom-coffee-w-7-superfood-mushrooms,23.05.2026,subscription
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,24.99,0,0.4165,mushroom blend,amazon,https://www.amazon.com/dp/B0B75PN7SZ,25.05.2026,single
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,21.24,15,0.354,mushroom blend,amazon,https://www.amazon.com/dp/B0B75PN7SZ,25.05.2026,subscription
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,29.99,0,0.4998,lion's mane,amazon,https://www.amazon.com/dp/B0C4C7SBN8,25.05.2026,single
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,31.99,0,0.5332,lion's mane,amazon,https://www.amazon.com/dp/B0C4C5L2JF,25.05.2026,single
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,31.99,0,0.5332,lion's mane,amazon,https://www.amazon.com/dp/B0C4C5L2JF,25.05.2026,subscription
+7,34,La Republica,Ground Mushroom Coffee 12oz Bag,ground,,60,340.2,29.99,0,0.4998,lion's mane,amazon,https://www.amazon.com/dp/B0CM57RVK8,25.05.2026,single
+7,35,La Republica,Mushroom Coffee 10-Pack Box of Single Serve Packets,packet,,,,14.99,0,,chaga,own_site,https://larepublicasuperfoods.com/products/10-pack-la-republica-mushroom-coffee-individual-serving-packets-new,23.05.2026,single
+7,35,La Republica,Mushroom Coffee 10-Pack Box of Single Serve Packets,packet,,,,12.74,15,,chaga,own_site,https://larepublicasuperfoods.com/products/10-pack-la-republica-mushroom-coffee-individual-serving-packets-new,23.05.2026,subscription
+7,35,La Republica,Mushroom Coffee 10-Pack Box of Single Serve Packets,packet,,0,,17.79,0,,lion's mane,amazon,https://www.amazon.com/dp/B0CGZFSLQB,25.05.2026,single
+7,36,La Republica,BIG SHOT Mushroom Coffee,instant,2,120,240,84.99,0,0.71,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-big-shot-organic-mushroom-coffee-with-7-superfood-mushrooms,23.05.2026,single
+7,36,La Republica,BIG SHOT Mushroom Coffee,instant,2,120,240,72.24,15,0.6,chaga,own_site,https://larepublicasuperfoods.com/products/la-republica-big-shot-organic-mushroom-coffee-with-7-superfood-mushrooms,23.05.2026,subscription
+7,36,La Republica,BIG SHOT Mushroom Coffee,instant,,120,240.4,74.99,0,0.6249,lion's mane,amazon,https://www.amazon.com/dp/B08L5JBCDY,25.05.2026,single
+7,37,La Republica,Decaf BIG SHOT Mushroom Coffee,instant,2,120,240,84.99,0,0.71,chaga,own_site,https://larepublicasuperfoods.com/products/decaf-la-republica-big-shot-organic-mushroom-coffee-with-7-superfood-mushrooms-4x-bigger-decaffeinated,23.05.2026,single
+7,37,La Republica,Decaf BIG SHOT Mushroom Coffee,instant,2,120,240,72.24,15,0.6,chaga,own_site,https://larepublicasuperfoods.com/products/decaf-la-republica-big-shot-organic-mushroom-coffee-with-7-superfood-mushrooms-4x-bigger-decaffeinated,23.05.2026,subscription
+7,37,La Republica,Decaf BIG SHOT Mushroom Coffee,instant,,120,240.4,23.99,0,0.1999,lion's mane,amazon,https://www.amazon.com/dp/B09253ZSNB,25.05.2026,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,,226.8,19,0,,adaptogen,own_site,https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens,23.05.2026,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,,226.8,15.2,20,,adaptogen,own_site,https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens,23.05.2026,subscription
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,,907.2,72.2,0,,adaptogen,own_site,https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens,23.05.2026,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,,907.2,57.76,20,,adaptogen,own_site,https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens,23.05.2026,subscription
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,15,150.3,19.99,0.0,1.3327,,amazon,https://www.amazon.com/dp/B0G311SP7Q,2026-05-25,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,15,150.3,18.99,5.0,1.266,,amazon,https://www.amazon.com/dp/B0G311SP7Q,2026-05-25,subscription
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,20,150.3,19.99,0.0,0.9995,,amazon,https://www.amazon.com/dp/B0G311QZMK,2026-05-25,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,20,150.3,18.99,5.0,0.9495,,amazon,https://www.amazon.com/dp/B0G311QZMK,2026-05-25,subscription
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,195,226.8,19.0,0.0,0.0974,,amazon,https://www.amazon.com/dp/B0CFYXGJGQ,2026-05-25,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,195,226.8,18.05,5.0,0.0926,,amazon,https://www.amazon.com/dp/B0CFYXGJGQ,2026-05-25,subscription
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,15,150.3,19.99,0.0,1.3327,,amazon,https://www.amazon.com/dp/B0G31163ST,2026-05-25,single
+8,38,Laird Superfood,Chai Instant Latte with Adaptogens,instant,,15,150.3,18.99,5.0,1.266,,amazon,https://www.amazon.com/dp/B0G31163ST,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,340.2,20,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,340.2,16,20,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,1360.8,76,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,1360.8,60.8,20,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,2041.2,114,0,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,2041.2,91.2,20,,reishi,own_site,https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee,23.05.2026,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,226.8,14.0,0.0,0.4667,,amazon,https://www.amazon.com/dp/B01MYSVO53,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,226.8,13.3,5.0,0.4433,,amazon,https://www.amazon.com/dp/B01MYSVO53,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,24,453.6,24.0,0.0,1.0,,amazon,https://www.amazon.com/dp/B06ZYDJ41T,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,24,453.6,22.8,5.0,0.95,,amazon,https://www.amazon.com/dp/B06ZYDJ41T,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,5,907.2,44.95,0.0,8.99,mct,amazon,https://www.amazon.com/dp/B0FXKB9VTM,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,12,1814.4,74.9,0.0,6.2417,mct,amazon,https://www.amazon.com/dp/B0GJZ4Z54P,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,907.2,44.97,0.0,1.499,mct,amazon,https://www.amazon.com/dp/B0GFYD2F3S,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,907.2,41.95,0.0,1.3983,mct,amazon,https://www.amazon.com/dp/B0GFPVP9TL,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,80,907.2,42.5,0.0,0.5312,mct,amazon,https://www.amazon.com/dp/B0GWWGQV78,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,,907.2,79.97,0.0,,mct,amazon,https://www.amazon.com/dp/B0GWRHWD63,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,226.8,17.0,0.0,0.5667,,amazon,https://www.amazon.com/dp/B07X32DZZS,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,226.8,16.15,5.0,0.5383,,amazon,https://www.amazon.com/dp/B07X32DZZS,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,453.6,9.99,0.0,0.333,,amazon,https://www.amazon.com/dp/B01CM4JEKI,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,28,453.6,24.0,0.0,0.8571,,amazon,https://www.amazon.com/dp/B01N2B3DEG,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,28,453.6,22.8,5.0,0.8143,,amazon,https://www.amazon.com/dp/B01N2B3DEG,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,453.6,27.0,0.0,0.9,,amazon,https://www.amazon.com/dp/B08QNK3BNJ,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,453.6,25.65,5.0,0.855,,amazon,https://www.amazon.com/dp/B08QNK3BNJ,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,80,,14.0,0.0,0.175,,amazon,https://www.amazon.com/dp/B078GNTC3G,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,80,,13.3,5.0,0.1663,,amazon,https://www.amazon.com/dp/B078GNTC3G,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,,14.0,0.0,0.4667,,amazon,https://www.amazon.com/dp/B078GQMST2,2026-05-25,single
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,,13.3,5.0,0.4433,,amazon,https://www.amazon.com/dp/B078GQMST2,2026-05-25,subscription
+8,39,Laird Superfood,DEFEND Functional Mushroom Coffee – Medium Roast,creamer,,30,907.2,48.0,0.0,1.6,,amazon,https://www.amazon.com/dp/B0GGLGDN52,2026-05-25,single
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,340.2,20,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,single
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,340.2,16,20,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,subscription
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,1360.8,76,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,single
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,1360.8,60.8,20,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,subscription
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,2041.2,114,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,single
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,,2041.2,91.2,20,,rhodiola,own_site,https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee,23.05.2026,subscription
+8,40,Laird Superfood,FOCUS Medium Roast Ground Coffee,creamer,,60,793.8,35.0,22,0.5833,mushroom blend,amazon,https://www.amazon.com/dp/B0CM7SGZCX,2026-05-25,single
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,,,15,0,,rhodiola,own_site,https://lairdsuperfood.com/products/focused-energy-coffee-k-cups,23.05.2026,single
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,,,12,20,,rhodiola,own_site,https://lairdsuperfood.com/products/focused-energy-coffee-k-cups,23.05.2026,subscription
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,10,104.9,15.0,0.0,1.5,chaga,amazon,https://www.amazon.com/dp/B0C3DVJZMN,2026-05-25,single
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,10,104.9,14.25,5.0,1.425,chaga,amazon,https://www.amazon.com/dp/B0C3DVJZMN,2026-05-25,subscription
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,10,104.9,14.68,0.0,1.468,mushroom blend,amazon,https://www.amazon.com/dp/B0C3DVJZPB,2026-05-25,single
+8,41,Laird Superfood,Focused Energy Coffee K-Cups,pods,,10,104.9,13.95,5.0,1.395,mushroom blend,amazon,https://www.amazon.com/dp/B0C3DVJZPB,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,,226.8,19,0,,mushroom,own_site,https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens,23.05.2026,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,,226.8,15.2,20,,mushroom,own_site,https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens,23.05.2026,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,,453.6,29,0,,mushroom,own_site,https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens,23.05.2026,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,,453.6,23.2,20,,mushroom,own_site,https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens,23.05.2026,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,453.6,27.0,0.0,0.9,mushroom blend,amazon,https://www.amazon.com/dp/B08QNGKX74,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,453.6,25.65,5.0,0.855,mushroom blend,amazon,https://www.amazon.com/dp/B08QNGKX74,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,453.6,29.0,0.0,0.7632,,amazon,https://www.amazon.com/dp/B01HDYROWC,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,453.6,27.55,5.0,0.725,,amazon,https://www.amazon.com/dp/B01HDYROWC,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,20,226.8,20.0,0.0,1.0,mushroom blend,amazon,https://www.amazon.com/dp/B0D2DVKS63,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,20,226.8,19.0,5.0,0.95,mushroom blend,amazon,https://www.amazon.com/dp/B0D2DVKS63,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,8,226.8,19.0,0.0,2.375,adaptogen,amazon,https://www.amazon.com/dp/B07SH1H22K,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,8,226.8,18.05,5.0,2.2563,adaptogen,amazon,https://www.amazon.com/dp/B07SH1H22K,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,60,453.6,19.0,0.0,0.3167,,amazon,https://www.amazon.com/dp/B0CQ9LDT74,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,7,226.8,19.0,0.0,2.7143,,amazon,https://www.amazon.com/dp/B01N2N0ZWV,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,7,226.8,18.05,5.0,2.5786,,amazon,https://www.amazon.com/dp/B01N2N0ZWV,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,226.8,19.0,0.0,0.5,,amazon,https://www.amazon.com/dp/B0F44GWLS7,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,226.8,18.05,5.0,0.475,,amazon,https://www.amazon.com/dp/B0F44GWLS7,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,19.0,0.0,0.6333,adaptogen,amazon,https://www.amazon.com/dp/B08JHD6QJ9,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,18.05,5.0,0.6017,adaptogen,amazon,https://www.amazon.com/dp/B08JHD6QJ9,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,40,226.8,9.99,0.0,0.2497,mushroom blend,amazon,https://www.amazon.com/dp/B07YXGDMHG,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,60,226.8,19.0,0.0,0.3167,,amazon,https://www.amazon.com/dp/B0F1DTPCFN,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,60,226.8,18.05,5.0,0.3008,,amazon,https://www.amazon.com/dp/B0F1DTPCFN,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,19.0,0.0,0.6333,,amazon,https://www.amazon.com/dp/B0FPMRNNTN,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,18.05,5.0,0.6017,,amazon,https://www.amazon.com/dp/B0FPMRNNTN,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,10,453.6,19.0,0.0,1.9,adaptogen,amazon,https://www.amazon.com/dp/B07SGY68G8,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,25,453.6,19.0,0.0,0.76,adaptogen,amazon,https://www.amazon.com/dp/B0C44D5QGF,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,19.0,0.0,0.6333,adaptogen,amazon,https://www.amazon.com/dp/B0CKD32MFM,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,18.05,5.0,0.6017,adaptogen,amazon,https://www.amazon.com/dp/B0CKD32MFM,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,226.8,20.0,0.0,0.5263,,amazon,https://www.amazon.com/dp/B0FL86WFXS,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,38,226.8,19.0,5.0,0.5,,amazon,https://www.amazon.com/dp/B0FL86WFXS,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,80,226.8,26.99,0.0,0.3374,,amazon,https://www.amazon.com/dp/B07VBH19ST,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,15,453.6,38.0,0.0,2.5333,adaptogen,amazon,https://www.amazon.com/dp/B0FRX1T2QM,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,19.0,0.0,0.6333,adaptogen,amazon,https://www.amazon.com/dp/B0C2S3424V,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,226.8,18.05,5.0,0.6017,adaptogen,amazon,https://www.amazon.com/dp/B0C2S3424V,2026-05-25,subscription
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,453.6,38.0,0.0,1.2667,,amazon,https://www.amazon.com/dp/B0GGMLD5WD,2026-05-25,single
+8,42,Laird Superfood,Mocha Instant Latte with Adaptogens,creamer,,30,453.6,38.0,0.0,1.2667,adaptogen,amazon,https://www.amazon.com/dp/B0GGM2DJ96,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,453.6,24,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,453.6,19.2,20,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,226.8,14,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,226.8,11.2,20,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,1360.8,68.4,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,1360.8,54.72,20,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,907.2,53.2,0,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,907.2,42.56,20,,mushroom,own_site,https://lairdsuperfood.com/products/superfood-creamer-mocha,23.05.2026,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,12,,6.49,0.0,0.5408,,amazon,https://www.amazon.com/dp/B0FK5G85T4,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,,,6.49,0.0,,,amazon,https://www.amazon.com/dp/B0FK5GM98F,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,113,226.8,7.07,26,0.0626,,amazon,https://www.amazon.com/dp/B0CH913LGS,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,30,226.8,7.07,26,0.2357,,amazon,https://www.amazon.com/dp/B0DKTSH7F2,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,113,226.8,7.07,26,0.0626,,amazon,https://www.amazon.com/dp/B0CH91MQ1Z,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,5,99.2,9.99,0.0,1.998,,amazon,https://www.amazon.com/dp/B0CH91KXKZ,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,5,99.2,9.49,5.0,1.898,,amazon,https://www.amazon.com/dp/B0CH91KXKZ,2026-05-25,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,30,1360.8,72.01,8,2.4003,,amazon,https://www.amazon.com/dp/B0BFPBRDR2,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,30,453.6,24.0,0.0,0.8,,amazon,https://www.amazon.com/dp/B06XGKP8TS,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,30,453.6,22.8,5.0,0.76,,amazon,https://www.amazon.com/dp/B06XGKP8TS,2026-05-25,subscription
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,1,907.2,5.79,0.0,5.79,,amazon,https://www.amazon.com/dp/B0CL59L4QG,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,30,907.2,48.0,0.0,1.6,,amazon,https://www.amazon.com/dp/B0GGLL8VQB,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,113,226.8,14.0,0.0,0.1239,,amazon,https://www.amazon.com/dp/B06Y4CGTGZ,2026-05-25,single
+8,43,Laird Superfood,Mocha Superfood Creamer®,creamer,,113,226.8,13.3,5.0,0.1177,,amazon,https://www.amazon.com/dp/B06Y4CGTGZ,2026-05-25,subscription
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,226.8,19,0,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,single
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,226.8,15.2,20,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,subscription
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,,2.5,0,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,single
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,,2,20,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,subscription
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,,33,0,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,single
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,,,26.4,20,,adaptogen,own_site,https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens,23.05.2026,subscription
+8,44,Laird Superfood,Peppermint Mocha Instant Latte with Adaptogens,instant,,1,,35.0,8,35.0,,amazon,https://www.amazon.com/dp/B0CNS1KWCG,2026-05-25,single
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,226.8,14,0,,coconut,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,23.05.2026,single
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,226.8,11.2,20,,coconut,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,23.05.2026,subscription
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,907.2,53.2,0,,coconut,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,23.05.2026,single
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,,907.2,42.56,20,,coconut,own_site,https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer,23.05.2026,subscription
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,0,226.8,14.0,0.0,,,amazon,https://www.amazon.com/dp/B07KX49QCB,2026-05-25,single
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,0,226.8,13.3,5.0,,,amazon,https://www.amazon.com/dp/B07KX49QCB,2026-05-25,subscription
+8,45,Laird Superfood,Peppermint Mocha Superfood Creamer®,creamer,,0,453.6,28.0,0.0,,,amazon,https://www.amazon.com/dp/B0FRL4Z87N,2026-05-25,single
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,,19.99,0,0.33,lion's mane,own_site,https://www.maxfitwellness.com/products/instant-mushroom-coffee-dark-roast-60-servings,23.05.2026,single
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,,18.99,5,0.32,lion's mane,own_site,https://www.maxfitwellness.com/products/instant-mushroom-coffee-dark-roast-60-servings,23.05.2026,subscription
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,141.7,19.99,0.0,0.3332,,amazon,https://www.amazon.com/dp/B0DHSTZBTX,2026-05-25,single
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,141.7,18.99,5.0,0.3165,,amazon,https://www.amazon.com/dp/B0DHSTZBTX,2026-05-25,subscription
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,141.7,19.99,0.0,0.3332,cordyceps,amazon,https://www.amazon.com/dp/B0DFHPP2DC,2026-05-25,single
+9,46,Max Fit Wellness,Dark Roast Instant Mushroom Coffee (60 Servings),instant,,60,141.7,18.99,5.0,0.3165,cordyceps,amazon,https://www.amazon.com/dp/B0DFHPP2DC,2026-05-25,subscription
+9,47,Max Fit Wellness,Immunity Mushroom Instant Coffee,instant,,60,141.7,19.99,0,0.33,chaga,own_site,https://www.maxfitwellness.com/products/immunity-mushroom-instant-coffee,23.05.2026,single
+9,47,Max Fit Wellness,Immunity Mushroom Instant Coffee,instant,,60,141.7,18.99,5,0.32,chaga,own_site,https://www.maxfitwellness.com/products/immunity-mushroom-instant-coffee,23.05.2026,subscription
+9,47,Max Fit Wellness,Immunity Mushroom Instant Coffee,instant,,60,141.7,19.99,0.0,0.3332,reishi,amazon,https://www.amazon.com/dp/B0CPYTVDMX,2026-05-25,single
+9,47,Max Fit Wellness,Immunity Mushroom Instant Coffee,instant,,60,141.7,18.99,5.0,0.3165,reishi,amazon,https://www.amazon.com/dp/B0CPYTVDMX,2026-05-25,subscription
+9,48,Max Fit Wellness,Original 10 Mushrooms Instant Coffee,instant,2.36,60,141.7,19.99,0,0.33,mushroom,own_site,https://www.maxfitwellness.com/products/10-mushrooms-coffee-60-servings5oz,23.05.2026,single
+9,48,Max Fit Wellness,Original 10 Mushrooms Instant Coffee,instant,2.36,60,141.7,18.99,5,0.32,mushroom,own_site,https://www.maxfitwellness.com/products/10-mushrooms-coffee-60-servings5oz,23.05.2026,subscription
+9,48,Max Fit Wellness,Original 10 Mushrooms Instant Coffee,instant,,60,141.7,19.99,0.0,0.3332,cordyceps,amazon,https://www.amazon.com/dp/B0C8WGD562,2026-05-25,single
+9,48,Max Fit Wellness,Original 10 Mushrooms Instant Coffee,instant,,60,141.7,18.99,5.0,0.3165,cordyceps,amazon,https://www.amazon.com/dp/B0C8WGD562,2026-05-25,subscription
+10,49,MudWtr,Coconut Creamer (30 serving),creamer,5,30,150,21.25,15,0.71,,own_site,https://mudwtr.com/products/30-serving-creamer-bag,23.05.2026,single
+10,49,MudWtr,Coconut Creamer (30 serving),creamer,5,30,150,17,32,0.57,,own_site,https://mudwtr.com/products/30-serving-creamer-bag,23.05.2026,subscription
+10,49,MudWtr,Coconut Creamer (30 serving),creamer,,30,181.4,24.99,0.0,0.833,mushroom blend,amazon,https://www.amazon.com/dp/B09RQ1QLYX,2026-05-25,single
+10,49,MudWtr,Coconut Creamer (30 serving),creamer,,30,181.4,23.74,5.0,0.7913,mushroom blend,amazon,https://www.amazon.com/dp/B09RQ1QLYX,2026-05-25,subscription
+10,50,MudWtr,Coffee (30 Serving),instant,5,30,150,42.5,15,1.42,l-theanine,own_site,https://mudwtr.com/products/coffee-30-serving,23.05.2026,single
+10,50,MudWtr,Coffee (30 Serving),instant,5,30,150,34,32,1.13,l-theanine,own_site,https://mudwtr.com/products/coffee-30-serving,23.05.2026,subscription
+10,50,MudWtr,Coffee (30 Serving),instant,,30,181.4,49.99,0.0,1.6663,lion's mane,amazon,https://www.amazon.com/dp/B0D1JGJJDB,2026-05-25,single
+10,50,MudWtr,Coffee (30 Serving),instant,,30,181.4,47.49,5.0,1.583,lion's mane,amazon,https://www.amazon.com/dp/B0D1JGJJDB,2026-05-25,subscription
+10,50,MudWtr,Coffee (30 Serving),instant,,30,150.3,49.99,0.0,1.6663,mushroom blend,amazon,https://www.amazon.com/dp/B0GJTL7WRT,2026-05-25,single
+10,50,MudWtr,Coffee (30 Serving),instant,,30,150.3,47.49,5.0,1.583,mushroom blend,amazon,https://www.amazon.com/dp/B0GJTL7WRT,2026-05-25,subscription
+11,51,Nootrum,Mushroom Coffee Fusion (Instant) - Lion’s Mane & Chaga,instant,1.8,30,54,34.99,10.3,1.17,lions mane,own_site,https://nootrum.com/products/mushroom-coffee-fusion-instant-lion-s-mane-chaga,23.05.2026,single
+11,52,Nootrum,Mushroom Coffee Fusion - Lion’s Mane & Chaga 12oz,ground,,,340.2,49.99,0,,lions mane,own_site,https://nootrum.com/products/mushroom-coffee-fusion-lion-s-mane-chaga-12oz,23.05.2026,single
+11,53,Nootrum,Mushroom Coffee Fusion - Lion’s Mane & Chaga 4oz,ground,,,113.4,29.49,9.2,,lions mane,own_site,https://nootrum.com/products/mushroom-coffee-fusion-lion-s-mane-chaga-4oz,23.05.2026,single
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,8,10,80,21.99,0,2.2,cordyceps,own_site,https://ommushrooms.com/products/mushroom-coffee-superfood,23.05.2026,single
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,8,10,80,18.69,15,1.87,cordyceps,own_site,https://ommushrooms.com/products/mushroom-coffee-superfood,23.05.2026,subscription
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,8,30,240,39.99,0,1.33,cordyceps,own_site,https://ommushrooms.com/products/mushroom-coffee-superfood,23.05.2026,single
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,8,30,240,33.99,15,1.13,cordyceps,own_site,https://ommushrooms.com/products/mushroom-coffee-superfood,23.05.2026,subscription
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,,30,176.9,25.57,36,0.8523,reishi,amazon,https://www.amazon.com/dp/B09G9B95D2,25.05.2026,single
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,,30,176.9,23.01,42,0.767,reishi,amazon,https://www.amazon.com/dp/B09G9B95D2,25.05.2026,subscription
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,,10,79.9,14.23,35,1.423,cordyceps,amazon,https://www.amazon.com/dp/B09HGD19YN,25.05.2026,single
+12,54,Om Mushrooms,Mushroom Coffee Blend,instant,,10,79.9,12.81,42,1.281,cordyceps,amazon,https://www.amazon.com/dp/B09HGD19YN,25.05.2026,subscription
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,8,10,80,21.99,0,2.2,mushroom,own_site,https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend,23.05.2026,single
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,8,10,80,18.69,15,1.87,mushroom,own_site,https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend,23.05.2026,subscription
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,8,30,240,39.99,0,1.33,mushroom,own_site,https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend,23.05.2026,single
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,8,30,240,33.99,15,1.13,mushroom,own_site,https://ommushrooms.com/products/mushroom-powered-coffee-latte-blend,23.05.2026,subscription
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,,30,240.1,25.99,13,0.8663,reishi,amazon,https://www.amazon.com/dp/B09G9HBWQR,25.05.2026,single
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,,30,240.1,23.39,22,0.7797,reishi,amazon,https://www.amazon.com/dp/B09G9HBWQR,25.05.2026,subscription
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,,30,240.1,26.22,34,0.874,reishi,amazon,https://www.amazon.com/dp/B09G98BJ13,25.05.2026,single
+12,55,Om Mushrooms,Mushroom Coffee Latte Blend,instant,,30,240.1,25.19,37,0.8397,reishi,amazon,https://www.amazon.com/dp/B09G98BJ13,25.05.2026,subscription
+13,56,Rasa,Radiant Roast Coffee,instant,,,,36,0,1.5,adaptogen,own_site,https://wearerasa.com/products/radiant-roast-coffee,23.05.2026,single
+13,56,Rasa,Radiant Roast Coffee,instant,,,,28.8,20,1.2,adaptogen,own_site,https://wearerasa.com/products/radiant-roast-coffee,23.05.2026,subscription
+13,56,Rasa,Radiant Roast Coffee,instant,,,28.3,34.99,0,,mushroom blend,amazon,https://www.amazon.com/dp/B09ZWXF8N5,24.05.2026,single
+13,56,Rasa,Radiant Roast Coffee,instant,,,28.3,31.49,10,,mushroom blend,amazon,https://www.amazon.com/dp/B09ZWXF8N5,24.05.2026,subscription
+13,57,Rasa,Crème de la Creamer,creamer,7.56,30,226.8,32,0,1.07,adaptogen,own_site,https://wearerasa.com/products/creme-de-la-creamer,23.05.2026,single
+13,57,Rasa,Crème de la Creamer,creamer,7.56,30,226.8,25.6,20,0.85,adaptogen,own_site,https://wearerasa.com/products/creme-de-la-creamer,23.05.2026,subscription
+13,57,Rasa,Crème de la Creamer,creamer,2.36,12,28.3,24,0,2,adaptogen,own_site,https://wearerasa.com/products/creme-de-la-creamer?variant=39982909784138,23.05.2026,single
+13,57,Rasa,Crème de la Creamer,creamer,2.36,12,28.3,19.2,20,1.6,adaptogen,own_site,https://wearerasa.com/products/creme-de-la-creamer?variant=39982909784138,23.05.2026,subscription
+13,57,Rasa,Crème de la Creamer,creamer,,,255.1,31.99,0,,mushroom blend,amazon,https://www.amazon.com/dp/B09QHCVSLV,24.05.2026,single
+13,57,Rasa,Crème de la Creamer,creamer,,,255.1,28.79,10,,mushroom blend,amazon,https://www.amazon.com/dp/B09QHCVSLV,24.05.2026,subscription
+13,57,Rasa,Crème de la Creamer,creamer,,30,255.1,32,0,1.0667,mushroom blend,amazon,https://www.amazon.com/dp/B09QHBPF26,24.05.2026,single
+13,57,Rasa,Crème de la Creamer,creamer,,30,255.1,28.8,10,0.96,mushroom blend,amazon,https://www.amazon.com/dp/B09QHBPF26,24.05.2026,subscription
+14,58,Ryze,Dark Roast Instant Coffee Bag,instant,,,,17.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/dark-roast-instant-coffee,2026-05-25,single
+14,58,Ryze,Dark Roast Instant Coffee Bag,instant,,30,178.6,44.99,0,1.4997,mushroom blend,amazon,https://www.amazon.com/dp/B0FRVXJTW2,25.05.2026,single
+14,58,Ryze,Dark Roast Instant Coffee Bag,instant,,30,178.6,40.49,10,1.3497,mushroom blend,amazon,https://www.amazon.com/dp/B0FRVXJTW2,25.05.2026,subscription
+14,58,Ryze,Dark Roast Instant Coffee Bag,instant,,30,389.8,89.98,0,2.9993,mushroom blend,amazon,https://www.amazon.com/dp/B0G8TGQSTC,25.05.2026,single
+14,58,Ryze,Dark Roast Instant Coffee Bag,instant,,30,389.8,80.98,10,2.6993,mushroom blend,amazon,https://www.amazon.com/dp/B0G8TGQSTC,25.05.2026,subscription
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,,,17.99,0,,mushroom,own_site,https://www.ryzesuperfoods.com/products/medium-roast-instant-coffee,2026-05-25,single
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,30,178.6,44.99,0,1.4997,mushroom blend,amazon,https://www.amazon.com/dp/B0FSGHP1FC,25.05.2026,single
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,30,178.6,40.49,10,1.3497,mushroom blend,amazon,https://www.amazon.com/dp/B0FSGHP1FC,25.05.2026,subscription
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,60,360,74.99,0,1.2498,mushroom blend,amazon,https://www.amazon.com/dp/B0FWVWZFW1,25.05.2026,single
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,60,360,67.49,10,1.1248,mushroom blend,amazon,https://www.amazon.com/dp/B0FWVWZFW1,25.05.2026,subscription
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,30,,79.99,0,2.6663,mushroom blend,amazon,https://www.amazon.com/dp/B0FWYJLLJK,25.05.2026,single
+14,59,Ryze,Medium Roast Instant Coffee Bag,instant,,30,,71.99,10,2.3997,mushroom blend,amazon,https://www.amazon.com/dp/B0FWYJLLJK,25.05.2026,subscription
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,30,,32,0,1.07,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,single
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,30,,25.92,19,0.86,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,subscription
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,60,,62,0,1.03,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,single
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,60,,50.22,19,0.84,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,subscription
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,90,,93,0,1.03,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,single
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,90,,75.33,19,0.84,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,subscription
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,120,,123,0,1.02,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,single
+16,60,Strong Coffee Co.,Coffee with Adaptogens - BLACK Instant,instant,,120,,99.63,19,0.83,adaptogen,own_site,https://strongcoffeecompany.com/products/black,24.05.2026,subscription
+16,61,Strong Coffee Co.,Coffee with Adaptogens Travel Packs - 10 Servings | STRONG,packet,,10,,15,0,1.5,lion's mane,own_site,https://strongcoffeecompany.com/products/black-fair-trade-instant-coffee-adaptogens-10-single-servings-per-pack,24.05.2026,single
+16,61,Strong Coffee Co.,Coffee with Adaptogens Travel Packs - 10 Servings | STRONG,packet,,10,,12.15,19,1.22,lion's mane,own_site,https://strongcoffeecompany.com/products/black-fair-trade-instant-coffee-adaptogens-10-single-servings-per-pack,24.05.2026,subscription
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,15,450,39.99,0,2.67,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,single
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,15,450,32.39,19,2.16,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,subscription
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,30,900,76,0,2.53,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,single
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,30,900,61.56,19,2.05,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,subscription
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,45,1350,113,0,2.51,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,single
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,45,1350,91.53,19,2.03,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,subscription
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,60,1800,148,0,2.47,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,single
+16,62,Strong Coffee Co.,Collagen Latte Dark Mocha,instant,30,60,1800,119.88,19,2,collagen,own_site,https://strongcoffeecompany.com/products/dark-mocha-instant-latte,24.05.2026,subscription
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,15,450,39.99,0,2.67,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,single
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,15,450,32.39,19,2.16,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,subscription
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,30,900,76,0,2.53,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,single
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,30,900,61.56,19,2.05,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,subscription
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,45,1350,113,0,2.51,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,single
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,45,1350,91.53,19,2.03,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,subscription
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,60,1800,148,0,2.47,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,single
+16,63,Strong Coffee Co.,Collagen Latte Hazelnut Mocha,instant,30,60,1800,119.88,19,2,collagen,own_site,https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials,24.05.2026,subscription
+16,64,Strong Coffee Co.,Collagen Latte PB Coco,instant,30,15,450,39,0,2.6,collagen,own_site,https://strongcoffeecompany.com/products/peanut-butter-coco-latte,24.05.2026,single
+16,64,Strong Coffee Co.,Collagen Latte PB Coco,instant,30,45,1350,102,0,2.27,collagen,own_site,https://strongcoffeecompany.com/products/peanut-butter-coco-latte,24.05.2026,single
+16,64,Strong Coffee Co.,Collagen Latte PB Coco,instant,30,90,2700,180,0,2,collagen,own_site,https://strongcoffeecompany.com/products/peanut-butter-coco-latte,24.05.2026,single
+16,65,Strong Coffee Co.,Collagen Latte Peppermint Mocha,instant,30,,,37,0,,collagen,own_site,https://strongcoffeecompany.com/products/peppermint-mocha-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,15,450,39.99,0,2.67,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,15,450,32.39,19,2.16,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,subscription
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,30,900,76,0,2.53,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,30,900,61.56,19,2.05,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,subscription
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,45,1350,113,0,2.51,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,45,1350,91.53,19,2.03,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,subscription
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,60,1800,148,0,2.47,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,60,1800,119.88,19,2,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,subscription
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,90,2700,228,0,2.53,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,single
+16,66,Strong Coffee Co.,Collagen Latte Snickerdoodle,instant,30,90,2700,184.68,19,2.05,collagen,own_site,https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials,24.05.2026,subscription
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,15,450,39.99,0,2.67,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,single
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,15,450,32.39,19,2.16,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,subscription
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,30,900,76,0,2.53,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,single
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,30,900,61.56,19,2.05,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,subscription
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,45,1350,113,0,2.51,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,single
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,45,1350,91.53,19,2.03,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,subscription
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,60,1800,148,0,2.47,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,single
+16,67,Strong Coffee Co.,Collagen Latte Vanilla,instant,30,60,1800,119.88,19,2,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-multi-serve,24.05.2026,subscription
+16,68,Strong Coffee Co.,Collagen Latte Vanilla Travel Packs,packet,30,,,25,0,,collagen,own_site,https://strongcoffeecompany.com/products/morning-fix-travel-box,24.05.2026,single
+17,69,Bunkell,"Bunkell Mushroom Coffee, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Instant Coffee Powder for Energy, Digestion & Immune Support, 30 Servings",instant,,30,180,17.79,18,0.593,lion's mane,amazon,https://www.amazon.com/dp/B0DHP915W6,25.05.2026,single
+17,69,Bunkell,"Bunkell Mushroom Coffee, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Instant Coffee Powder for Energy, Digestion & Immune Support, 30 Servings",instant,,30,180,17.79,18,0.593,lion's mane,amazon,https://www.amazon.com/dp/B0DHP915W6,25.05.2026,subscription
+17,70,Bunkell,"Bunkell Mushroom Chai, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Chai Powder for Energy, Focus, Digestion & Immune Support, 20 Servings 1 Pack",instant,,20,170.1,19.88,9,0.994,lion's mane,amazon,https://www.amazon.com/dp/B0FHQ84QV5,25.05.2026,single
+17,70,Bunkell,"Bunkell Mushroom Chai, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Chai Powder for Energy, Focus, Digestion & Immune Support, 20 Servings 1 Pack",instant,,20,170.1,17.89,9,0.8945,lion's mane,amazon,https://www.amazon.com/dp/B0FHQ84QV5,25.05.2026,subscription
+17,71,Bunkell,"Bunkell Mushroom Coffee, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Instant Coffee Powder for Energy, Digestion & Immune Support, 50 Servings",instant,,50,299.9,29.59,18,0.5918,lion's mane,amazon,https://www.amazon.com/dp/B0F1CWGYJD,25.05.2026,single
+17,71,Bunkell,"Bunkell Mushroom Coffee, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Instant Coffee Powder for Energy, Digestion & Immune Support, 50 Servings",instant,,50,299.9,29.59,18,0.5918,lion's mane,amazon,https://www.amazon.com/dp/B0F1CWGYJD,25.05.2026,subscription
+17,72,Bunkell,"Bunkell Mushroom Matcha, Adaptogenic 6 Mushrooms Mix w/Japanese Matcha, Ceremonial Powder Blend with Lion's Mane, Reishi, Cordyceps & Shiitake for Energy, Focus & Immune Support, 30 Servings 1 Pack",instant,,30,180,9.99,0,0.333,lion's mane,amazon,https://www.amazon.com/dp/B0F3JCC5FC,25.05.2026,single
+17,72,Bunkell,"Bunkell Mushroom Matcha, Adaptogenic 6 Mushrooms Mix w/Japanese Matcha, Ceremonial Powder Blend with Lion's Mane, Reishi, Cordyceps & Shiitake for Energy, Focus & Immune Support, 30 Servings 1 Pack",instant,,30,180,9.99,0,0.333,lion's mane,amazon,https://www.amazon.com/dp/B0F3JCC5FC,25.05.2026,subscription
+17,73,Bunkell,"Bunkell Mushroom Coffee Creamer, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet, Turkey Tail, Probiotics Creamer for Energy, Focus & Digestion Support, 30 Servings",creamer,,30,209.8,19.88,0,0.6627,lion's mane,amazon,https://www.amazon.com/dp/B0FHQ5HC1G,25.05.2026,single
+17,73,Bunkell,"Bunkell Mushroom Coffee Creamer, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet, Turkey Tail, Probiotics Creamer for Energy, Focus & Digestion Support, 30 Servings",creamer,,30,209.8,17.89,10,0.5963,lion's mane,amazon,https://www.amazon.com/dp/B0FHQ5HC1G,25.05.2026,subscription
+17,74,Bunkell,"Bunkell Mushroom Coffee, Adaptogenic 6 Mushrooms with Lion's Mane, Reishi, Cordyceps, Shiitake, King Trumpet & Turkey Tail, Instant Coffee Powder for Energy, Digestion & Immune Support, 40 Servings",instant,,40,240,17.79,0,0.4447,lion's mane,amazon,https://www.amazon.com/dp/B0F1CVFRDJ,25.05.2026,single
+18,75,Clevr Blends,"Clevr Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced, (14 Lattes)",instant,,14,340.2,29,0,2.0714,reishi,amazon,https://www.amazon.com/dp/B09JV6TT9C,25.05.2026,single
+18,75,Clevr Blends,"Clevr Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced, (14 Lattes)",instant,,14,340.2,26.1,10,1.8643,reishi,amazon,https://www.amazon.com/dp/B09JV6TT9C,25.05.2026,subscription
+18,76,Clevr Blends,"Clevr Chai Tea Latte, Instant Superfood Powder Blend with Lion’s Mane, Reishi Mushroom, Black Tea, Organic Spices, Coconut Cream, Ashwagandha, Oprah’s Favorite Things 2022 (14 Lattes)",instant,,14,340,29,0,2.0714,reishi,amazon,https://www.amazon.com/dp/B0C3KF9G2G,25.05.2026,single
+18,76,Clevr Blends,"Clevr Chai Tea Latte, Instant Superfood Powder Blend with Lion’s Mane, Reishi Mushroom, Black Tea, Organic Spices, Coconut Cream, Ashwagandha, Oprah’s Favorite Things 2022 (14 Lattes)",instant,,14,340,26.1,10,1.8643,reishi,amazon,https://www.amazon.com/dp/B0C3KF9G2G,25.05.2026,subscription
+18,77,Clevr Blends,"Clevr Mushroom Coffee – Decadent Café-Style Latte, Arabica Coffee, Ashwagandha, Lions Mane, Reishi, Probiotics for Energy & Focus – 14 Servings",instant,,14,340.2,29,0,2.0714,reishi,amazon,https://www.amazon.com/dp/B0C3K512XQ,25.05.2026,single
+18,77,Clevr Blends,"Clevr Mushroom Coffee – Decadent Café-Style Latte, Arabica Coffee, Ashwagandha, Lions Mane, Reishi, Probiotics for Energy & Focus – 14 Servings",instant,,14,340.2,26.1,10,1.8643,reishi,amazon,https://www.amazon.com/dp/B0C3K512XQ,25.05.2026,subscription
+18,78,Clevr Blends,"Clevr Honey Lavender Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend, Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,32,0,2.2857,reishi,amazon,https://www.amazon.com/dp/B0F8XC296G,25.05.2026,single
+18,78,Clevr Blends,"Clevr Honey Lavender Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend, Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,28.8,10,2.0571,reishi,amazon,https://www.amazon.com/dp/B0F8XC296G,25.05.2026,subscription
+18,79,Clevr Blends,"Clevr Pistachio Matcha SuperLatte, Organic Ceremonial Grade, Instant Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,32,0,2.2857,reishi,amazon,https://www.amazon.com/dp/B0F8X8L5WF,25.05.2026,single
+18,79,Clevr Blends,"Clevr Pistachio Matcha SuperLatte, Organic Ceremonial Grade, Instant Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,28.8,10,2.0571,reishi,amazon,https://www.amazon.com/dp/B0F8X8L5WF,25.05.2026,subscription
+18,80,Clevr Blends,"Strawberry Matcha SuperLatte – Decadent Café-Style Latte, Organic Ceremonial Japanese Tea, L-Theanine, Supports Radiant Skin, Energy, Focus, Gut Health – 14 Servings",instant,,14,340.2,32,0,2.2857,,amazon,https://www.amazon.com/dp/B0GKGRKNBV,25.05.2026,single
+18,80,Clevr Blends,"Strawberry Matcha SuperLatte – Decadent Café-Style Latte, Organic Ceremonial Japanese Tea, L-Theanine, Supports Radiant Skin, Energy, Focus, Gut Health – 14 Servings",instant,,14,340.2,28.8,10,2.0571,,amazon,https://www.amazon.com/dp/B0GKGRKNBV,25.05.2026,subscription
+18,81,Clevr Blends,"Clevr Honey Vanilla Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend, Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,32,0,2.2857,reishi,amazon,https://www.amazon.com/dp/B0F8WMSJC8,25.05.2026,single
+18,81,Clevr Blends,"Clevr Honey Vanilla Matcha SuperLatte, Instant Ceremonial Grade, Superfood Powder Blend, Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced (14 Lattes)",instant,,14,340.2,28.8,10,2.0571,reishi,amazon,https://www.amazon.com/dp/B0F8WMSJC8,25.05.2026,subscription
+18,82,Clevr Blends,"Clevr Chai Tea Latte, Instant Superfood Powder Blend with Lions Mane, Reishi Mushroom, Black Tea, Organic Spices, Coconut Cream, Ashwagandha, Oprah’s Favorite Things 2022, (30 Lattes)",instant,,30,725.7,58,0,1.9333,reishi,amazon,https://www.amazon.com/dp/B0F67NZBGP,25.05.2026,single
+18,82,Clevr Blends,"Clevr Chai Tea Latte, Instant Superfood Powder Blend with Lions Mane, Reishi Mushroom, Black Tea, Organic Spices, Coconut Cream, Ashwagandha, Oprah’s Favorite Things 2022, (30 Lattes)",instant,,30,725.7,52.2,10,1.74,reishi,amazon,https://www.amazon.com/dp/B0F67NZBGP,25.05.2026,subscription
+18,83,Clevr Blends,"Clevr Turmeric Powder, Golden Milk Instant Latte Mix, Superfood Powder with Lions Mane, Reishi Mushroom, Organic Spices, Coconut Cream, Ashwagandha, Serve Hot or Iced, (14 Lattes)",instant,,14,340.2,29,0,2.0714,reishi,amazon,https://www.amazon.com/dp/B0C3KF9G2K,25.05.2026,single
+18,83,Clevr Blends,"Clevr Turmeric Powder, Golden Milk Instant Latte Mix, Superfood Powder with Lions Mane, Reishi Mushroom, Organic Spices, Coconut Cream, Ashwagandha, Serve Hot or Iced, (14 Lattes)",instant,,14,340.2,26.1,10,1.8643,reishi,amazon,https://www.amazon.com/dp/B0C3KF9G2K,25.05.2026,subscription
+18,84,Clevr Blends,"Clevr Matcha Superlatte, Instant Ceremonial Grade, Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced, (30 Lattes)",instant,,30,725.7,58,0,1.9333,reishi,amazon,https://www.amazon.com/dp/B0F67PJZ15,25.05.2026,single
+18,84,Clevr Blends,"Clevr Matcha Superlatte, Instant Ceremonial Grade, Superfood Powder Blend with Lions Mane, Reishi Mushroom, Coconut Cream, Ashwagandha, Serve Hot or Iced, (30 Lattes)",instant,,30,725.7,52.2,10,1.74,reishi,amazon,https://www.amazon.com/dp/B0F67PJZ15,25.05.2026,subscription
+18,85,Clevr Blends,"Clevr Blends Turmeric Powder, Golden Milk Instant Latte Mix, Superfood Powder with Oat Milk, Lions Mane, Reishi Mushroom, Organic Spices, Coconut Cream, Ashwagandha, Serve Hot or Iced, 14 Servings",instant,,14,340.2,29,0,2.0714,reishi,amazon,https://www.amazon.com/dp/B09H8944CG,25.05.2026,single
+19,86,Lucid,"Lucid Superfood Organic Mushroom Coffee with Nootropics - Lion's Mane, Tremella, Cordyceps & Turkey Tail - Instant Mushroom Coffee Focus Brain Health - Alpha GPC, L-Theanine, Ginko Biloba - USA Made",instant,,30,225.1,43.99,0.0,1.4663,lion's mane,amazon,https://www.amazon.com/dp/B0DDY9GDNQ,2026-05-25,single
+19,86,Lucid,"Lucid Superfood Organic Mushroom Coffee with Nootropics - Lion's Mane, Tremella, Cordyceps & Turkey Tail - Instant Mushroom Coffee Focus Brain Health - Alpha GPC, L-Theanine, Ginko Biloba - USA Made",instant,,30,225.1,39.59,10.0,1.3197,lion's mane,amazon,https://www.amazon.com/dp/B0DDY9GDNQ,2026-05-25,subscription
+19,87,Lucid,"Lucid Superfood Organic Mushroom Matcha with Nootropics - Lion's Mane, Tremella, Cordyceps & Turkey Tail - Instant Mushroom Matcha Focus Brain Health - Alpha GPC, L-Theanine, Ginko Biloba - USA Made",instant,,80,225.1,43.99,0.0,0.5499,lion's mane,amazon,https://www.amazon.com/dp/B0DF12YPHJ,2026-05-25,single
+19,87,Lucid,"Lucid Superfood Organic Mushroom Matcha with Nootropics - Lion's Mane, Tremella, Cordyceps & Turkey Tail - Instant Mushroom Matcha Focus Brain Health - Alpha GPC, L-Theanine, Ginko Biloba - USA Made",instant,,80,225.1,39.59,10.0,0.4949,lion's mane,amazon,https://www.amazon.com/dp/B0DF12YPHJ,2026-05-25,subscription
+20,88,North Spore,North Spore 'Functional-5' Mushroom Coffee,ground,,30,340.2,22.0,0.0,0.7333,,amazon,https://www.amazon.com/dp/B0F8C8F5TL,2026-05-25,single
+21,89,Pella Nutrition,"Pella Nutrition Mushroom Coffee – Lions Mane, Reishi, Chaga, Cordyceps, Shiitake, Maitake, and Turkey Tail Mushroom Supplement – Superfood Instant Coffee for Focus & Energy (Regular Caffeine, 60 Cups)",instant,,60,178.6,23.99,0,0.3998,reishi,amazon,https://www.amazon.com/dp/B0B5VH84J4,25.05.2026,single
+21,89,Pella Nutrition,"Pella Nutrition Mushroom Coffee – Lions Mane, Reishi, Chaga, Cordyceps, Shiitake, Maitake, and Turkey Tail Mushroom Supplement – Superfood Instant Coffee for Focus & Energy (Regular Caffeine, 60 Cups)",instant,,60,178.6,21.59,10,0.3598,reishi,amazon,https://www.amazon.com/dp/B0B5VH84J4,25.05.2026,subscription
+21,90,Pella Nutrition,"Pella Nutrition Mushroom Coffee with Lion's Mane (Regular Caffeine, 60 Cups) & Drops Of Nature Green Tea Extract Liquid Drops (Pineapple, 60mL) – Vegan, Non-GMO – Antioxidant-Rich, Daily Focus Support",instant,,60,,41.48,6,0.6913,lion's mane,amazon,https://www.amazon.com/dp/B0BDVBZPKN,25.05.2026,single
+22,91,Strong Coffee Company,STRONG Coffee Co. Dark Mocha Instant Latte | Organic Coffee with Collagen Protein | Lion’s Mane & L-Theanine | Adaptogens & Nootropics | 15 Servings,instant,,15,450.5,41,0,2.7333,adaptogen,amazon,https://www.amazon.com/dp/B0BHXKRW7Y,24.05.2026,single
+22,91,Strong Coffee Company,STRONG Coffee Co. Dark Mocha Instant Latte | Organic Coffee with Collagen Protein | Lion’s Mane & L-Theanine | Adaptogens & Nootropics | 15 Servings,instant,,15,450.5,36.9,10,2.46,adaptogen,amazon,https://www.amazon.com/dp/B0BHXKRW7Y,24.05.2026,subscription
+22,92,Strong Coffee Company,"Strong Coffee Co. Coffee Booster | 10g Collagen Coffee Protein with Nootropics & Adaptogens, NeuroFactor®, Ashwagandha, L-Theanine & Electrolytes for Focus & Balanced Energy | 15 Packets",packet,,15,165.8,29.45,0,1.9633,adaptogen,amazon,https://www.amazon.com/dp/B0FL2VRKMB,24.05.2026,single
+22,93,Strong Coffee Company,Strong Coffee Co. Snickerdoodle Instant Latte | Organic Coffee with Collagen Protein | Lion’s Mane & L-Theanine | Adaptogens & Nootropics | 15 Servings,instant,,15,345.9,41,0,2.7333,adaptogen,amazon,https://www.amazon.com/dp/B0F8Y1TJN5,24.05.2026,single
+22,94,Strong Coffee Company,Strong Coffee Co. Vanilla Instant Latte | Organic Coffee with Collagen Protein | Lion’s Mane & L-Theanine | Adaptogens & Nootropics | 15 Servings,instant,,15,450.8,41,0,2.7333,adaptogen,amazon,https://www.amazon.com/dp/B07HJGN4RR,24.05.2026,single
+22,95,Strong Coffee Company,Strong Coffee Co. Vanilla Instant Latte Travel Pack | Organic Coffee with 15g Collagen Protein | Lion’s Mane & L-Theanine | Nootropic Instant Coffee | Instant Coffee Packets (7 Servings),packet,,7,214.3,22,0,3.1429,collagen,amazon,https://www.amazon.com/dp/B07HKN6TT5,24.05.2026,single
+22,96,Strong Coffee Company,"Strong Coffee Co. Instant Black Coffee | Premium Organic Coffee with Nootropics & Adaptogens, NeuroFactor®, L-Theanine, Ashwagandha, Reishi & MCT Oil | No Jitters, No Crash, Instant Coffee Packets (1, 10 Servings)",packet,,10,40,14.99,0,1.499,reishi,amazon,https://www.amazon.com/dp/B094S5LV6T,24.05.2026,single
+22,96,Strong Coffee Company,"Strong Coffee Co. Instant Black Coffee | Premium Organic Coffee with Nootropics & Adaptogens, NeuroFactor®, L-Theanine, Ashwagandha, Reishi & MCT Oil | No Jitters, No Crash, Instant Coffee Packets (1, 10 Servings)",packet,,10,40,13.49,10,1.349,reishi,amazon,https://www.amazon.com/dp/B094S5LV6T,24.05.2026,subscription
+22,97,Strong Coffee Company,"Strong Coffee Co. Instant Black Coffee | Premium Organic Coffee with Nootropics & Adaptogens, NeuroFactor®, L-Theanine, Ashwagandha, Reishi & MCT Oil | No Jitters, No Crash (1, 30 Servings)",instant,,30,107.7,32,0,1.0667,reishi,amazon,https://www.amazon.com/dp/B09FFNVBG6,24.05.2026,single
+22,98,Strong Coffee Company,STRONG Coffee Co. Hazelnut Instant Latte | Organic Coffee with Collagen Protein | Lion’s Mane & L-Theanine | Adaptogens & Nootropics | 15 Servings,instant,,15,450.8,41,0,2.7333,adaptogen,amazon,https://www.amazon.com/dp/B0CHBK2QG2,24.05.2026,single
+23,99,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 30 Servings",instant,,30,180,17.99,10,0.5997,lion's mane,amazon,https://www.amazon.com/dp/B0DHPGMLXW,25.05.2026,single
+23,99,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 30 Servings",instant,,30,180,17.99,10,0.5997,lion's mane,amazon,https://www.amazon.com/dp/B0DHPGMLXW,25.05.2026,subscription
+23,100,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 45 Servings",instant,,45,269.3,26.09,10,0.5798,lion's mane,amazon,https://www.amazon.com/dp/B0DST55KP7,25.05.2026,single
+23,100,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 45 Servings",instant,,45,269.3,26.09,10,0.5798,lion's mane,amazon,https://www.amazon.com/dp/B0DST55KP7,25.05.2026,subscription
+23,101,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 2 Pack",instant,,60,360,34.19,10,1.1397,lion's mane,amazon,https://www.amazon.com/dp/B0DNJPJQLH,25.05.2026,single
+23,101,Taoters,"Mushroom Coffee | Enhanced Focus, Boosted Immunity, Improved Energy | 6 Adaptogenic Mushrooms: Cordyceps, Reishi, King Trumpet, Shiitake, Lion's Mane & Turkey Tail | 2 Pack",instant,,60,360,34.19,10,1.1397,lion's mane,amazon,https://www.amazon.com/dp/B0DNJPJQLH,25.05.2026,subscription
+24,102,VenturePal,"Venture Pal Mushroom Coffee (40 Servings) 12 Adaptogenic Mushrooms, Lion’s Mane, Cordyceps, Turkey Tail, Reishi, Ashwagandha & Probiotics, Instant Coffee for Focus, Digestion & Immune Support",instant,,40,100.1,14.99,0.0,0.3748,reishi,amazon,https://www.amazon.com/dp/B0DDCJFFBM,2026-05-25,single
+24,102,VenturePal,"Venture Pal Mushroom Coffee (40 Servings) 12 Adaptogenic Mushrooms, Lion’s Mane, Cordyceps, Turkey Tail, Reishi, Ashwagandha & Probiotics, Instant Coffee for Focus, Digestion & Immune Support",instant,,40,100.1,13.49,10.0,0.3372,reishi,amazon,https://www.amazon.com/dp/B0DDCJFFBM,2026-05-25,subscription
+24,103,VenturePal,"Venture Pal 16 in 1 Mushroom Powder (90 Servings) - 1,730mg Mushroom Coffee Alternative with Ashwagandha, Lion’s Mane, Chaga & More | 100% Fruiting Bodies | Support Immune, Focus & Energy",instant,,90,180.0,19.99,0.0,0.2221,chaga,amazon,https://www.amazon.com/dp/B0DTHYK85S,2026-05-25,single
+24,103,VenturePal,"Venture Pal 16 in 1 Mushroom Powder (90 Servings) - 1,730mg Mushroom Coffee Alternative with Ashwagandha, Lion’s Mane, Chaga & More | 100% Fruiting Bodies | Support Immune, Focus & Energy",instant,,90,180.0,17.99,10.0,0.1999,chaga,amazon,https://www.amazon.com/dp/B0DTHYK85S,2026-05-25,subscription
+24,104,VenturePal,"Venture Pal Mushroom Matcha Powder – 13 Superfood Mushroom Coffee Alternative with Ceremonial Grade Matcha Powder, 1.5B Probiotics for Focus, Energy & Digestion",instant,,30,165.0,16.99,0.0,0.5663,,amazon,https://www.amazon.com/dp/B0F2FPWJDV,2026-05-25,single
+24,104,VenturePal,"Venture Pal Mushroom Matcha Powder – 13 Superfood Mushroom Coffee Alternative with Ceremonial Grade Matcha Powder, 1.5B Probiotics for Focus, Energy & Digestion",instant,,30,165.0,15.29,10.0,0.5097,,amazon,https://www.amazon.com/dp/B0F2FPWJDV,2026-05-25,subscription
+24,105,VenturePal,"Mushroom Hot Cocoa Powder with Magnesium Glycinate, Natural Sleep Aid with Reishi & L-Theanine for Adults, 12 Superfoods, Melatonin 3mg, Unsweetened Hot Chocolate Drink Mix for Sleep, 30 Servings",instant,,30,299.9,29.99,0.0,0.9997,reishi,amazon,https://www.amazon.com/dp/B0F8HXNY5N,2026-05-25,single
+24,105,VenturePal,"Mushroom Hot Cocoa Powder with Magnesium Glycinate, Natural Sleep Aid with Reishi & L-Theanine for Adults, 12 Superfoods, Melatonin 3mg, Unsweetened Hot Chocolate Drink Mix for Sleep, 30 Servings",instant,,30,299.9,26.99,10.0,0.8997,reishi,amazon,https://www.amazon.com/dp/B0F8HXNY5N,2026-05-25,subscription
+24,106,VenturePal,"Venture Pal Premium Adaptogenic Mushroom Coffee with Multi Collagen, Lions Mane, Reishi, Chaga, Biotin, Vitamin C - Supports Energy, Focus, Skin, Hair, Nails, Joints, Digestion & Immunity, 30 Servings",instant,,30,180.0,14.99,0.0,0.4997,reishi,amazon,https://www.amazon.com/dp/B0F8HXDRDW,2026-05-25,single
+24,106,VenturePal,"Venture Pal Premium Adaptogenic Mushroom Coffee with Multi Collagen, Lions Mane, Reishi, Chaga, Biotin, Vitamin C - Supports Energy, Focus, Skin, Hair, Nails, Joints, Digestion & Immunity, 30 Servings",instant,,30,180.0,13.49,10.0,0.4497,reishi,amazon,https://www.amazon.com/dp/B0F8HXDRDW,2026-05-25,subscription
+24,107,VenturePal,"Venture Pal Slim Mushroom Coffee, Instant Coffee with Berberine, Cinnamon, Yerba Mate & Turmeric, Supports Weight Management & Energy, 40 Servings",instant,,40,100.1,18.99,0.0,0.4747,,amazon,https://www.amazon.com/dp/B0DFBMVX7T,2026-05-25,single
+24,107,VenturePal,"Venture Pal Slim Mushroom Coffee, Instant Coffee with Berberine, Cinnamon, Yerba Mate & Turmeric, Supports Weight Management & Energy, 40 Servings",instant,,40,100.1,17.09,10.0,0.4273,,amazon,https://www.amazon.com/dp/B0DFBMVX7T,2026-05-25,subscription
+25,108,YEGE,"Mushroom Coffee, Instant Mushroom Coffee with Cordyceps, Reishi, King Trumpet, Shiitake, Turkey Tail, Lions Mane for Energy, Focus, Positive Mood & Immune Support (30 Servings)",instant,,30,180.0,17.89,14,0.5963,reishi,amazon,https://www.amazon.com/dp/B0DJSKQRPM,2026-05-25,single
+25,108,YEGE,"Mushroom Coffee, Instant Mushroom Coffee with Cordyceps, Reishi, King Trumpet, Shiitake, Turkey Tail, Lions Mane for Energy, Focus, Positive Mood & Immune Support (30 Servings)",instant,,30,180.0,17.89,14.0,0.5963,reishi,amazon,https://www.amazon.com/dp/B0DJSKQRPM,2026-05-25,subscription
+25,109,YEGE,"Mushroom Coffee, Instant Mushroom Coffee with Cordyceps, Reishi, King Trumpet, Shiitake, Turkey Tail, Lions Mane for Energy, Focus, Positive Mood & Immune Support (30 Servings)-2Pcs",instant,,30,360.0,34.98,12,1.166,reishi,amazon,https://www.amazon.com/dp/B0GTV8G15R,2026-05-25,single
+8,110,Laird Superfood,Chocolate Lovers Bundle,creamer,,,,63.65,0,,adaptogen,own_site,https://lairdsuperfood.com/products/chocolate-lovers-bundle,23.05.2026,single
+8,110,Laird Superfood,Chocolate Lovers Bundle,creamer,,,,50.92,20,,adaptogen,own_site,https://lairdsuperfood.com/products/chocolate-lovers-bundle,23.05.2026,subscription
+8,110,Laird Superfood,Chocolate Lovers Bundle,creamer,,1,,80.0,29,80.0,mushroom blend,amazon,https://www.amazon.com/dp/B0D6SL24YQ,2026-05-25,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,226.8,19,0,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,226.8,15.2,20,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,subscription
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,453.6,36,0,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,453.6,28.8,20,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,subscription
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,907.2,72,0,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,907.2,57.6,20,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,subscription
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,1360.8,108,0,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,,1360.8,86.4,20,,chaga,own_site,https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms,23.05.2026,subscription
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,7,226.8,20.0,0.0,2.8571,mushroom blend,amazon,https://www.amazon.com/dp/B081FDD412,2026-05-25,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,7,226.8,19.0,5.0,2.7143,mushroom blend,amazon,https://www.amazon.com/dp/B081FDD412,2026-05-25,subscription
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,20,1360.8,102.8,0.0,5.14,mushroom blend,amazon,https://www.amazon.com/dp/B0BFP96Q38,2026-05-25,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,4,320.3,7.99,0.0,1.9975,,amazon,https://www.amazon.com/dp/B0964F4LKT,2026-05-25,single
+8,111,Laird Superfood,Hot Chocolate with Functional Mushrooms,instant,,30,,22.42,0.0,0.7473,,amazon,https://www.amazon.com/dp/B0CLNVMLJB,2026-05-25,single
+10,112,MudWtr,Original Starter Kit,instant,5,30,150,42.5,15,1.42,,own_site,https://mudwtr.com/products/30-servings-tin,23.05.2026,single
+10,112,MudWtr,Original Starter Kit,instant,5,30,150,34,43.3,1.13,,own_site,https://mudwtr.com/products/30-servings-tin,23.05.2026,subscription
+10,112,MudWtr,Original Starter Kit,instant,,30,181.4,49.99,0.0,1.6663,lion's mane,amazon,https://www.amazon.com/dp/B09MJGMT4V,2026-05-25,single
+10,112,MudWtr,Original Starter Kit,instant,,30,181.4,47.49,5.0,1.583,lion's mane,amazon,https://www.amazon.com/dp/B09MJGMT4V,2026-05-25,subscription
+10,113,MudWtr,Original (90 serving),instant,5,90,450,106.25,15,1.18,lion's mane,own_site,https://mudwtr.com/products/90-serving-bag,23.05.2026,single
+10,113,MudWtr,Original (90 serving),instant,5,90,450,85,32,0.94,lion's mane,own_site,https://mudwtr.com/products/90-serving-bag,23.05.2026,subscription
+10,113,MudWtr,Original (90 serving),instant,,90,544.3,125.0,0.0,1.3889,lion's mane,amazon,https://www.amazon.com/dp/B0DXN4NHGW,2026-05-25,single
+10,113,MudWtr,Original (90 serving),instant,,90,544.3,118.75,5.0,1.3194,lion's mane,amazon,https://www.amazon.com/dp/B0DXN4NHGW,2026-05-25,subscription
+13,114,Rasa,Bold,ground,7.56,30,226.8,49.99,0,1.67,adaptogen,own_site,https://wearerasa.com/products/bold-rasa-8oz,23.05.2026,single
+13,114,Rasa,Bold,ground,7.56,30,226.8,39.99,20,1.33,adaptogen,own_site,https://wearerasa.com/products/bold-rasa-8oz,23.05.2026,subscription
+13,114,Rasa,Bold,ground,7.56,120,907.2,180,0,1.5,adaptogen,own_site,https://wearerasa.com/products/bold-rasa-8oz?variant=39982893105226,23.05.2026,single
+13,114,Rasa,Bold,ground,7.56,120,907.2,144,20,1.2,adaptogen,own_site,https://wearerasa.com/products/bold-rasa-8oz?variant=39982893105226,23.05.2026,subscription
+13,114,Rasa,Bold,ground,,30,226.8,49.99,0,1.6663,lion's mane,amazon,https://www.amazon.com/dp/B097S8BF5D,24.05.2026,single
+13,114,Rasa,Bold,ground,,30,226.8,44.99,10,1.4997,lion's mane,amazon,https://www.amazon.com/dp/B097S8BF5D,24.05.2026,subscription
+13,115,Rasa,Dirty,ground,7.56,30,226.8,29.99,0,1,adaptogen,own_site,https://wearerasa.com/products/dirty-rasa,23.05.2026,single
+13,115,Rasa,Dirty,ground,7.56,30,226.8,23.99,20,0.8,adaptogen,own_site,https://wearerasa.com/products/dirty-rasa,23.05.2026,subscription
+13,115,Rasa,Dirty,ground,7.56,120,907.2,108,0,0.9,adaptogen,own_site,https://wearerasa.com/products/dirty-rasa?variant=32475247804490,23.05.2026,single
+13,115,Rasa,Dirty,ground,7.56,120,907.2,86.4,20,0.72,adaptogen,own_site,https://wearerasa.com/products/dirty-rasa?variant=32475247804490,23.05.2026,subscription
+13,115,Rasa,Dirty,ground,,30,226.8,32,0,1.0667,chaga,amazon,https://www.amazon.com/dp/B07L8MHHGL,24.05.2026,single
+13,115,Rasa,Dirty,ground,,30,226.8,28.8,10,0.96,chaga,amazon,https://www.amazon.com/dp/B07L8MHHGL,24.05.2026,subscription
+13,116,Rasa,Original,ground,7.56,30,226.8,29.99,0,1,adaptogen,own_site,https://wearerasa.com/products/original-rasa,23.05.2026,single
+13,116,Rasa,Original,ground,7.56,30,226.8,23.99,20,0.8,adaptogen,own_site,https://wearerasa.com/products/original-rasa,23.05.2026,subscription
+13,116,Rasa,Original,ground,7.56,120,907.2,108,0,0.9,adaptogen,own_site,https://wearerasa.com/products/original-rasa?variant=39982877179978,23.05.2026,single
+13,116,Rasa,Original,ground,7.56,120,907.2,86.4,20,0.72,adaptogen,own_site,https://wearerasa.com/products/original-rasa?variant=39982877179978,23.05.2026,subscription
+13,116,Rasa,Original,ground,,30,232.5,19.99,0,0.6663,chaga,amazon,https://www.amazon.com/dp/B079FMNNQD,24.05.2026,single
+13,116,Rasa,Original,ground,,30,226.8,32,0,1.0667,chaga,amazon,https://www.amazon.com/dp/B0BF4L8FND,24.05.2026,single
+13,116,Rasa,Original,ground,,30,226.8,28.8,10,0.96,chaga,amazon,https://www.amazon.com/dp/B0BF4L8FND,24.05.2026,subscription
+13,117,Rasa,The Rasa Variety Pack,packet,,,,29.99,0,1.87,adaptogen,own_site,https://wearerasa.com/products/rasa-variety-pack,23.05.2026,single
+13,117,Rasa,The Rasa Variety Pack,packet,,,,23.99,20,1.5,adaptogen,own_site,https://wearerasa.com/products/rasa-variety-pack,23.05.2026,subscription
+13,117,Rasa,The Rasa Variety Pack,packet,,,85,42,0,,chaga,amazon,https://www.amazon.com/dp/B07YBK56GV,24.05.2026,single
+16,118,Strong Coffee Co.,Strong Pods,pods,,,,25,0,,,own_site,https://strongcoffeecompany.com/products/strong-pods,24.05.2026,single
+17,119,Bunkell,"Bunkell Mushroom Hot Cocoa, Adaptogenic Mushroom with Reishi, L-Theanine, Chicory, Melatonin & Glycine, Melatonin, Sleep Hot Cocoa Supplement for Sleep and Stress Support, 25 Servings 1 Pack",capsule,,25,290.3,22.88,0,0.9152,reishi,amazon,https://www.amazon.com/dp/B0FC29KW33,25.05.2026,single
+17,119,Bunkell,"Bunkell Mushroom Hot Cocoa, Adaptogenic Mushroom with Reishi, L-Theanine, Chicory, Melatonin & Glycine, Melatonin, Sleep Hot Cocoa Supplement for Sleep and Stress Support, 25 Servings 1 Pack",capsule,,25,290.3,20.59,10,0.8236,reishi,amazon,https://www.amazon.com/dp/B0FC29KW33,25.05.2026,subscription
+21,120,Pella Nutrition,"Low-Caffeine Mushroom Coffee (60 Servings) – Superfood Great Tasting Instant Coffee – Includes Lion's Mane, Reishi, Chaga, Cordyceps, Shiitake, Maitake, and Turkey Tail Mushroom Supplement",capsule,,60,178.6,17.99,25,0.2998,lion's mane,amazon,https://www.amazon.com/dp/B0C2NJG9N9,25.05.2026,single
+21,120,Pella Nutrition,"Low-Caffeine Mushroom Coffee (60 Servings) – Superfood Great Tasting Instant Coffee – Includes Lion's Mane, Reishi, Chaga, Cordyceps, Shiitake, Maitake, and Turkey Tail Mushroom Supplement",capsule,,60,178.6,16.19,33,0.2698,lion's mane,amazon,https://www.amazon.com/dp/B0C2NJG9N9,25.05.2026,subscription

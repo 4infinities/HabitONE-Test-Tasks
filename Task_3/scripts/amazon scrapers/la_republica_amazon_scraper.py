@@ -24,8 +24,9 @@ class LaRepublicaScraper(AmazonScraperBase):
         "https://www.amazon.com/stores/LaRepublica/page/08A24069-1E8E-4D1A-8CF3-A472F005748D"
         "?lp_asin=B078XR2R6B&ref_=ast_bln"
     )
-    OUT_FILENAME   = "la_republica_amazon.csv"
-    DEFAULT_FORMAT = "ground"  # La Republica is primarily ground/instant mushroom coffee
+    OUT_FILENAME           = "la_republica_amazon.csv"
+    DEFAULT_FORMAT         = "ground"  # La Republica is primarily ground/instant mushroom coffee
+    AUTO_DISCOVER_SUBPAGES = False      # get_asins_from_storefront already handles sub-pages
 
     EXTRA_FORMAT_KW = {
         "instant": ["instant", "powder", "powdered", "mushroom coffee powder"],

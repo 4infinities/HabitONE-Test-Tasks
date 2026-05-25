@@ -29,16 +29,8 @@ from typing import Optional
 
 warnings.filterwarnings("ignore")
 
-try:
-    from langchain_ollama import ChatOllama as _ChatOllama
-    import langchain_community.chat_models as _lcm
-    if not hasattr(_lcm, "ChatOllama"):
-        _lcm.ChatOllama = _ChatOllama
-except ImportError:
-    pass
-
 from bs4 import BeautifulSoup
-from scrapegraphai.docloaders import ChromiumLoader
+from curl_cffi import requests as cffi_requests
 
 ROOT    = Path(__file__).parent.parent
 RAW_DIR = ROOT / "data" / "raw"
@@ -50,10 +42,11 @@ CSV_FIELDS = [
 ]
 
 _BASE_FORMAT_KW = {
+    "pods":    ["k-cup", "k cup", "kcup", "keurig"],
     "packet":  ["packet", "sachet", "single-serve", "stick pack", "variety pack", "sampler"],
     "capsule": ["capsule", "pill", "softgel", "tablet"],
     "creamer": ["creamer", "creme"],
-    "ground":  ["ground coffee", "whole bean", "brew", "french press"],
+    "ground":  ["ground coffee", "ground beans", "whole bean", "brew", "french press"],
     "instant": ["instant", "powder", "powdered"],
 }
 
@@ -79,9 +72,11 @@ class AmazonScraperBase:
     OUT_FILENAME   : str  = ""    # e.g. "strong_coffee_amazon.csv"
     DEFAULT_FORMAT : str  = "instant"
 
-    EXTRA_FORMAT_KW     : dict = {}   # merged on top of _BASE_FORMAT_KW
-    EXTRA_INGREDIENT_KW : dict = {}   # merged on top of _BASE_INGREDIENT_KW
-    SKIP_KW             : list = _BASE_SKIP_KW
+    EXTRA_FORMAT_KW        : dict = {}   # merged on top of _BASE_FORMAT_KW
+    EXTRA_INGREDIENT_KW    : dict = {}   # merged on top of _BASE_INGREDIENT_KW
+    SKIP_KW                : list = _BASE_SKIP_KW
+    EXTRA_STOREFRONT_URLS  : list = []   # additional store/search pages scraped before product loop
+    AUTO_DISCOVER_SUBPAGES : bool = True # set False if subclass handles sub-pages inside get_asins_from_storefront
     # ──────────────────────────────────────────────────────────────────────
 
     def __init__(self) -> None:
@@ -95,6 +90,13 @@ class AmazonScraperBase:
             self.log.addHandler(h)
             self.log.setLevel(logging.ERROR)
 
+        self._base_headers = {
+            "accept-language": "en-US,en;q=0.9",
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "upgrade-insecure-requests": "1",
+        }
+
+        # pods must stay at front so k-cup titles don't fall through to "instant"
         self._format_kw = {**_BASE_FORMAT_KW}
         for k, v in self.EXTRA_FORMAT_KW.items():
             self._format_kw.setdefault(k, [])
@@ -126,17 +128,27 @@ class AmazonScraperBase:
 
     # ── Fetch ──────────────────────────────────────────────────────────────
 
+    def _make_session(self) -> "cffi_requests.Session":
+        s = cffi_requests.Session(impersonate="chrome124")
+        s.headers.update(self._base_headers)
+        s.cookies.set("i18n-prefs", "USD", domain=".amazon.com")
+        return s
+
     def fetch_html(self, url: str, retries: int = 2) -> Optional[str]:
+        # Fresh session per request — Amazon poisons the session after the first
+        # product page by setting session-token, which causes subsequent pages to
+        # return a 330KB login-wall instead of the full product page.
         for attempt in range(1, retries + 1):
             try:
-                loader = ChromiumLoader([url], headless=True, load_state="load", timeout=60)
-                docs = loader.load()
-                if docs and docs[0].page_content.strip():
-                    return docs[0].page_content
+                session = self._make_session()
+                resp = session.get(url, timeout=30)
+                if resp.status_code == 200 and len(resp.text) > 10000:
+                    return resp.text
+                self.log.error(f"Unexpected response {resp.status_code} (len={len(resp.text)}) for {url}")
             except Exception as e:
                 self.log.error(f"Fetch attempt {attempt} failed for {url}: {e}")
-                if attempt < retries:
-                    time.sleep(5)
+            if attempt < retries:
+                time.sleep(5)
         return None
 
     # ── ASIN discovery ─────────────────────────────────────────────────────
@@ -144,6 +156,19 @@ class AmazonScraperBase:
     def get_asins_from_storefront(self, html: str) -> list[str]:
         asins = re.findall(r"/dp/([A-Z0-9]{10})", html)
         return list(dict.fromkeys(asins))
+
+    def _discover_store_subpages(self, html: str) -> list[str]:
+        """Return internal Amazon store category page URLs found in storefront HTML."""
+        found = []
+        for path in re.findall(
+            r'href=["\']([^"\']*?/stores(?:/[^"\']+)?/page/[A-F0-9-]{36}[^"\']*)["\']',
+            html, re.IGNORECASE,
+        ):
+            url = path if path.startswith("http") else "https://www.amazon.com" + path
+            base_url = url.split("?")[0]  # strip query params that filter by lp_asin
+            if base_url not in found:
+                found.append(base_url)
+        return found
 
     def get_asins_from_twister(self, html: str) -> list[str]:
         soup = BeautifulSoup(html, "lxml")
@@ -173,24 +198,45 @@ class AmazonScraperBase:
                 basis_price = float(m.group(1))
 
         single_price = None
-        for el in soup.select(".a-price .a-offscreen"):
-            parent = el.find_parent(class_="a-price")
-            if parent and "basisPrice" in parent.get("class", []):
+        # Try scoped buybox first (avoids picking up prices from related-product widgets)
+        _PRICE_SKIP_CLS = {"basisPrice", "apex-basisprice-value", "apex-basis-price-value"}
+        _BUYBOX_SCOPES = ["#apex_offerDisplay_desktop", "#corePriceDisplay_desktop_feature_div", "#buybox"]
+        for scope_sel in _BUYBOX_SCOPES:
+            scope_el = soup.select_one(scope_sel)
+            if not scope_el:
                 continue
-            m = re.match(r"\$(\d+\.\d+)", el.get_text(strip=True))
-            if m:
-                single_price = float(m.group(1))
+            for el in scope_el.select(".a-offscreen"):
+                m = re.match(r"\$(\d+\.\d+)", el.get_text(strip=True))
+                if m:
+                    single_price = float(m.group(1))
+                    break
+            if single_price:
                 break
+        # Fallback: global search (original behavior)
+        if not single_price:
+            for el in soup.select(".a-price .a-offscreen"):
+                parent = el.find_parent(class_="a-price")
+                if parent:
+                    cls = set(parent.get("class", []))
+                    if cls & _PRICE_SKIP_CLS:
+                        continue
+                m = re.match(r"\$(\d+\.\d+)", el.get_text(strip=True))
+                if m:
+                    single_price = float(m.group(1))
+                    break
 
         single_discount = 0.0
         if basis_price and single_price and basis_price > single_price:
             single_discount = round((basis_price - single_price) / basis_price * 100)
 
         sub_price = None
-        for el in soup.select('[id*="sns"] .a-offscreen, .snsPriceLabelValue'):
-            m = re.match(r"\$(\d+\.\d+)", el.get_text(strip=True))
-            if m:
-                sub_price = float(m.group(1))
+        for sel in ['#snsAccordionRowMiddle .a-offscreen', '[id*="sns"] .a-offscreen', '.snsPriceLabelValue']:
+            for el in soup.select(sel):
+                m = re.match(r"\$(\d+\.\d+)", el.get_text(strip=True))
+                if m:
+                    sub_price = float(m.group(1))
+                    break
+            if sub_price:
                 break
 
         discounts = []
@@ -203,11 +249,13 @@ class AmazonScraperBase:
         # Serving count: title → bullets/details → full HTML
         _SC_PATTERNS = [
             r"(\d+)\s*[Ss]erving",
+            r"(\d+)\s*[Ll]att(?:e|es)?\b",  # "14 Lattes", "30 Lattes" (Clevr etc.)
             r"(\d+)\s*[Cc]ount",
             r"(\d+)\s*[Ss]achet",
             r"(\d+)\s*[Pp]acket",
             r"(\d+)\s*[Ss]tick\b",
             r"(\d+)\s*[Pp]od\b",
+            r"(\d+)\s*ct\b",   # K-cup boxes say "10ct" not "10 Count"
         ]
         serving_count = None
         for pattern in _SC_PATTERNS:
@@ -300,15 +348,48 @@ class AmazonScraperBase:
             queue = [self.SEED_ASIN]
         else:
             self.safe_print(f"Step 1: Fetching {self.BRAND} storefront...")
-            storefront_html = self.fetch_html(self.STOREFRONT_URL)
-            if storefront_html:
-                queue = self.get_asins_from_storefront(storefront_html)
-                self.safe_print(f"  Found {len(queue)} ASINs: {queue}")
-            else:
-                self.safe_print("  Storefront fetch failed — using seed ASIN only.")
+            queue: list[str] = []
+            seen_sf: set[str] = set()
+
+            all_sf_urls = [self.STOREFRONT_URL] + list(self.EXTRA_STOREFRONT_URLS)
+            for sf_url in all_sf_urls:
+                if sf_url in seen_sf:
+                    continue
+                seen_sf.add(sf_url)
+
+                sf_html = self.fetch_html(sf_url)
+                if not sf_html:
+                    self.safe_print(f"  Fetch failed: {sf_url[:80]}")
+                    continue
+
+                new_asins = [a for a in self.get_asins_from_storefront(sf_html) if a not in queue]
+                queue.extend(new_asins)
+                self.safe_print(f"  {sf_url[:80]} → +{len(new_asins)} ASINs")
+
+                # Follow internal store category links (skip if subclass handles sub-pages itself)
+                if not self.AUTO_DISCOVER_SUBPAGES:
+                    continue
+                for sp_url in self._discover_store_subpages(sf_html):
+                    sp_base = sp_url.split("?")[0]
+                    if sp_base in seen_sf:
+                        continue
+                    seen_sf.add(sp_base)
+                    time.sleep(random.uniform(2, 4))
+                    sp_html = self.fetch_html(sp_url)
+                    if sp_html:
+                        sp_asins = [a for a in self.get_asins_from_storefront(sp_html) if a not in queue]
+                        queue.extend(sp_asins)
+                        self.safe_print(f"    sub-page ...{sp_url[-50:]} → +{len(sp_asins)} ASINs")
+
+                if sf_url != all_sf_urls[-1]:
+                    time.sleep(random.uniform(2, 4))
+
+            if not queue:
+                self.safe_print("  All storefront fetches failed — using seed ASIN only.")
                 queue = [self.SEED_ASIN]
             if self.SEED_ASIN not in queue:
                 queue.insert(0, self.SEED_ASIN)
+            self.safe_print(f"  Total queue: {len(queue)} ASINs")
 
         seen = set()
         self.safe_print(f"\n{'Pilot' if pilot else 'Step 2'}: Scraping product pages...")

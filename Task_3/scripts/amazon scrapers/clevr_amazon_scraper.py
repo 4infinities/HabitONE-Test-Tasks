@@ -30,6 +30,7 @@ class ClevrScraper(AmazonScraperBase):
     SKIP_KW = [
         "apparel", "t-shirt", "mug", "gift card", "frother", "kettle",
         "kit", "bundle", "shaker",
+        "electrolyte", "hydration drink", "glp-1",  # non-coffee wellness SKUs
     ]
 
 

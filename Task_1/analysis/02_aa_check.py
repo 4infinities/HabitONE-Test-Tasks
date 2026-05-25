@@ -51,12 +51,12 @@ after = cohort_metrics(df, pre_ids, payment_start=TEST_START)
 
 def print_metrics(label, m):
     print(f"\n{label}")
-    print(f"  Cohort users: {m['cohort_users']:,}")
-    print(f"  Paying users: {m['paying_users']:,}")
-    print(f"  RPU: {m['rpu']:.4f}")
-    print(f"  Conversion rate: {m['conversion_rate']:.4f}")
-    print(f"  ARPU (payers): {m['arpu_payers']:.4f}")
-    print(f"  Payments per user: {m['payments_per_user']:.4f}")
+    print(f"  Cohort users:        {m['cohort_users']:,}")
+    print(f"  Paying users:        {m['paying_users']:,}")
+    print(f"  Conversion rate:     {m['conversion_rate']:.4f}")
+    print(f"  Payments per payer:  {m['payments_per_payer']:.4f}")
+    print(f"  ARPP:                {m['arpu_payers']:.4f}")
+    print(f"  RPU (descriptive):   {m['rpu']:.4f}  [= CR * ARPP]")
 
 
 if before and after:
@@ -72,17 +72,28 @@ if before and after:
         else np.nan
     )
 
-    print("\nShift (after - before):")
-    if not np.isnan(rpu_rel):
-        print(f"  RPU: {rpu_shift:+.4f} ({rpu_rel:+.1f}% relative)")
-    else:
-        print(f"  RPU: {rpu_shift:+.4f}")
-    if not np.isnan(conv_rel):
-        print(f"  Conversion rate: {conv_shift:+.4f} ({conv_rel:+.1f}% relative)")
-    else:
-        print(f"  Conversion rate: {conv_shift:+.4f}")
+    ppp_shift = after["payments_per_payer"] - before["payments_per_payer"]
+    arpp_shift = after["arpu_payers"] - before["arpu_payers"]
+    ppp_rel = (ppp_shift / before["payments_per_payer"] * 100) if before["payments_per_payer"] else np.nan
+    arpp_rel = (arpp_shift / before["arpu_payers"] * 100) if before["arpu_payers"] else np.nan
 
-    if abs(rpu_rel) > 20 or abs(conv_rel) > 20:
+    print("\nShift (after - before):")
+    if not np.isnan(conv_rel):
+        print(f"  Conversion rate:    {conv_shift:+.4f} ({conv_rel:+.1f}% relative)")
+    else:
+        print(f"  Conversion rate:    {conv_shift:+.4f}")
+    if not np.isnan(ppp_rel):
+        print(f"  Payments per payer: {ppp_shift:+.4f} ({ppp_rel:+.1f}% relative)")
+    else:
+        print(f"  Payments per payer: {ppp_shift:+.4f}")
+    if not np.isnan(arpp_rel):
+        print(f"  ARPP:               {arpp_shift:+.4f} ({arpp_rel:+.1f}% relative)")
+    else:
+        print(f"  ARPP:               {arpp_shift:+.4f}")
+    if not np.isnan(rpu_rel):
+        print(f"  RPU (descriptive):  {rpu_shift:+.4f} ({rpu_rel:+.1f}% relative)")
+
+    if any(abs(x) > 20 for x in [conv_rel, ppp_rel, arpp_rel] if not np.isnan(x)):
         print("WARNING: Large shift across boundary — possible external confound")
     else:
         print("PASS: Pre-existing cohort relatively stable across boundary")

@@ -9,6 +9,7 @@ from datetime import date
 import numpy as np
 import pandas as pd
 from scipy import stats
+from statsmodels.stats.proportion import proportions_ztest
 
 from constants import (
     SCRIPT_DIR, TEST_START, PAYMENT_START,
@@ -49,13 +50,6 @@ def compute_results(df):
     pay_t = int((test["revenue"] > 0).sum())
     cr_c, cr_t = pay_c / n_c, pay_t / n_t
 
-    # PRIMARY METRIC: Payments Per User — Mann-Whitney U (test > control)
-    ppu_c = ctrl["payment_count"].mean()
-    ppu_t = test["payment_count"].mean()
-    _, p_ppu = stats.mannwhitneyu(test["payment_count"], ctrl["payment_count"], alternative="greater")
-    ci_ppu_c = _bootstrap_ci(ctrl["payment_count"].values)
-    ci_ppu_t = _bootstrap_ci(test["payment_count"].values)
-
     # ARPPU: payer-only amounts, Mann-Whitney (test > control)
     arpp_c = ctrl.loc[ctrl["revenue"] > 0, "revenue"]
     arpp_t = test.loc[test["revenue"] > 0, "revenue"]
@@ -63,11 +57,19 @@ def compute_results(df):
     ci_arpp_c = _bootstrap_ci(arpp_c.values)
     ci_arpp_t = _bootstrap_ci(arpp_t.values)
 
-    # RPU: all users, Mann-Whitney (test > control)
+    # Payments per payer: frequency among payers only, no zero-inflation problem
+    ppp_c_vals = ctrl.loc[ctrl["payment_count"] > 0, "payment_count"]
+    ppp_t_vals = test.loc[test["payment_count"] > 0, "payment_count"]
+    ppp_c = float(ppp_c_vals.mean())
+    ppp_t = float(ppp_t_vals.mean())
+    _, p_ppp = stats.mannwhitneyu(ppp_t_vals, ppp_c_vals, alternative="greater")
+    ci_ppp_c = _bootstrap_ci(ppp_c_vals.values)
+    ci_ppp_t = _bootstrap_ci(ppp_t_vals.values)
+
+    # RPU: Mann-Whitney U (test > control) + bootstrap CI
+    # Note: zero-inflation (97% zeros) reduces power — CI is wide, result must be read with that context
     _, p_rpu = stats.mannwhitneyu(test["revenue"], ctrl["revenue"], alternative="greater")
     rpu_c, rpu_t = ctrl["revenue"].mean(), test["revenue"].mean()
-
-    # Bootstrap CI for RPU
     ci_rpu_c = _bootstrap_ci(ctrl["revenue"].values)
     ci_rpu_t = _bootstrap_ci(test["revenue"].values)
 
@@ -77,21 +79,24 @@ def compute_results(df):
     ci_total_rev_c = _bootstrap_sum_ci(ctrl["revenue"].values)
     ci_total_rev_t = _bootstrap_sum_ci(test["revenue"].values)
 
-    # Power analysis for PPU (5% relative MDE, alpha=0.05, power=0.80)
-    ppu_mde = ppu_c * 1.05
-    ppu_sd = ctrl["payment_count"].std()
+    # Power analysis: CR (1 pp MDE) and payments_per_payer (10% MDE)
     z_req = stats.norm.ppf(1 - ALPHA) + stats.norm.ppf(0.80)
-    n_req_ppu = int(np.ceil(2 * (z_req * ppu_sd / (ppu_mde - ppu_c)) ** 2)) if ppu_mde > ppu_c and ppu_sd > 0 else float("nan")
-    obs_power_ppu = float(1 - stats.norm.cdf(
-        stats.norm.ppf(1 - ALPHA) - abs(ppu_t - ppu_c) / (ppu_sd * np.sqrt(2 / min(n_c, n_t)))))
+    h_cr = 2 * (np.arcsin(np.sqrt(min(cr_c + 0.01, 0.999))) - np.arcsin(np.sqrt(cr_c))) if cr_c > 0 else float("nan")
+    n_req_cr = int(np.ceil((z_req / h_cr) ** 2)) if not np.isnan(h_cr) and h_cr != 0 else float("nan")
+    obs_power_cr = float(1 - stats.norm.cdf(
+        stats.norm.ppf(1 - ALPHA) - abs(cr_t - cr_c) / np.sqrt(cr_c * (1 - cr_c) * 2 / min(n_c, n_t))
+    )) if cr_c > 0 and cr_c < 1 else float("nan")
+    ppp_sd = float(ppp_c_vals.std()) if len(ppp_c_vals) > 1 else float("nan")
+    ppp_delta = ppp_c * 0.10
+    n_req_ppp = int(np.ceil(2 * (z_req * ppp_sd / ppp_delta) ** 2)) if ppp_delta > 0 and not np.isnan(ppp_sd) else float("nan")
+    obs_power_ppp = float(1 - stats.norm.cdf(
+        stats.norm.ppf(1 - ALPHA) - abs(ppp_t - ppp_c) / (ppp_sd * np.sqrt(2 / min(len(ppp_c_vals), len(ppp_t_vals))))
+    )) if not np.isnan(ppp_sd) and len(ppp_c_vals) > 0 and len(ppp_t_vals) > 0 else float("nan")
 
-    # Conversion rate (secondary — kept for reference)
+    # Conversion rate — Z-test, one-tailed (test > control)
     diff_cr = cr_t - cr_c
     se_cr = np.sqrt(cr_t * (1 - cr_t) / n_t + cr_c * (1 - cr_c) / n_c)
-
-    # Conversion rate p-value (chi-square)
-    ct = np.array([[pay_c, n_c - pay_c], [pay_t, n_t - pay_t]])
-    _, p_cr, _, _ = stats.chi2_contingency(ct)
+    _, p_cr = proportions_ztest([pay_t, pay_c], [n_t, n_c], alternative="larger")
 
     # Whale metrics
     cutoff = _whale_cutoff(ab)
@@ -109,7 +114,7 @@ def compute_results(df):
     else:
         p_whale = float("nan")
 
-    # Segment attrs for PPU breakdown
+    # Segment attrs for PPP breakdown
     attrs = (
         df[df["id_user"].isin(ab["id_user"])]
         .sort_values("date_reg")
@@ -118,7 +123,7 @@ def compute_results(df):
     )
     ab_seg = ab.merge(attrs, on="id_user", how="left")
 
-    # Segment PPU tables with Mann-Whitney p-values and bootstrap CIs
+    # Segment PPU tables: payments per user (all users, consistent with charts)
     seg_dims = ["gender", "age_group", "country_group", "id_traffic_source", "system"]
     N_BOOT_SEG = 1_000
     segment_ppu = {}
@@ -190,16 +195,18 @@ def compute_results(df):
         "pay_c": pay_c, "pay_t": pay_t,
         "cr_c": cr_c, "cr_t": cr_t,
         "diff_cr": diff_cr, "se_cr": se_cr,
-        "ppu_c": ppu_c, "ppu_t": ppu_t,
-        "p_ppu": p_ppu, "ci_ppu_c": ci_ppu_c, "ci_ppu_t": ci_ppu_t,
-        "n_req_ppu": n_req_ppu, "obs_power_ppu": obs_power_ppu,
+        "p_cr": p_cr,
+        "n_req_cr": n_req_cr, "obs_power_cr": obs_power_cr,
+        "ppp_c": ppp_c, "ppp_t": ppp_t,
+        "p_ppp": p_ppp, "ci_ppp_c": ci_ppp_c, "ci_ppp_t": ci_ppp_t,
+        "n_payers_c": len(ppp_c_vals), "n_payers_t": len(ppp_t_vals),
+        "n_req_ppp": n_req_ppp, "obs_power_ppp": obs_power_ppp,
         "arpp_c": float(arpp_c.mean()), "arpp_t": float(arpp_t.mean()),
         "p_arpp": p_arpp, "ci_arpp_c": ci_arpp_c, "ci_arpp_t": ci_arpp_t,
         "rpu_c": rpu_c, "rpu_t": rpu_t,
         "p_rpu": p_rpu, "ci_rpu_c": ci_rpu_c, "ci_rpu_t": ci_rpu_t,
         "total_rev_c": total_rev_c, "total_rev_t": total_rev_t,
         "ci_total_rev_c": ci_total_rev_c, "ci_total_rev_t": ci_total_rev_t,
-        "p_cr": p_cr,
         "whale_cutoff": cutoff,
         "n_whales_c": len(w_c), "n_whales_t": len(w_t),
         "whale_cr_c": whale_cr_c, "whale_cr_t": whale_cr_t,
@@ -263,17 +270,14 @@ def compute_aa_results(df):
     n_pre = len(pre_df)
     n_ctrl = len(ctrl)
 
-    # PPU — Mann-Whitney two-sided
-    _, p_ppu = stats.mannwhitneyu(
-        pre_df["payment_count"], ctrl["payment_count"], alternative="two-sided"
-    )
-    ci_ppu_pre = _bootstrap_ci(pre_df["payment_count"].values)
-
-    # ARPU (all users) — Mann-Whitney two-sided
-    _, p_arpu = stats.mannwhitneyu(
-        pre_df["revenue"], ctrl["revenue"], alternative="two-sided"
-    )
-    ci_arpu_pre = _bootstrap_ci(pre_df["revenue"].values)
+    # Payments per payer — Mann-Whitney two-sided (AA: should be no difference)
+    ppp_pre_vals = pre_df.loc[pre_df["payment_count"] > 0, "payment_count"].values
+    ppp_ctrl_vals = ctrl.loc[ctrl["payment_count"] > 0, "payment_count"].values
+    if len(ppp_pre_vals) >= 5 and len(ppp_ctrl_vals) >= 5:
+        _, p_ppp = stats.mannwhitneyu(ppp_pre_vals, ppp_ctrl_vals, alternative="two-sided")
+    else:
+        p_ppp = float("nan")
+    ci_ppp_pre = _bootstrap_ci(ppp_pre_vals) if len(ppp_pre_vals) > 0 else (0.0, 0.0)
 
     # ARPPU (payers only) — Mann-Whitney two-sided
     arppu_pre_vals = pre_df.loc[pre_df["revenue"] > 0, "revenue"].values
@@ -283,6 +287,9 @@ def compute_aa_results(df):
     else:
         p_arppu = float("nan")
     ci_arppu_pre = _bootstrap_ci(arppu_pre_vals) if len(arppu_pre_vals) > 0 else (0.0, 0.0)
+
+    # RPU pre-test (descriptive only)
+    rpu_pre = float(pre_df["revenue"].mean())
 
     # CR — chi-square
     pay_pre_n = int((pre_df["revenue"] > 0).sum())
@@ -294,15 +301,14 @@ def compute_aa_results(df):
         "n_pre": n_pre, "n_ctrl": n_ctrl,
         "n_days": n_days,
         "pre_start": pre_start,
-        "ppu_pre": float(pre_df["payment_count"].mean()),
-        "ci_ppu_pre": ci_ppu_pre,
-        "p_ppu": p_ppu,
-        "arpu_pre": float(pre_df["revenue"].mean()),
-        "ci_arpu_pre": ci_arpu_pre,
-        "p_arpu": p_arpu,
+        "ppp_pre": float(ppp_pre_vals.mean()) if len(ppp_pre_vals) > 0 else 0.0,
+        "ci_ppp_pre": ci_ppp_pre,
+        "p_ppp": p_ppp,
+        "n_payers_pre": len(ppp_pre_vals),
         "arppu_pre": float(arppu_pre_vals.mean()) if len(arppu_pre_vals) > 0 else 0.0,
         "ci_arppu_pre": ci_arppu_pre,
         "p_arppu": p_arppu,
+        "rpu_pre": rpu_pre,
         "cr_pre": pay_pre_n / n_pre,
         "pay_pre_n": pay_pre_n, "pay_ctrl_n": pay_ctrl_n,
         "p_cr": p_cr,
@@ -403,9 +409,9 @@ DIM_LABELS = {
 
 
 def generate_html(r, aa):
-    ppu_diff = r["ppu_t"] - r["ppu_c"]
-    ppu_ci_low  = r["ci_ppu_t"][0] - r["ci_ppu_c"][1]
-    ppu_ci_high = r["ci_ppu_t"][1] - r["ci_ppu_c"][0]
+    ppp_diff = r["ppp_t"] - r["ppp_c"]
+    ppp_ci_low  = r["ci_ppp_t"][0] - r["ci_ppp_c"][1]
+    ppp_ci_high = r["ci_ppp_t"][1] - r["ci_ppp_c"][0]
     cr_ci_low  = r["diff_cr"] - 1.96 * r["se_cr"]
     cr_ci_high = r["diff_cr"] + 1.96 * r["se_cr"]
 
@@ -417,18 +423,20 @@ def generate_html(r, aa):
     )
 
     try:
-        n_req_ppu = int(r["n_req_ppu"])
+        n_req_cr  = int(r["n_req_cr"])
+        n_req_ppp = int(r["n_req_ppp"])
+        cr_ok  = r["n_c"] >= n_req_cr
+        ppp_ok = r["n_payers_c"] >= n_req_ppp
         powered_note = (
-            f"<strong>Експеримент мав достатню потужність для метрики payments per user</strong> "
-            f"(потрібно ~{n_req_ppu:,} користувачів/групу при MDE 5%; фактично: ~{r['n_c']:,}; "
-            f"оцінена потужність: <strong>{r['obs_power_ppu']:.0%}</strong>)."
-            if r["n_c"] >= n_req_ppu
-            else f"<strong>Експеримент може бути недостатньо потужним для метрики payments per user</strong> "
-                 f"(потрібно ~{n_req_ppu:,} користувачів/групу при MDE 5%; фактично: ~{r['n_c']:,}; "
-                 f"оцінена потужність: <strong>{r['obs_power_ppu']:.0%}</strong>)."
+            f"<strong>CR:</strong> {'достатня' if cr_ok else 'недостатня'} потужність "
+            f"(потрібно ~{n_req_cr:,} користувачів/групу при MDE 1 pp; фактично: {r['n_c']:,}; "
+            f"оцінена потужність: <strong>{r['obs_power_cr']:.0%}</strong>). "
+            f"<strong>Payments per payer:</strong> {'достатня' if ppp_ok else 'недостатня'} потужність "
+            f"(потрібно ~{n_req_ppp:,} платників/групу при MDE 10%; фактично: {r['n_payers_c']:,}; "
+            f"оцінена потужність: <strong>{r['obs_power_ppp']:.0%}</strong>)."
         )
     except (TypeError, ValueError):
-        powered_note = "Аналіз потужності для payments per user не вдалось обчислити."
+        powered_note = "Аналіз потужності не вдалось обчислити."
 
     # Segment PPU tables HTML
     seg_tables_html = ""
@@ -460,10 +468,16 @@ def generate_html(r, aa):
   <p>
     Новий UI екрану оплати <strong>не показав статистично значущого покращення</strong>
     жодної з основних бізнес-метрик.
-    Первинна метрика — <strong>payments per user (PPU)</strong> —
-    склала <strong>{r['ppu_t']:.4f}</strong> у тестовій групі проти <strong>{r['ppu_c']:.4f}</strong>
-    у контрольній (різниця: <strong>{ppu_diff:+.4f}</strong>, p={r['p_ppu']:.3f} — <strong>не значуще</strong>).
-    Revenue per user: ${r['rpu_t']:.2f} (test) проти ${r['rpu_c']:.2f} (control) — також не значуще (p={r['p_rpu']:.3f}).
+    Замість єдиного показника PPU (payments per user) використовується
+    <strong>декомпозиція на три первинні метрики</strong>: Conversion Rate (CR),
+    Payments per Payer (PPP) та ARPPU — кожна тестується окремим методом,
+    відповідним до природи розподілу.
+    CR: <strong>{r['cr_t']:.2%}</strong> (test) vs <strong>{r['cr_c']:.2%}</strong> (control), p={r['p_cr']:.3f} — <strong>не значуще</strong>.
+    PPP: <strong>{r['ppp_t']:.2f}</strong> vs <strong>{r['ppp_c']:.2f}</strong> платежів/платника, p={r['p_ppp']:.3f} — <strong>не значуще</strong>.
+    ARPPU: <strong>${r['arpp_t']:,.0f}</strong> vs <strong>${r['arpp_c']:,.0f}</strong>, p={r['p_arpp']:.3f} — <strong>не значуще</strong>.
+    RPU: <strong>${r['rpu_t']:.2f}</strong> vs <strong>${r['rpu_c']:.2f}</strong>
+    ({(r['rpu_t']/r['rpu_c']-1)*100:+.1f}%), p={r['p_rpu']:.3f} — <strong>не значуще</strong>
+    (великий номінальний ліфт не підтверджується статистично через надвисоку дисперсію китів — CI у таблиці метрик).
   </p>
   <p>
     <strong>Критична аномалія, яку необхідно розслідувати до будь-якого рішення:</strong>
@@ -571,14 +585,22 @@ def generate_html(r, aa):
   <tr>
     <th>Метрика</th><th>Pre-Test</th><th>Control</th><th>Різниця</th><th>Результат</th>
   </tr>
+  <tr>
+    <td><strong>Conversion Rate</strong><br>
+        <small>% користувачів із ≥1 успішним платежем</small></td>
+    <td>{aa['cr_pre']:.2%}<br><small>({aa['pay_pre_n']:,} / {aa['n_pre']:,})</small></td>
+    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
+    <td>{(r['cr_c'] - aa['cr_pre']) * 100:+.2f} pp</td>
+    <td>{_badge(aa['p_cr'])}</td>
+  </tr>
   <tr style="background:#fff8e1">
-    <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
-        <small>Загальна кількість успішних платежів ÷ усі користувачі.
-        Враховує і конверсію, і повторні покупки</small></td>
-    <td>{aa['ppu_pre']:.4f}<br><small>({aa['ci_ppu_pre'][0]:.4f} — {aa['ci_ppu_pre'][1]:.4f})</small></td>
-    <td>{r['ppu_c']:.4f}<br><small>({r['ci_ppu_c'][0]:.4f} — {r['ci_ppu_c'][1]:.4f})</small></td>
-    <td>{r['ppu_c'] - aa['ppu_pre']:+.4f}<br><small>({(r['ppu_c'] / aa['ppu_pre'] - 1) * 100 if aa['ppu_pre'] else 0:+.1f}%)</small></td>
-    <td>{_badge(aa['p_ppu'])}</td>
+    <td><strong>Payments per Payer (PPP)</strong><br>
+        <small>Середня кількість платежів серед тих, хто платив.
+        Вимірює частоту покупок без zero-inflation від неплатників</small></td>
+    <td>{aa['ppp_pre']:.4f}<br><small>({aa['ci_ppp_pre'][0]:.4f} — {aa['ci_ppp_pre'][1]:.4f})<br>n платників={aa['n_payers_pre']:,}</small></td>
+    <td>{r['ppp_c']:.4f}<br><small>({r['ci_ppp_c'][0]:.4f} — {r['ci_ppp_c'][1]:.4f})<br>n платників={r['n_payers_c']:,}</small></td>
+    <td>{r['ppp_c'] - aa['ppp_pre']:+.4f}<br><small>({(r['ppp_c'] / aa['ppp_pre'] - 1) * 100 if aa['ppp_pre'] else 0:+.1f}%)</small></td>
+    <td>{_badge(aa['p_ppp'])}</td>
   </tr>
   <tr>
     <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
@@ -589,65 +611,85 @@ def generate_html(r, aa):
     <td>{_badge(aa['p_arppu'])}</td>
   </tr>
   <tr>
-    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
-        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
-    <td>${aa['arpu_pre']:,.2f}<br><small>({aa['ci_arpu_pre'][0]:.2f} — {aa['ci_arpu_pre'][1]:.2f})</small></td>
-    <td>${r['rpu_c']:,.2f}<br><small>({r['ci_rpu_c'][0]:.2f} — {r['ci_rpu_c'][1]:.2f})</small></td>
-    <td>{(r['rpu_c'] / aa['arpu_pre'] - 1) * 100 if aa['arpu_pre'] else 0:+.1f}%</td>
-    <td>{_badge(aa['p_arpu'])}</td>
-  </tr>
-  <tr>
-    <td><strong>Conversion Rate</strong><br>
-        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
-    <td>{aa['cr_pre']:.2%}<br><small>({aa['pay_pre_n']:,} / {aa['n_pre']:,})</small></td>
-    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
-    <td>{(r['cr_c'] - aa['cr_pre']) * 100:+.2f} pp</td>
-    <td>{_badge(aa['p_cr'])}</td>
+    <td><strong>RPU (дескриптивно)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі. Не тестується напряму —
+        інтерпретується як CR &times; ARPPU</small></td>
+    <td>${aa['rpu_pre']:,.2f}</td>
+    <td>${r['rpu_c']:,.2f}</td>
+    <td>{(r['rpu_c'] / aa['rpu_pre'] - 1) * 100 if aa['rpu_pre'] else 0:+.1f}%</td>
+    <td><span class="badge badge-na">Дескриптивно</span></td>
   </tr>
 </table>
 <div class="info">
   <strong>Що показує цей A/A-тест:</strong>
   Контрольна група конвертується краще за передтестову когорту —
-  Conversion Rate {r['cr_c']:.2%} (Control) проти {aa['cr_pre']:.2%} (Pre-Test),
+  CR {r['cr_c']:.2%} (Control) проти {aa['cr_pre']:.2%} (Pre-Test),
   {(r['cr_c'] - aa['cr_pre']) * 100:+.2f} pp, p={aa['p_cr']:.3f}.
-  Саме ця різниця у конверсії і пояснює підвищені PPU та ARPU в контрольній групі:
-  більше користувачів платить → більше платежів на юзера (PPU {r['ppu_c']:.4f} проти {aa['ppu_pre']:.4f})
-  і вищий середній дохід на користувача (ARPU ${r['rpu_c']:.2f} проти ${aa['arpu_pre']:.2f}).
-  При цьому середній чек серед тих, хто платить (ARPPU), змінився незначно
-  (${r['arpp_c']:.2f} проти ${aa['arppu_pre']:.2f}, {(r['arpp_c'] / aa['arppu_pre'] - 1) * 100 if aa['arppu_pre'] else 0:+.1f}%) —
-  платять ті самі за типом користувачі, просто їх більше в контрольній групі.
-  Це пояснюється сезонним ефектом: нові реєстрації у липні конвертуються
-  активніше, ніж у червні.
+  Payments per payer (PPP) у контрольній групі {r['ppp_c']:.2f} проти {aa['ppp_pre']:.2f}
+  (p={aa['p_ppp']:.3f}) — частота покупок серед тих, хто платить, суттєво не відрізняється.
+  Середній чек (ARPPU) також стабільний:
+  ${r['arpp_c']:.0f} (Control) проти ${aa['arppu_pre']:.0f} (Pre-Test), {(r['arpp_c'] / aa['arppu_pre'] - 1) * 100 if aa['arppu_pre'] else 0:+.1f}%.
+  RPU Control вищий за Pre-Test ({(r['rpu_c'] / aa['rpu_pre'] - 1) * 100 if aa['rpu_pre'] else 0:+.1f}%)
+  переважно за рахунок різниці у конверсії (більше платників), а не за рахунок поведінки самих платників.
+  Це характерний сезонний ефект: нові реєстрації у липні конвертуються активніше, ніж у червні.
 </div>
 
 <!-- ═══════════════════════════════════════════════════════ 6. РЕЗУЛЬТАТИ МЕТРИК -->
 <h2>6. Результати ключових метрик</h2>
+
+<div class="info">
+  <strong>Чому не один показник, а три?</strong>
+  Класичний PPU (payments per user) здається зручним: одне число, що враховує і конверсію,
+  і частоту покупок. Але у whale-моделі він приховує структуру ефекту.
+  PPU = CR &times; PPP &times; (нормування), тому зміна PPU може означати
+  <em>будь-що</em>: більше людей почало платити, або ті самі платять частіше, або обидва ефекти одночасно.
+  Крім того, ~97% користувачів не платять взагалі, і включення їх нулів
+  у розрахунок PPU знижує чутливість тесту (Mann-Whitney тоне у tied ranks).
+  <br><br>
+  Тому використовується декомпозиція:
+  <ul style="margin:6px 0">
+    <li><strong>CR (Z-test)</strong> — чи змінилась частка тих, хто платить?</li>
+    <li><strong>PPP (Mann-Whitney)</strong> — серед тих, хто платить, чи змінилась частота покупок?</li>
+    <li><strong>ARPPU (Mann-Whitney)</strong> — чи змінився середній чек?</li>
+    <li><strong>RPU (Mann-Whitney)</strong> — тестується, але з застереженням: 97% нулів знижують чутливість; CI широкий, великий номінальний ліфт може бути шумом китів.</li>
+  </ul>
+</div>
+
 <table>
   <tr>
     <th>Метрика</th><th>Control</th><th>Test</th><th>Різниця</th><th>Результат</th>
   </tr>
   <tr style="background:#fff8e1">
-    <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
-        <small>Загальна кількість успішних платежів ÷ усі користувачі.
-        Враховує і конверсію, і повторні покупки</small></td>
-    <td>{r['ppu_c']:.4f}<br><small>({r['ci_ppu_c'][0]:.4f} — {r['ci_ppu_c'][1]:.4f})</small></td>
-    <td>{r['ppu_t']:.4f}<br><small>({r['ci_ppu_t'][0]:.4f} — {r['ci_ppu_t'][1]:.4f})</small></td>
-    <td>{ppu_diff:+.4f}<br><small>({(r['ppu_t'] / r['ppu_c'] - 1) * 100 if r['ppu_c'] else 0:+.1f}%)</small></td>
-    <td>{_badge(r['p_ppu'])}</td>
+    <td><strong>Conversion Rate (CR)</strong><br>
+        <small>% користувачів із ≥1 успішним платежем. Z-test (one-tailed)</small></td>
+    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
+    <td>{r['cr_t']:.2%}<br><small>({r['pay_t']:,} / {r['n_t']:,})</small></td>
+    <td>{(r['diff_cr']*100):+.2f} pp<br><small>95% CI: ({cr_ci_low*100:+.2f} — {cr_ci_high*100:+.2f} pp)</small></td>
+    <td>{_badge(r['p_cr'])}</td>
+  </tr>
+  <tr style="background:#fff8e1">
+    <td><strong>Payments per Payer (PPP)</strong><br>
+        <small>Середня кількість платежів серед тих, хто платив. Mann-Whitney U.
+        Вимірює частоту покупок без zero-inflation від неплатників</small></td>
+    <td>{r['ppp_c']:.4f}<br><small>({r['ci_ppp_c'][0]:.4f} — {r['ci_ppp_c'][1]:.4f})<br>n={r['n_payers_c']:,} платників</small></td>
+    <td>{r['ppp_t']:.4f}<br><small>({r['ci_ppp_t'][0]:.4f} — {r['ci_ppp_t'][1]:.4f})<br>n={r['n_payers_t']:,} платників</small></td>
+    <td>{ppp_diff:+.4f}<br><small>({(r['ppp_t'] / r['ppp_c'] - 1) * 100 if r['ppp_c'] else 0:+.1f}%)<br>95% CI: ({ppp_ci_low:+.4f} — {ppp_ci_high:+.4f})</small></td>
+    <td>{_badge(r['p_ppp'])}</td>
   </tr>
   <tr>
     <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
-        <small>Середній чек серед користувачів, які платили</small></td>
+        <small>Середній чек серед платників. Mann-Whitney U</small></td>
     <td>${r['arpp_c']:,.2f}<br><small>({r['ci_arpp_c'][0]:,.2f} — {r['ci_arpp_c'][1]:,.2f})</small></td>
     <td>${r['arpp_t']:,.2f}<br><small>({r['ci_arpp_t'][0]:,.2f} — {r['ci_arpp_t'][1]:,.2f})</small></td>
     <td>{(r['arpp_t'] / r['arpp_c'] - 1) * 100:+.1f}%</td>
     <td>{_badge(r['p_arpp'])}</td>
   </tr>
   <tr>
-    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
-        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
-    <td>${r['rpu_c']:,.2f}<br><small>({r['ci_rpu_c'][0]:.2f} — {r['ci_rpu_c'][1]:.2f})</small></td>
-    <td>${r['rpu_t']:,.2f}<br><small>({r['ci_rpu_t'][0]:.2f} — {r['ci_rpu_t'][1]:.2f})</small></td>
+    <td><strong>RPU (Revenue Per User)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі. Mann-Whitney U.
+        97% нулів знижують чутливість — читайте разом із CI</small></td>
+    <td>${r['rpu_c']:,.2f}<br><small>95% CI: ({r['ci_rpu_c'][0]:.2f} — {r['ci_rpu_c'][1]:.2f})</small></td>
+    <td>${r['rpu_t']:,.2f}<br><small>95% CI: ({r['ci_rpu_t'][0]:.2f} — {r['ci_rpu_t'][1]:.2f})</small></td>
     <td>{(r['rpu_t'] / r['rpu_c'] - 1) * 100:+.1f}%</td>
     <td>{_badge(r['p_rpu'])}</td>
   </tr>
@@ -657,26 +699,17 @@ def generate_html(r, aa):
     <td>${r['total_rev_c']:,.0f}<br><small>({r['ci_total_rev_c'][0]:,.0f} — {r['ci_total_rev_c'][1]:,.0f})</small></td>
     <td>${r['total_rev_t']:,.0f}<br><small>({r['ci_total_rev_t'][0]:,.0f} — {r['ci_total_rev_t'][1]:,.0f})</small></td>
     <td>{(r['total_rev_t'] / r['total_rev_c'] - 1) * 100:+.1f}%</td>
-    <td>{_badge(r['p_rpu'])}</td>
-  </tr>
-  <tr>
-    <td><strong>Conversion Rate</strong><br>
-        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
-    <td>{r['cr_c']:.2%}<br><small>({r['pay_c']:,} / {r['n_c']:,})</small></td>
-    <td>{r['cr_t']:.2%}<br><small>({r['pay_t']:,} / {r['n_t']:,})</small></td>
-    <td>{(r['diff_cr']*100):+.2f} pp</td>
-    <td>{_badge(r['p_cr'])}</td>
+    <td><span class="badge badge-na">Дескриптивно</span></td>
   </tr>
 </table>
 
 <div class="info">
   <strong>Що показують цифри разом:</strong>
-  Конверсія (% платящих) у тест-групі дещо нижча, але середній чек (ARPPU) і ARPU — вищі,
-  а загальна виручка test-групи також вища.
-  Різниця у конверсії мінімальна (~0.01 pp) — статистично та практично незначуща.
-  Зростання ARPPU і ARPU свідчить, що новий UI
-  <strong>не скорочує аудиторію, але залучає більше китів або стимулює більші покупки</strong>.
-  Жодна з різниць не є статистично значущою при поточному розмірі вибірки.
+  Жодна з трьох первинних метрик не є статистично значущою.
+  CR у тест-групі дещо нижчий (-{abs(r['diff_cr']*100):.2f} pp), PPP майже однаковий (+{(r['ppp_t']/r['ppp_c']-1)*100:.1f}%),
+  ARPPU вищий (+{(r['arpp_t']/r['arpp_c']-1)*100:.1f}%) — але при такому розмірі вибірки платників
+  (n={r['n_payers_c']:,} / {r['n_payers_t']:,}) широкий CI не дозволяє відокремити сигнал від шуму.
+  Напрямок ARPP позитивний: новий UI <strong>не скорочує розмір платежів і не відлякує китів</strong>.
 </div>
 
 <div class="chart">
@@ -855,9 +888,10 @@ def generate_html(r, aa):
 <!-- ═══════════════════════════════════════════════════════ 11. РИЗИКИ -->
 <h2>11. Ризики та застереження</h2>
 <ul>
-  <li><strong>Потужність revenue-метрик:</strong> Через екстремальну дисперсію сум платежів
-    (whale-модель) для надійного виявлення 10% зміни RPU знадобляться сотні тисяч користувачів.
-    Revenue-висновки недостатньо потужні.</li>
+  <li><strong>Потужність метрик:</strong> {powered_note}
+    CR достатньо потужний (низька дисперсія бінарного виходу).
+    PPP і ARPPU недостатньо потужні через малу кількість платників та екстремальну
+    дисперсію сум у whale-моделі. RPU не тестується окремо — він читається через CR &times; ARPPU.</li>
   <li><strong>Дисбаланс country group:</strong> Рандомізація призвела до статистично
     значущого дисбалансу country_group (chi² = 18.08, p = 0.0004). Оскільки country groups
     мають суттєво різні базові рівні конверсії (2.1%–5.3%), цей дисбаланс може
@@ -879,9 +913,12 @@ def generate_html(r, aa):
   <h3>НЕ ЗАПУСКАТИ — перезапустити після виправлення багу</h3>
   <p>
     Новий UI екрану оплати <strong>не демонструє статистично значущого покращення</strong>
-    відносно поточного дизайну за жодною первинною метрикою.
-    PPU склав {r['ppu_t']:.4f} у test проти {r['ppu_c']:.4f} у control (p={r['p_ppu']:.3f}).
-    Revenue-метрики позитивні за напрямком, але не значущі.
+    відносно поточного дизайну за жодною з трьох первинних метрик:
+    CR {r['cr_t']:.2%} vs {r['cr_c']:.2%} (p={r['p_cr']:.3f}),
+    PPP {r['ppp_t']:.2f} vs {r['ppp_c']:.2f} (p={r['p_ppp']:.3f}),
+    ARPP ${r['arpp_t']:,.0f} vs ${r['arpp_c']:,.0f} (p={r['p_arpp']:.3f}).
+    RPU: ${r['rpu_t']:.2f} vs ${r['rpu_c']:.2f} ({(r['rpu_t']/r['rpu_c']-1)*100:+.1f}%), p={r['p_rpu']:.3f} — не значуще
+    (великий номінальний ліфт пояснюється 1–2 додатковими китами при n={r['n_payers_c']:,} платників на групу).
   </p>
   <p>
     <strong>Важливе застереження:</strong> результати ускладнено критичним багом у country group 4

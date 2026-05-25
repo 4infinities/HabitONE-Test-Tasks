@@ -1,0 +1,51 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;30;;32;0;1.07;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;single
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;30;;25.92;19;0.86;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;subscription
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;60;;62;0;1.03;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;single
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;60;;50.22;19;0.84;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;subscription
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;90;;93;0;1.03;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;single
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;90;;75.33;19;0.84;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;subscription
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;120;;123;0;1.02;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;single
+Strong Coffee Co.;Coffee with Adaptogens - BLACK Instant;instant;;120;;99.63;19;0.83;adaptogen;own_site;https://strongcoffeecompany.com/products/black;24.05.2026;subscription
+Strong Coffee Co.;Coffee with Adaptogens Travel Packs - 10 Servings | STRONG;packet;;10;;15;0;1.5;lion's mane;own_site;https://strongcoffeecompany.com/products/black-fair-trade-instant-coffee-adaptogens-10-single-servings-per-pack;24.05.2026;single
+Strong Coffee Co.;Coffee with Adaptogens Travel Packs - 10 Servings | STRONG;packet;;10;;12.15;19;1.22;lion's mane;own_site;https://strongcoffeecompany.com/products/black-fair-trade-instant-coffee-adaptogens-10-single-servings-per-pack;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;15;450;39.99;0;2.67;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;15;450;32.39;19;2.16;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;30;900;76;0;2.53;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;30;900;61.56;19;2.05;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;45;1350;113;0;2.51;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;45;1350;91.53;19;2.03;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;60;1800;148;0;2.47;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Dark Mocha;instant;30;60;1800;119.88;19;2;collagen;own_site;https://strongcoffeecompany.com/products/dark-mocha-instant-latte;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;15;450;39.99;0;2.67;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;15;450;32.39;19;2.16;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;30;900;76;0;2.53;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;30;900;61.56;19;2.05;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;45;1350;113;0;2.51;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;45;1350;91.53;19;2.03;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;60;1800;148;0;2.47;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Hazelnut Mocha;instant;30;60;1800;119.88;19;2;collagen;own_site;https://strongcoffeecompany.com/products/hazelnut-mocha-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte PB Coco;instant;30;15;450;39;0;2.6;collagen;own_site;https://strongcoffeecompany.com/products/peanut-butter-coco-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte PB Coco;instant;30;45;1350;102;0;2.27;collagen;own_site;https://strongcoffeecompany.com/products/peanut-butter-coco-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte PB Coco;instant;30;90;2700;180;0;2;collagen;own_site;https://strongcoffeecompany.com/products/peanut-butter-coco-latte;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Peppermint Mocha;instant;30;;;37;0;;collagen;own_site;https://strongcoffeecompany.com/products/peppermint-mocha-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;15;450;39.99;0;2.67;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;15;450;32.39;19;2.16;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;30;900;76;0;2.53;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;30;900;61.56;19;2.05;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;45;1350;113;0;2.51;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;45;1350;91.53;19;2.03;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;60;1800;148;0;2.47;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;60;1800;119.88;19;2;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;90;2700;228;0;2.53;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Snickerdoodle;instant;30;90;2700;184.68;19;2.05;collagen;own_site;https://strongcoffeecompany.com/products/instant-snickerdoodle-latte-essentials;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;15;450;39.99;0;2.67;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;15;450;32.39;19;2.16;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;30;900;76;0;2.53;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;30;900;61.56;19;2.05;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;45;1350;113;0;2.51;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;45;1350;91.53;19;2.03;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;60;1800;148;0;2.47;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;single
+Strong Coffee Co.;Collagen Latte Vanilla;instant;30;60;1800;119.88;19;2;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-multi-serve;24.05.2026;subscription
+Strong Coffee Co.;Collagen Latte Vanilla Travel Packs;packet;30;;;25;0;;collagen;own_site;https://strongcoffeecompany.com/products/morning-fix-travel-box;24.05.2026;single
+Strong Coffee Co.;Strong Pods;pods;;;;25;0;;;own_site;https://strongcoffeecompany.com/products/strong-pods;24.05.2026;single

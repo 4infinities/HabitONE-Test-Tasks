@@ -1,0 +1,9 @@
+brand,product_name,format,serving_size_g,serving_count,volume_g,price_usd,discount_pct,serving_price,key_ingredient,channel,url,date_collected,purchase_type
+Shroomi,"Medium Roast Nicaragua — For Morning Clarity, 10 oz",ground,,24,283.5,36.99,0,1.54,lion's mane,own_site,https://www.shroomihealth.com/products/mushroom-ground-coffee-lions-mane-focus,2026-05-23,single
+Shroomi,"Medium Roast Nicaragua — For Morning Clarity, 10 oz",ground,,24,283.5,33.29,10.0,1.39,lion's mane,own_site,https://www.shroomihealth.com/products/mushroom-ground-coffee-lions-mane-focus,2026-05-23,subscription
+Shroomi,"Dark Roast Guatemala — For Deep Focus, 10 oz",ground,,24,283.5,36.99,0,1.54,lion's mane,own_site,https://www.shroomihealth.com/products/dark-roast-guatemala-huehuetenango-with-lions-mane-mushroom,2026-05-23,single
+Shroomi,"Dark Roast Guatemala — For Deep Focus, 10 oz",ground,,24,283.5,33.29,10.0,1.39,lion's mane,own_site,https://www.shroomihealth.com/products/dark-roast-guatemala-huehuetenango-with-lions-mane-mushroom,2026-05-23,subscription
+Shroomi,"Light Roast Mexico — For Creative Flow, 10 oz",ground,,24,283.5,36.99,0,1.54,lion's mane,own_site,https://www.shroomihealth.com/products/light-roast-mexico-chiapas-with-lions-mane-mushroom,2026-05-23,single
+Shroomi,"Light Roast Mexico — For Creative Flow, 10 oz",ground,,24,283.5,33.29,10.0,1.39,lion's mane,own_site,https://www.shroomihealth.com/products/light-roast-mexico-chiapas-with-lions-mane-mushroom,2026-05-23,subscription
+Shroomi,"Half Decaf Peru — For Calm Evenings & Steady Focus, 10 oz",ground,,24,283.5,39.99,0,1.67,lion's mane,own_site,https://www.shroomihealth.com/products/half-caf-roast-peru-la-florida-with-lions-mane-mushroom,2026-05-23,single
+Shroomi,"Half Decaf Peru — For Calm Evenings & Steady Focus, 10 oz",ground,,24,283.5,35.99,10.0,1.5,lion's mane,own_site,https://www.shroomihealth.com/products/half-caf-roast-peru-la-florida-with-lions-mane-mushroom,2026-05-23,subscription

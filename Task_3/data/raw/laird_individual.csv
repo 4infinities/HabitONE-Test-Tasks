@@ -1,0 +1,83 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Laird Superfood;Blind Box Bundle;bundle;;;;75;0;;mushroom;own_site;https://lairdsuperfood.com/products/blind-box-bundle;23.05.2026;single
+Laird Superfood;Blind Box Bundle;bundle;;;;60;20;;mushroom;own_site;https://lairdsuperfood.com/products/blind-box-bundle;23.05.2026;subscription
+Laird Superfood;Chai Instant Latte with Adaptogens;instant;;;226.8;19;0;;adaptogen;own_site;https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Chai Instant Latte with Adaptogens;instant;;;226.8;15.2;20;;adaptogen;own_site;https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Chai Instant Latte with Adaptogens;instant;;;907.2;72.2;0;;adaptogen;own_site;https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Chai Instant Latte with Adaptogens;instant;;;907.2;57.76;20;;adaptogen;own_site;https://lairdsuperfood.com/products/chai-instant-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Chocolate Lovers Bundle;creamer;;;;63.65;0;;adaptogen;own_site;https://lairdsuperfood.com/products/chocolate-lovers-bundle;23.05.2026;single
+Laird Superfood;Chocolate Lovers Bundle;creamer;;;;50.92;20;;adaptogen;own_site;https://lairdsuperfood.com/products/chocolate-lovers-bundle;23.05.2026;subscription
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;340.2;20;0;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;single
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;340.2;16;20;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;subscription
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;1360.8;76;0;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;single
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;1360.8;60.8;20;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;subscription
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;2041.2;114;0;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;single
+Laird Superfood;DEFEND Functional Mushroom Coffee – Medium Roast;creamer;;;2041.2;91.2;20;;reishi;own_site;https://lairdsuperfood.com/products/defend-medium-roast-functional-coffee;23.05.2026;subscription
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;340.2;20;0;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;single
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;340.2;16;20;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;subscription
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;1360.8;76;0;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;single
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;1360.8;60.8;20;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;subscription
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;2041.2;114;0;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;single
+Laird Superfood;FOCUS Medium Roast Ground Coffee;creamer;;;2041.2;91.2;20;;rhodiola;own_site;https://lairdsuperfood.com/products/focus-medium-roast-ground-coffee;23.05.2026;subscription
+Laird Superfood;Focused Energy Coffee K-Cups;pods;;;;15;0;;rhodiola;own_site;https://lairdsuperfood.com/products/focused-energy-coffee-k-cups;23.05.2026;single
+Laird Superfood;Focused Energy Coffee K-Cups;pods;;;;12;20;;rhodiola;own_site;https://lairdsuperfood.com/products/focused-energy-coffee-k-cups;23.05.2026;subscription
+Laird Superfood;Functional Mushroom Coffee K-Cups;pods;;;;15;0;;chaga;own_site;https://lairdsuperfood.com/products/functional-mushroom-coffee-k-cups-medium-roast;23.05.2026;single
+Laird Superfood;Functional Mushroom Coffee K-Cups;pods;;;;12;20;;chaga;own_site;https://lairdsuperfood.com/products/functional-mushroom-coffee-k-cups-medium-roast;23.05.2026;subscription
+Laird Superfood;Gabby's Favorites Bundle;creamer;;;;50.35;0;;;own_site;https://lairdsuperfood.com/products/gabbys-favorites-bundle;23.05.2026;single
+Laird Superfood;Gabby's Favorites Bundle;creamer;;;;40.28;20;;;own_site;https://lairdsuperfood.com/products/gabbys-favorites-bundle;23.05.2026;subscription
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;226.8;19;0;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;single
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;226.8;15.2;20;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;subscription
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;453.6;36;0;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;single
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;453.6;28.8;20;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;subscription
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;907.2;72;0;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;single
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;907.2;57.6;20;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;subscription
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;1360.8;108;0;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;single
+Laird Superfood;Hot Chocolate with Functional Mushrooms;instant;;;1360.8;86.4;20;;chaga;own_site;https://lairdsuperfood.com/products/hot-chocolate-with-functional-mushrooms;23.05.2026;subscription
+Laird Superfood;Maca Instant Latte;instant;;;226.8;19;0;;mushroom;own_site;https://lairdsuperfood.com/products/maca-instant-latte;23.05.2026;single
+Laird Superfood;Maca Instant Latte;instant;;;226.8;15.2;20;;mushroom;own_site;https://lairdsuperfood.com/products/maca-instant-latte;23.05.2026;subscription
+Laird Superfood;Maple Instant Latte;instant;;;226.8;19;0;;coconut;own_site;https://lairdsuperfood.com/products/maple-instant-latte;23.05.2026;single
+Laird Superfood;Maple Instant Latte;instant;;;226.8;15.2;20;;coconut;own_site;https://lairdsuperfood.com/products/maple-instant-latte;23.05.2026;subscription
+Laird Superfood;Mocha Instant Latte with Adaptogens;creamer;;;226.8;19;0;;mushroom;own_site;https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Mocha Instant Latte with Adaptogens;creamer;;;226.8;15.2;20;;mushroom;own_site;https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Mocha Instant Latte with Adaptogens;creamer;;;453.6;29;0;;mushroom;own_site;https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Mocha Instant Latte with Adaptogens;creamer;;;453.6;23.2;20;;mushroom;own_site;https://lairdsuperfood.com/products/mocha-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;453.6;24;0;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;single
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;453.6;19.2;20;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;subscription
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;226.8;14;0;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;single
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;226.8;11.2;20;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;subscription
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;1360.8;68.4;0;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;single
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;1360.8;54.72;20;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;subscription
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;907.2;53.2;0;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;single
+Laird Superfood;Mocha Superfood Creamer®;creamer;;;907.2;42.56;20;;mushroom;own_site;https://lairdsuperfood.com/products/superfood-creamer-mocha;23.05.2026;subscription
+Laird Superfood;Organic Decaf Perform Functional Mushroom Ground Medium Roast Coffee;creamer;;;340.2;20;0;;mushroom;own_site;https://lairdsuperfood.com/products/organic-decaf-perform-functional-mushroom-ground-medium-roast-coffee;23.05.2026;single
+Laird Superfood;Organic Decaf Perform Functional Mushroom Ground Medium Roast Coffee;creamer;;;340.2;16;20;;mushroom;own_site;https://lairdsuperfood.com/products/organic-decaf-perform-functional-mushroom-ground-medium-roast-coffee;23.05.2026;subscription
+Laird Superfood;Organic Morning Jumpstart;instant;;;76.5;24;0;;;own_site;https://lairdsuperfood.com/products/morning-jumpstart;23.05.2026;single
+Laird Superfood;Organic Morning Jumpstart;instant;;;76.5;19.2;20;;;own_site;https://lairdsuperfood.com/products/morning-jumpstart;23.05.2026;subscription
+Laird Superfood;Organic Morning Jumpstart;instant;;;382.7;114;0;;;own_site;https://lairdsuperfood.com/products/morning-jumpstart;23.05.2026;single
+Laird Superfood;Organic Morning Jumpstart;instant;;;382.7;91.2;20;;;own_site;https://lairdsuperfood.com/products/morning-jumpstart;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;340.2;20;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;340.2;16;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;1360.8;76;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;1360.8;60.8;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;2041.2;114;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Dark Roast Ground;creamer;;;2041.2;91.2;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-dark-roast-ground-functional-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;340.2;20;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;340.2;16;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;1360.8;76;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;1360.8;60.8;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;2041.2;114;0;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;single
+Laird Superfood;Organic PERFORM Functional Mushroom Coffee - Medium Roast Ground;creamer;;;2041.2;91.2;20;;chaga;own_site;https://lairdsuperfood.com/products/perform-medium-roast-ground-mushroom-coffee;23.05.2026;subscription
+Laird Superfood;Organic Perform Functional Mushroom Whole Bean Dark Roast Coffee;creamer;;;340.2;20;0;;mushroom;own_site;https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-dark-roast-coffee;23.05.2026;single
+Laird Superfood;Organic Perform Functional Mushroom Whole Bean Dark Roast Coffee;creamer;;;340.2;16;20;;mushroom;own_site;https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-dark-roast-coffee;23.05.2026;subscription
+Laird Superfood;Organic Perform Functional Mushroom Whole Bean Medium Roast Coffee;creamer;;;340.2;20;0;;mushroom;own_site;https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-medium-roast-coffee;23.05.2026;single
+Laird Superfood;Organic Perform Functional Mushroom Whole Bean Medium Roast Coffee;creamer;;;340.2;16;20;;mushroom;own_site;https://lairdsuperfood.com/products/organic-perform-functional-mushroom-whole-bean-medium-roast-coffee;23.05.2026;subscription
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;226.8;19;0;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;226.8;15.2;20;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;;2.5;0;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;;2;20;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;;33;0;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;single
+Laird Superfood;Peppermint Mocha Instant Latte with Adaptogens;instant;;;;26.4;20;;adaptogen;own_site;https://lairdsuperfood.com/products/peppermint-mocha-instant-latte-with-adaptogens;23.05.2026;subscription
+Laird Superfood;Peppermint Mocha Superfood Creamer®;creamer;;;226.8;14;0;;coconut;own_site;https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer;23.05.2026;single
+Laird Superfood;Peppermint Mocha Superfood Creamer®;creamer;;;226.8;11.2;20;;coconut;own_site;https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer;23.05.2026;subscription
+Laird Superfood;Peppermint Mocha Superfood Creamer®;creamer;;;907.2;53.2;0;;coconut;own_site;https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer;23.05.2026;single
+Laird Superfood;Peppermint Mocha Superfood Creamer®;creamer;;;907.2;42.56;20;;coconut;own_site;https://lairdsuperfood.com/products/peppermint-mocha-superfood-creamer;23.05.2026;subscription

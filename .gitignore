@@ -1,8 +1,23 @@
+# Environment files
 .env
-*.md
+
+# Compiled Python files
+**/__pycache__/
 *.pyc
-__pycache__/
-Task_3/data/raw/*.csv
-Task_3/data/processed/*.csv
+
+# Specific files to ignore
+**/claude.md
+
+# Task_1 specific outputs
+Task_1/analysis/outputs/*.csv
+Task_1/charts/*.png
+
+# Task_3 specific files
+Task_3/data/raw/scrape_errors.log
+Task_3/scripts/**/__pycache__/
+
+# Node modules
 node_modules/
+
+# Archive directories
 **/archive/

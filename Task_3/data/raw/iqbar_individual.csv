@@ -1,0 +1,13 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+IQBAR;IQJOE Original Variety (40 Sticks);instant;;40;;47.02;0;1.18;;own_site;https://www.eatiqbar.com/products/iqjoe-original-variety-40-sticks;24.05.2026;single
+IQBAR;IQJOE Original Variety (40 Sticks);instant;;40;;39.97;15;1;;own_site;https://www.eatiqbar.com/products/iqjoe-original-variety-40-sticks;24.05.2026;subscription
+IQBAR;Original Black (40 Sticks);instant;;40;;47.02;0;1.18;;own_site;https://www.eatiqbar.com/products/original-black-40-sticks;24.05.2026;single
+IQBAR;Original Black (40 Sticks);instant;;40;;39.97;15;1;;own_site;https://www.eatiqbar.com/products/original-black-40-sticks;24.05.2026;subscription
+IQBAR;Vanilla Spice (40 Sticks);instant;;40;;47.02;0;1.18;;own_site;https://www.eatiqbar.com/products/vanilla-spice-40-sticks;24.05.2026;single
+IQBAR;Vanilla Spice (40 Sticks);instant;;40;;39.97;15;1;;own_site;https://www.eatiqbar.com/products/vanilla-spice-40-sticks;24.05.2026;subscription
+IQBAR;Toasted Hazelnut (40 Sticks);instant;;40;;47.02;0;1.18;;own_site;https://www.eatiqbar.com/products/toasted-hazelnut-40-sticks;24.05.2026;single
+IQBAR;Toasted Hazelnut (40 Sticks);instant;;40;;39.97;15;1;;own_site;https://www.eatiqbar.com/products/toasted-hazelnut-40-sticks;24.05.2026;subscription
+IQBAR;Caffè Mocha (40 Sticks);instant;;40;;47.02;0;1.18;;own_site;https://www.eatiqbar.com/products/caffe-mocha-40-sticks;24.05.2026;single
+IQBAR;Caffè Mocha (40 Sticks);instant;;40;;39.97;15;1;;own_site;https://www.eatiqbar.com/products/caffe-mocha-40-sticks;24.05.2026;subscription
+IQBAR;IQJOE Original Variety (16 Sticks);instant;;16;;19.99;0;1.25;;own_site;https://www.eatiqbar.com/products/iqjoe-original-variety-16-sticks;24.05.2026;single
+IQBAR;IQJOE Original Variety (16 Sticks);instant;;16;;16.99;15;1.06;;own_site;https://www.eatiqbar.com/products/iqjoe-original-variety-16-sticks;24.05.2026;subscription

@@ -28,7 +28,9 @@ OUTPUT_DIR = os.path.join(SCRIPT_DIR, "outputs")
 ALPHA = 0.05
 
 # Количество тестируемых метрик — нужно для поправки Bonferroni
-N_METRICS = 4  # payments_per_user, RPU, ARPP, conversion_rate
+# CR (Z-test) + payments_per_payer (MW) + ARPP (MW)
+# RPU не тестируется напрямую — интерпретируется как CR × ARPP
+N_METRICS = 3
 
 # Число итераций bootstrap: чем больше — тем точнее CI, 10k — стандарт
 N_BOOTSTRAP = 10_000
@@ -66,6 +68,32 @@ def whale_cutoff(ab):
     rev = ab[ab["revenue"] > 0]["revenue"].sort_values(ascending=False).values
     idx = int((rev.cumsum() < WHALE_PCT * rev.sum()).sum())
     return float(rev[min(idx, len(rev) - 1)])
+
+
+def ttest_row(scenario, metric, ctrl, test):
+    """
+    Welch's t-test (two-sample, one-tailed) для сравнения средних.
+    H0: mean(test) <= mean(ctrl). H1: mean(test) > mean(ctrl).
+    Welch вариант (equal_var=False) не требует равенства дисперсий.
+    CI считается через bootstrap — те же 10k итераций, что и у MW.
+    """
+    _, p = stats.ttest_ind(test, ctrl, equal_var=False, alternative="greater")
+    ci = bootstrap_ci(ctrl.values, test.values)
+    m_c, m_t = ctrl.mean(), test.mean()
+    return {
+        "scenario": scenario,
+        "metric": metric,
+        "test": "Welch t-test",
+        "control_mean": m_c,
+        "test_mean": m_t,
+        "abs_diff": m_t - m_c,
+        "rel_diff_pct": (m_t / m_c - 1) * 100 if m_c else float("nan"),
+        "ci_95_low": ci[0],
+        "ci_95_high": ci[1],
+        "p_value": p,
+        "p_bonferroni": min(p * N_METRICS, 1.0),
+        "significant": p < ALPHA / N_METRICS,
+    }
 
 
 def mw_row(scenario, metric, ctrl, test):
@@ -152,11 +180,29 @@ def run_scenario(df, label):
 
     ctrl_arpp = ctrl[ctrl["revenue"] > 0]["revenue"]
     test_arpp = test[test["revenue"] > 0]["revenue"]
+    # payments_per_payer: среди плательщиков, без нулей — нет проблемы zero-inflation
+    ctrl_ppp = ctrl[ctrl["payment_count"] > 0]["payment_count"]
+    test_ppp = test[test["payment_count"] > 0]["payment_count"]
+
     rows = [
         ztest_row(label, ctrl, test),
-        mw_row(label, "payments_per_user", ctrl["payment_count"], test["payment_count"]),
-        mw_row(label, "RPU", ctrl["revenue"], test["revenue"]),
+        mw_row(label, "payments_per_payer", ctrl_ppp, test_ppp),
         mw_row(label, "ARPP", ctrl_arpp, test_arpp),
+    ]
+
+    # RPU дескриптивно: CR × ARPP, без отдельного теста
+    rpu_ctrl = ctrl["revenue"].mean()
+    rpu_test = test["revenue"].mean()
+    rpu_info = {
+        "scenario": label,
+        "rpu_control": rpu_ctrl,
+        "rpu_test": rpu_test,
+        "rpu_rel_diff_pct": (rpu_test / rpu_ctrl - 1) * 100 if rpu_ctrl else float("nan"),
+    }
+
+    ttest_rows = [
+        ttest_row(label, "payments_per_payer", ctrl_ppp, test_ppp),
+        ttest_row(label, "ARPP", ctrl_arpp, test_arpp),
     ]
 
     # Whale RPU: выручка от китов / все пользователи группы
@@ -177,7 +223,29 @@ def run_scenario(df, label):
         "whale_rpu_test": whale_rpu_t,
         "whale_rpu_rel_diff_pct": (whale_rpu_t / whale_rpu_c - 1) * 100 if whale_rpu_c else float("nan"),
     }
-    return pd.DataFrame(rows), whale_info
+    comparison = _build_comparison(pd.DataFrame(rows), pd.DataFrame(ttest_rows))
+    return pd.DataFrame(rows), whale_info, rpu_info, comparison
+
+
+def _build_comparison(mw_df, tt_df):
+    """
+    Склеивает MW и t-test результаты в одну сравнительную таблицу.
+    Только непрерывные метрики (без conversion_rate — там Z-test).
+    Колонки: metric, p_mw, sig_mw, p_ttest, sig_ttest, verdict.
+    verdict = 'AGREE' если оба теста дают одинаковый вывод о значимости.
+    """
+    cols = ["metric", "p_value", "p_bonferroni", "significant"]
+    mw = mw_df[mw_df["metric"] != "conversion_rate"][cols].rename(
+        columns={"p_value": "p_mw", "p_bonferroni": "p_bonf_mw", "significant": "sig_mw"}
+    )
+    tt = tt_df[cols].rename(
+        columns={"p_value": "p_ttest", "p_bonferroni": "p_bonf_ttest", "significant": "sig_ttest"}
+    )
+    cmp = mw.merge(tt, on="metric")
+    cmp["verdict"] = cmp.apply(
+        lambda r: "AGREE" if r["sig_mw"] == r["sig_ttest"] else "DISAGREE", axis=1
+    )
+    return cmp
 
 
 def sign_test(df, label):
@@ -230,20 +298,31 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     all_rows, whale_rows = [], []
 
+    cmp_rows = []
+    rpu_rows = []
     for df, label in [(load_mobile_payments(), "mobile"), (load_all_payments(), "all_devices")]:
-        tests_df, whale_info = run_scenario(df, label)
+        tests_df, whale_info, rpu_info, cmp = run_scenario(df, label)
         all_rows.append(tests_df)
         whale_rows.append(whale_info)
+        rpu_rows.append(rpu_info)
+        cmp["scenario"] = label
+        cmp_rows.append(cmp)
 
-        # Скорректированный порог: 0.05 / 3 ≈ 0.0167
         print(f"\n{'='*60}")
         print(f"STATISTICAL TESTS: {label.upper()}  (Bonferroni alpha = {ALPHA/N_METRICS:.4f})")
-        print(f"Primary metric: payments_per_user (Mann-Whitney U)")
+        print(f"Decomposition: CR (Z-test) + payments_per_payer (MW) + ARPP (MW)")
         print(f"{'='*60}")
         print(tests_df[[
             "metric", "control_mean", "test_mean", "rel_diff_pct",
             "ci_95_low", "ci_95_high", "p_value", "p_bonferroni", "significant",
         ]].to_string(index=False))
+        print(f"\n  RPU (descriptive, CR * ARPP): "
+              f"ctrl=${rpu_info['rpu_control']:.4f}  "
+              f"test=${rpu_info['rpu_test']:.4f}  "
+              f"diff={rpu_info['rpu_rel_diff_pct']:+.1f}%")
+
+        print(f"\n--- Mann-Whitney U vs Welch t-test ({label}) ---")
+        print(cmp[["metric", "p_mw", "sig_mw", "p_ttest", "sig_ttest", "verdict"]].to_string(index=False))
         print(f"\n  Whale RPU (cutoff ${whale_info['whale_cutoff']:,.2f}): "
               f"ctrl=${whale_info['whale_rpu_control']:.4f}  "
               f"test=${whale_info['whale_rpu_test']:.4f}  "
@@ -253,7 +332,11 @@ def main():
         os.path.join(OUTPUT_DIR, "metrics_table.csv"), index=False, float_format="%.6f")
     pd.DataFrame(whale_rows).to_csv(
         os.path.join(OUTPUT_DIR, "whale_rpu_step7.csv"), index=False, float_format="%.4f")
-    print(f"\nSaved: metrics_table.csv, whale_rpu_step7.csv")
+    pd.concat(cmp_rows, ignore_index=True).to_csv(
+        os.path.join(OUTPUT_DIR, "mw_vs_ttest.csv"), index=False, float_format="%.6f")
+    pd.DataFrame(rpu_rows).to_csv(
+        os.path.join(OUTPUT_DIR, "rpu_descriptive.csv"), index=False, float_format="%.4f")
+    print(f"\nSaved: metrics_table.csv, whale_rpu_step7.csv, mw_vs_ttest.csv, rpu_descriptive.csv")
 
     # Sign test — mobile only (primary scenario, CLAUDE.md Step 5)
     sign = sign_test(load_mobile_payments(), "mobile")

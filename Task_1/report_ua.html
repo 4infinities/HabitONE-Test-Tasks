@@ -32,7 +32,7 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
 
 <h1>A/B Test Report: Редизайн екрану оплати (мобільна версія)</h1>
 <p style="color:#555">
-  Сформовано: 2026-05-24 &nbsp;|&nbsp;
+  Сформовано: 2026-05-25 &nbsp;|&nbsp;
   Початок експерименту: 23 липня 2021 р. &nbsp;|&nbsp;
   Платформа: лише Mobile
 </p>
@@ -44,10 +44,16 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
   <p>
     Новий UI екрану оплати <strong>не показав статистично значущого покращення</strong>
     жодної з основних бізнес-метрик.
-    Первинна метрика — <strong>payments per user (PPU)</strong> —
-    склала <strong>0.1122</strong> у тестовій групі проти <strong>0.1120</strong>
-    у контрольній (різниця: <strong>+0.0002</strong>, p=0.514 — <strong>не значуще</strong>).
-    Revenue per user: $18.48 (test) проти $14.85 (control) — також не значуще (p=0.514).
+    Замість єдиного показника PPU (payments per user) використовується
+    <strong>декомпозиція на три первинні метрики</strong>: Conversion Rate (CR),
+    Payments per Payer (PPP) та ARPPU — кожна тестується окремим методом,
+    відповідним до природи розподілу.
+    CR: <strong>2.87%</strong> (test) vs <strong>2.88%</strong> (control), p=0.519 — <strong>не значуще</strong>.
+    PPP: <strong>3.91</strong> vs <strong>3.89</strong> платежів/платника, p=0.218 — <strong>не значуще</strong>.
+    ARPPU: <strong>$644</strong> vs <strong>$515</strong>, p=0.243 — <strong>не значуще</strong>.
+    RPU: <strong>$18.48</strong> vs <strong>$14.85</strong>
+    (+24.5%), p=0.514 — <strong>не значуще</strong>
+    (великий номінальний ліфт не підтверджується статистично через надвисоку дисперсію китів — CI у таблиці метрик).
   </p>
   <p>
     <strong>Критична аномалія, яку необхідно розслідувати до будь-якого рішення:</strong>
@@ -153,114 +159,133 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
 </p>
 <table>
   <tr>
-    <th>Метрика</th><th>Pre-Test</th><th>Control</th><th>Різниця (Control − Pre-Test)</th><th>Результат</th>
-  </tr>
-  <tr style="background:#fff8e1">
-    <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
-        <small>Загальна кількість успішних платежів ÷ усі користувачі.
-        Враховує і конверсію, і повторні покупки</small></td>
-    <td>0.0721<br><small>(0.0574 — 0.0904)</small></td>
-    <td>0.1120<br><small>(0.0815 — 0.1483)</small></td>
-    <td>+0.0400<br><small>(+55.4%)</small></td>
-    <td><span class="badge badge-sig">Значущий (p=0.000)</span></td>
-  </tr>
-  <tr>
-    <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
-        <small>Середній чек серед користувачів, які платили</small></td>
-    <td>$454.78<br><small>(346.19 — 582.97)</small></td>
-    <td>$514.91<br><small>(355.86 — 699.55)</small></td>
-    <td>+13.2%</td>
-    <td><span class="badge badge-ns">Не значущий (p=0.361)</span></td>
-  </tr>
-  <tr>
-    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
-        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
-    <td>$9.42<br><small>(7.11 — 12.22)</small></td>
-    <td>$14.85<br><small>(10.09 — 20.77)</small></td>
-    <td>+57.5%</td>
-    <td><span class="badge badge-sig">Значущий (p=0.000)</span></td>
+    <th>Метрика</th><th>Pre-Test</th><th>Control</th><th>Різниця</th><th>Результат</th>
   </tr>
   <tr>
     <td><strong>Conversion Rate</strong><br>
-        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
+        <small>% користувачів із ≥1 успішним платежем</small></td>
     <td>2.07%<br><small>(561 / 27,072)</small></td>
     <td>2.88%<br><small>(175 / 6,070)</small></td>
     <td>+0.81 pp</td>
     <td><span class="badge badge-sig">Значущий (p=0.000)</span></td>
   </tr>
+  <tr style="background:#fff8e1">
+    <td><strong>Payments per Payer (PPP)</strong><br>
+        <small>Середня кількість платежів серед тих, хто платив.
+        Вимірює частоту покупок без zero-inflation від неплатників</small></td>
+    <td>3.4777<br><small>(2.8341 — 4.3066)<br>n платників=561</small></td>
+    <td>3.8857<br><small>(2.9370 — 4.9771)<br>n платників=175</small></td>
+    <td>+0.4080<br><small>(+11.7%)</small></td>
+    <td><span class="badge badge-ns">Не значущий (p=0.681)</span></td>
+  </tr>
+  <tr>
+    <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
+        <small>Середній чек серед користувачів, які платили</small></td>
+    <td>$454.78<br><small>(348.36 — 581.87)</small></td>
+    <td>$514.91<br><small>(352.70 — 699.54)</small></td>
+    <td>+13.2%</td>
+    <td><span class="badge badge-ns">Не значущий (p=0.361)</span></td>
+  </tr>
+  <tr>
+    <td><strong>RPU (дескриптивно)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі. Не тестується напряму —
+        інтерпретується як CR &times; ARPPU</small></td>
+    <td>$9.42</td>
+    <td>$14.85</td>
+    <td>+57.5%</td>
+    <td><span class="badge badge-na">Дескриптивно</span></td>
+  </tr>
 </table>
 <div class="info">
   <strong>Що показує цей A/A-тест:</strong>
   Контрольна група конвертується краще за передтестову когорту —
-  Conversion Rate 2.88% (Control) проти 2.07% (Pre-Test),
+  CR 2.88% (Control) проти 2.07% (Pre-Test),
   +0.81 pp, p=0.000.
-  Саме ця різниця у конверсії і пояснює підвищені PPU та ARPU в контрольній групі:
-  більше користувачів платить → більше платежів на голову (PPU 0.1120 проти 0.0721)
-  і вищий середній дохід на користувача (ARPU $14.85 проти $9.42).
-  При цьому середній чек серед тих, хто платить (ARPPU), змінився незначно
-  ($514.91 проти $454.78, +13.2%) —
-  платять ті самі за типом користувачі, просто їх більше в контрольній групі.
-  Це узгоджується з очікуваним сезонним ефектом: нові реєстрації у липні конвертуються
-  активніше, ніж у червні.
+  Payments per payer (PPP) у контрольній групі 3.89 проти 3.48
+  (p=0.681) — частота покупок серед тих, хто платить, суттєво не відрізняється.
+  Середній чек (ARPPU) також стабільний:
+  $515 (Control) проти $455 (Pre-Test), +13.2%.
+  RPU Control вищий за Pre-Test (+57.5%)
+  переважно за рахунок різниці у конверсії (більше платників), а не за рахунок поведінки самих платників.
+  Це характерний сезонний ефект: нові реєстрації у липні конвертуються активніше, ніж у червні.
 </div>
 
 <!-- ═══════════════════════════════════════════════════════ 6. РЕЗУЛЬТАТИ МЕТРИК -->
 <h2>6. Результати ключових метрик</h2>
+
+<div class="info">
+  <strong>Чому не один показник, а три?</strong>
+  Класичний PPU (payments per user) здається зручним: одне число, що враховує і конверсію,
+  і частоту покупок. Але у whale-моделі він приховує структуру ефекту.
+  PPU = CR &times; PPP &times; (нормування), тому зміна PPU може означати
+  <em>будь-що</em>: більше людей почало платити, або ті самі платять частіше, або обидва ефекти одночасно.
+  Крім того, ~97% користувачів не платять взагалі, і включення їх нулів
+  у розрахунок PPU знижує чутливість тесту (Mann-Whitney тоне у tied ranks).
+  <br><br>
+  Тому використовується декомпозиція:
+  <ul style="margin:6px 0">
+    <li><strong>CR (Z-test)</strong> — чи змінилась частка тих, хто платить?</li>
+    <li><strong>PPP (Mann-Whitney)</strong> — серед тих, хто платить, чи змінилась частота покупок?</li>
+    <li><strong>ARPPU (Mann-Whitney)</strong> — чи змінився середній чек?</li>
+    <li><strong>RPU (Mann-Whitney)</strong> — тестується, але з застереженням: 97% нулів знижують чутливість; CI широкий, великий номінальний ліфт може бути шумом китів.</li>
+  </ul>
+</div>
+
 <table>
   <tr>
     <th>Метрика</th><th>Control</th><th>Test</th><th>Різниця</th><th>Результат</th>
   </tr>
   <tr style="background:#fff8e1">
-    <td><strong>Payments Per User (PPU) — PRIMARY</strong><br>
-        <small>Загальна кількість успішних платежів ÷ усі користувачі.
-        Враховує і конверсію, і повторні покупки</small></td>
-    <td>0.1120<br><small>(0.0815 — 0.1483)</small></td>
-    <td>0.1122<br><small>(0.0800 — 0.1501)</small></td>
-    <td>+0.0002<br><small>(+0.2%)</small></td>
-    <td><span class="badge badge-ns">Не значущий (p=0.514)</span></td>
+    <td><strong>Conversion Rate (CR)</strong><br>
+        <small>% користувачів із ≥1 успішним платежем. Z-test (one-tailed)</small></td>
+    <td>2.88%<br><small>(175 / 6,070)</small></td>
+    <td>2.87%<br><small>(171 / 5,961)</small></td>
+    <td>-0.01 pp<br><small>95% CI: (-0.61 — +0.58 pp)</small></td>
+    <td><span class="badge badge-ns">Не значущий (p=0.519)</span></td>
+  </tr>
+  <tr style="background:#fff8e1">
+    <td><strong>Payments per Payer (PPP)</strong><br>
+        <small>Середня кількість платежів серед тих, хто платив. Mann-Whitney U.
+        Вимірює частоту покупок без zero-inflation від неплатників</small></td>
+    <td>3.8857<br><small>(2.9370 — 4.9771)<br>n=175 платників</small></td>
+    <td>3.9123<br><small>(2.9006 — 5.0586)<br>n=171 платників</small></td>
+    <td>+0.0266<br><small>(+0.7%)<br>95% CI: (-2.0766 — +2.1216)</small></td>
+    <td><span class="badge badge-ns">Не значущий (p=0.218)</span></td>
   </tr>
   <tr>
     <td><strong>ARPPU (Avg Revenue Per Paying User)</strong><br>
-        <small>Середній чек серед користувачів, які платили</small></td>
-    <td>$514.91<br><small>(355.86 — 699.55)</small></td>
-    <td>$644.31<br><small>(409.55 — 926.39)</small></td>
+        <small>Середній чек серед платників. Mann-Whitney U</small></td>
+    <td>$514.91<br><small>(352.70 — 699.54)</small></td>
+    <td>$644.31<br><small>(401.49 — 928.78)</small></td>
     <td>+25.1%</td>
     <td><span class="badge badge-ns">Не значущий (p=0.243)</span></td>
   </tr>
   <tr>
-    <td><strong>ARPU (Avg Revenue Per User)</strong><br>
-        <small>Загальна виручка ÷ усі користувачі (включно з тими, хто не платив)</small></td>
-    <td>$14.85<br><small>(10.09 — 20.77)</small></td>
-    <td>$18.48<br><small>(11.39 — 27.21)</small></td>
+    <td><strong>RPU (Revenue Per User)</strong><br>
+        <small>Загальна виручка ÷ усі користувачі. Mann-Whitney U.
+        97% нулів знижують чутливість — читайте разом із CI</small></td>
+    <td>$14.85<br><small>95% CI: (9.87 — 20.77)</small></td>
+    <td>$18.48<br><small>95% CI: (11.53 — 26.95)</small></td>
     <td>+24.5%</td>
     <td><span class="badge badge-ns">Не значущий (p=0.514)</span></td>
   </tr>
   <tr>
     <td><strong>Total Revenue</strong><br>
         <small>Сумарна виручка групи за весь період</small></td>
-    <td>$90,109<br><small>(59,083 — 124,566)</small></td>
-    <td>$110,177<br><small>(67,168 — 159,802)</small></td>
+    <td>$90,109<br><small>(61,014 — 126,140)</small></td>
+    <td>$110,177<br><small>(68,176 — 161,222)</small></td>
     <td>+22.3%</td>
-    <td><span class="badge badge-ns">Не значущий (p=0.514)</span></td>
-  </tr>
-  <tr>
-    <td><strong>Conversion Rate</strong><br>
-        <small>% користувачів із ≥1 успішним платежем (вторинний орієнтир)</small></td>
-    <td>2.88%<br><small>(175 / 6,070)</small></td>
-    <td>2.87%<br><small>(171 / 5,961)</small></td>
-    <td>-0.01 pp</td>
-    <td><span class="badge badge-ns">Не значущий (p=1.000)</span></td>
+    <td><span class="badge badge-na">Дескриптивно</span></td>
   </tr>
 </table>
 
 <div class="info">
   <strong>Що показують цифри разом:</strong>
-  Конверсія (% платящих) у тест-групі дещо нижча, але середній чек (ARPPU) і ARPU — вищі,
-  а загальна виручка test-групи також вища.
-  Різниця у конверсії мінімальна (~0.01 pp) — статистично та практично незначуща.
-  Зростання ARPPU і ARPU свідчить, що новий UI
-  <strong>не скорочує аудиторію, але залучає більше китів або стимулює більші покупки</strong>.
-  Жодна з різниць не є статистично значущою при поточному розмірі вибірки.
+  Жодна з трьох первинних метрик не є статистично значущою.
+  CR у тест-групі дещо нижчий (-0.01 pp), PPP майже однаковий (+0.7%),
+  ARPPU вищий (+25.1%) — але при такому розмірі вибірки платників
+  (n=175 / 171) широкий CI не дозволяє відокремити сигнал від шуму.
+  Напрямок ARPP позитивний: новий UI <strong>не скорочує розмір платежів і не відлякує китів</strong>.
 </div>
 
 <div class="chart">
@@ -345,22 +370,22 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
   </p>
 </div>
 
-<h3>Стать</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>female</td><td>0.1254 <small>(n=2,409)</small></td><td>0.1086 <small>(n=2,384)</small></td><td style="background:#fdf0f0">-0.0167</td><td style="background:#fdf0f0">(-0.1031, +0.0640)</td><td>0.473</td></tr>
-<tr><td>male</td><td>0.1033 <small>(n=3,661)</small></td><td>0.1146 <small>(n=3,577)</small></td><td style="background:#eef6ee">+0.0114</td><td style="background:#eef6ee">(-0.0502, +0.0746)</td><td>0.588</td></tr></table><h3>Вікова група</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>1</td><td>0.0401 <small>(n=998)</small></td><td>0.0635 <small>(n=1,087)</small></td><td style="background:#eef6ee">+0.0234</td><td style="background:#eef6ee">(-0.0149, +0.0690)</td><td>0.330</td></tr>
-<tr><td>2</td><td>0.0636 <small>(n=1,195)</small></td><td>0.0405 <small>(n=1,112)</small></td><td style="background:#fdf0f0">-0.0231</td><td style="background:#fdf0f0">(-0.0672, +0.0153)</td><td>0.823</td></tr>
-<tr><td>3</td><td>0.1588 <small>(n=1,776)</small></td><td>0.1678 <small>(n=1,794)</small></td><td style="background:#eef6ee">+0.0090</td><td style="background:#eef6ee">(-0.1127, +0.1365)</td><td>0.604</td></tr>
-<tr><td>4</td><td>0.1433 <small>(n=1,479)</small></td><td>0.0847 <small>(n=1,416)</small></td><td style="background:#fdf0f0">-0.0586</td><td style="background:#fdf0f0">(-0.1561, +0.0383)</td><td>0.773</td></tr>
-<tr><td>5</td><td>0.1125 <small>(n=622)</small></td><td>0.2428 <small>(n=552)</small></td><td style="background:#eef6ee">+0.1302</td><td style="background:#eef6ee">(-0.0369, +0.3218)</td><td>0.665</td></tr></table><h3>Country Group</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>1</td><td>0.1031 <small>(n=4,859)</small></td><td>0.1158 <small>(n=4,757)</small></td><td style="background:#eef6ee">+0.0127</td><td style="background:#eef6ee">(-0.0354, +0.0652)</td><td>0.850</td></tr>
-<tr><td>2</td><td>0.1737 <small>(n=806)</small></td><td>0.1184 <small>(n=870)</small></td><td style="background:#fdf0f0">-0.0553</td><td style="background:#fdf0f0">(-0.2598, +0.1097)</td><td>0.690</td></tr>
-<tr><td>3</td><td>0.0538 <small>(n=186)</small></td><td>0.0474 <small>(n=190)</small></td><td style="background:#fdf0f0">-0.0064</td><td style="background:#fdf0f0">(-0.0650, +0.0521)</td><td>0.547</td></tr>
-<tr><td>4</td><td>0.1324 <small>(n=219)</small></td><td>0.0417 <small>(n=144)</small></td><td style="background:#fdf0f0">-0.0908</td><td style="background:#fdf0f0">(-0.2989, +0.0442)</td><td>0.706</td></tr></table><h3>Джерело трафіку</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>Alderaan</td><td>0.0378 <small>(n=3,520)</small></td><td>0.0358 <small>(n=3,460)</small></td><td style="background:#fdf0f0">-0.0019</td><td style="background:#fdf0f0">(-0.0297, +0.0265)</td><td>0.854</td></tr>
+<h3>Стать</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>female</td><td>0.1254 <small>(n=2,409)</small></td><td>0.1086 <small>(n=2,384)</small></td><td style="background:#fdf0f0">-0.0167</td><td style="background:#fdf0f0">(-0.0984, +0.0681)</td><td>0.473</td></tr>
+<tr><td>male</td><td>0.1033 <small>(n=3,661)</small></td><td>0.1146 <small>(n=3,577)</small></td><td style="background:#eef6ee">+0.0114</td><td style="background:#eef6ee">(-0.0509, +0.0688)</td><td>0.588</td></tr></table><h3>Вікова група</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>1</td><td>0.0401 <small>(n=998)</small></td><td>0.0635 <small>(n=1,087)</small></td><td style="background:#eef6ee">+0.0234</td><td style="background:#eef6ee">(-0.0162, +0.0678)</td><td>0.330</td></tr>
+<tr><td>2</td><td>0.0636 <small>(n=1,195)</small></td><td>0.0405 <small>(n=1,112)</small></td><td style="background:#fdf0f0">-0.0231</td><td style="background:#fdf0f0">(-0.0681, +0.0122)</td><td>0.823</td></tr>
+<tr><td>3</td><td>0.1588 <small>(n=1,776)</small></td><td>0.1678 <small>(n=1,794)</small></td><td style="background:#eef6ee">+0.0090</td><td style="background:#eef6ee">(-0.1222, +0.1482)</td><td>0.604</td></tr>
+<tr><td>4</td><td>0.1433 <small>(n=1,479)</small></td><td>0.0847 <small>(n=1,416)</small></td><td style="background:#fdf0f0">-0.0586</td><td style="background:#fdf0f0">(-0.1552, +0.0383)</td><td>0.773</td></tr>
+<tr><td>5</td><td>0.1125 <small>(n=622)</small></td><td>0.2428 <small>(n=552)</small></td><td style="background:#eef6ee">+0.1302</td><td style="background:#eef6ee">(-0.0374, +0.3145)</td><td>0.665</td></tr></table><h3>Country Group</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>1</td><td>0.1031 <small>(n=4,859)</small></td><td>0.1158 <small>(n=4,757)</small></td><td style="background:#eef6ee">+0.0127</td><td style="background:#eef6ee">(-0.0347, +0.0658)</td><td>0.850</td></tr>
+<tr><td>2</td><td>0.1737 <small>(n=806)</small></td><td>0.1184 <small>(n=870)</small></td><td style="background:#fdf0f0">-0.0553</td><td style="background:#fdf0f0">(-0.2665, +0.1144)</td><td>0.690</td></tr>
+<tr><td>3</td><td>0.0538 <small>(n=186)</small></td><td>0.0474 <small>(n=190)</small></td><td style="background:#fdf0f0">-0.0064</td><td style="background:#fdf0f0">(-0.0651, +0.0574)</td><td>0.547</td></tr>
+<tr><td>4</td><td>0.1324 <small>(n=219)</small></td><td>0.0417 <small>(n=144)</small></td><td style="background:#fdf0f0">-0.0908</td><td style="background:#fdf0f0">(-0.2919, +0.0419)</td><td>0.706</td></tr></table><h3>Джерело трафіку</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>Alderaan</td><td>0.0378 <small>(n=3,520)</small></td><td>0.0358 <small>(n=3,460)</small></td><td style="background:#fdf0f0">-0.0019</td><td style="background:#fdf0f0">(-0.0293, +0.0273)</td><td>0.854</td></tr>
 <tr><td>Corellia</td><td>0.0000 <small>(n=4)</small></td><td>nan <small>(n=0)</small></td><td style="">—</td><td style="">—</td><td>—</td></tr>
-<tr><td>Coruscant</td><td>0.2622 <small>(n=1,644)</small></td><td>0.2833 <small>(n=1,585)</small></td><td style="background:#eef6ee">+0.0211</td><td style="background:#eef6ee">(-0.1306, +0.1730)</td><td>0.801</td></tr>
-<tr><td>Jakku</td><td>0.1333 <small>(n=75)</small></td><td>0.1250 <small>(n=72)</small></td><td style="background:#fdf0f0">-0.0083</td><td style="background:#fdf0f0">(-0.1861, +0.1983)</td><td>0.391</td></tr>
-<tr><td>Mandalore</td><td>0.1282 <small>(n=827)</small></td><td>0.1031 <small>(n=844)</small></td><td style="background:#fdf0f0">-0.0251</td><td style="background:#fdf0f0">(-0.2078, +0.1266)</td><td>0.384</td></tr></table><h3>Операційна система</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>Android</td><td>0.1264 <small>(n=2,659)</small></td><td>0.1055 <small>(n=2,494)</small></td><td style="background:#fdf0f0">-0.0209</td><td style="background:#fdf0f0">(-0.1090, +0.0689)</td><td>0.819</td></tr>
+<tr><td>Coruscant</td><td>0.2622 <small>(n=1,644)</small></td><td>0.2833 <small>(n=1,585)</small></td><td style="background:#eef6ee">+0.0211</td><td style="background:#eef6ee">(-0.1129, +0.1741)</td><td>0.801</td></tr>
+<tr><td>Jakku</td><td>0.1333 <small>(n=75)</small></td><td>0.1250 <small>(n=72)</small></td><td style="background:#fdf0f0">-0.0083</td><td style="background:#fdf0f0">(-0.1856, +0.2100)</td><td>0.391</td></tr>
+<tr><td>Mandalore</td><td>0.1282 <small>(n=827)</small></td><td>0.1031 <small>(n=844)</small></td><td style="background:#fdf0f0">-0.0251</td><td style="background:#fdf0f0">(-0.1761, +0.1382)</td><td>0.384</td></tr></table><h3>Операційна система</h3><table><tr><th>Сегмент</th><th>Control PPU (n)</th><th>Test PPU (n)</th><th>Різниця</th><th>95% CI різниці</th><th>p-value</th></tr><tr><td>Android</td><td>0.1264 <small>(n=2,659)</small></td><td>0.1055 <small>(n=2,494)</small></td><td style="background:#fdf0f0">-0.0209</td><td style="background:#fdf0f0">(-0.1117, +0.0612)</td><td>0.819</td></tr>
 <tr><td>Mac</td><td>0.0000 <small>(n=3)</small></td><td>0.0000 <small>(n=1)</small></td><td style="">+0.0000</td><td style="">—</td><td>—</td></tr>
 <tr><td>Other</td><td>0.0000 <small>(n=10)</small></td><td>0.0000 <small>(n=1)</small></td><td style="">+0.0000</td><td style="">—</td><td>—</td></tr>
-<tr><td>iOS</td><td>0.1012 <small>(n=3,398)</small></td><td>0.1172 <small>(n=3,465)</small></td><td style="background:#eef6ee">+0.0159</td><td style="background:#eef6ee">(-0.0396, +0.0738)</td><td>0.782</td></tr></table>
+<tr><td>iOS</td><td>0.1012 <small>(n=3,398)</small></td><td>0.1172 <small>(n=3,465)</small></td><td style="background:#eef6ee">+0.0159</td><td style="background:#eef6ee">(-0.0389, +0.0706)</td><td>0.782</td></tr></table>
 
 <p><small>
   Усі результати сегментного аналізу є exploratory і не скориговані на множинні порівняння.
@@ -454,9 +479,10 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
 <!-- ═══════════════════════════════════════════════════════ 11. РИЗИКИ -->
 <h2>11. Ризики та застереження</h2>
 <ul>
-  <li><strong>Потужність revenue-метрик:</strong> Через екстремальну дисперсію сум платежів
-    (whale-модель) для надійного виявлення 10% зміни RPU знадобляться сотні тисяч користувачів.
-    Revenue-висновки недостатньо потужні.</li>
+  <li><strong>Потужність метрик:</strong> <strong>CR:</strong> достатня потужність (потрібно ~2,010 користувачів/групу при MDE 1 pp; фактично: 6,070; оцінена потужність: <strong>6%</strong>). <strong>Payments per payer:</strong> недостатня потужність (потрібно ~3,888 платників/групу при MDE 10%; фактично: 175; оцінена потужність: <strong>5%</strong>).
+    CR достатньо потужний (низька дисперсія бінарного виходу).
+    PPP і ARPPU недостатньо потужні через малу кількість платників та екстремальну
+    дисперсію сум у whale-моделі. RPU не тестується окремо — він читається через CR &times; ARPPU.</li>
   <li><strong>Дисбаланс country group:</strong> Рандомізація призвела до статистично
     значущого дисбалансу country_group (chi² = 18.08, p = 0.0004). Оскільки country groups
     мають суттєво різні базові рівні конверсії (2.1%–5.3%), цей дисбаланс може
@@ -478,9 +504,12 @@ footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padd
   <h3>НЕ ЗАПУСКАТИ — перезапустити після виправлення багу</h3>
   <p>
     Новий UI екрану оплати <strong>не демонструє статистично значущого покращення</strong>
-    відносно поточного дизайну за жодною первинною метрикою.
-    PPU склав 0.1122 у test проти 0.1120 у control (p=0.514).
-    Revenue-метрики позитивні за напрямком, але не значущі.
+    відносно поточного дизайну за жодною з трьох первинних метрик:
+    CR 2.87% vs 2.88% (p=0.519),
+    PPP 3.91 vs 3.89 (p=0.218),
+    ARPP $644 vs $515 (p=0.243).
+    RPU: $18.48 vs $14.85 (+24.5%), p=0.514 — не значуще
+    (великий номінальний ліфт пояснюється 1–2 додатковими китами при n=175 платників на групу).
   </p>
   <p>
     <strong>Важливе застереження:</strong> результати ускладнено критичним багом у country group 4

@@ -1,0 +1,4 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Nootrum;Mushroom Coffee Fusion (Instant) - Lion’s Mane & Chaga;instant;1.8;30;54;34.99;10.3;1.17;lions mane;own_site;https://nootrum.com/products/mushroom-coffee-fusion-instant-lion-s-mane-chaga;23.05.2026;single
+Nootrum;Mushroom Coffee Fusion - Lion’s Mane & Chaga 12oz;ground;;;340.2;49.99;0;;lions mane;own_site;https://nootrum.com/products/mushroom-coffee-fusion-lion-s-mane-chaga-12oz;23.05.2026;single
+Nootrum;Mushroom Coffee Fusion - Lion’s Mane & Chaga 4oz;ground;;;113.4;29.49;9.2;;lions mane;own_site;https://nootrum.com/products/mushroom-coffee-fusion-lion-s-mane-chaga-4oz;23.05.2026;single

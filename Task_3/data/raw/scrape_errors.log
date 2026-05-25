@@ -137,3 +137,14 @@ Call log:
 2026-05-25 00:52:41,008 | Ryze | product superfood-creamer status=503
 2026-05-25 00:52:41,218 | Ryze | product ryze-mushroom-coffee status=503
 2026-05-25 00:54:29,268 | Ryze | product ube-latte-carton status=503
+2026-05-25 10:44:30,418 | Laird Superfood | Unexpected response 200 (len=2332) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 10:44:36,281 | Laird Superfood | Unexpected response 200 (len=2332) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 10:48:31,696 | Laird Superfood | Unexpected response 200 (len=2332) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 10:48:37,538 | Laird Superfood | Unexpected response 200 (len=2332) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship
+2026-05-25 10:48:38,374 | Laird Superfood | Unexpected response 200 (len=2373) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship&page=2
+2026-05-25 10:48:44,215 | Laird Superfood | Unexpected response 200 (len=2373) for https://www.amazon.com/s?k=laird+superfood&i=grocery-intl-ship&page=2
+2026-05-25 10:48:45,078 | Laird Superfood | Unexpected response 200 (len=2365) for https://www.amazon.com/s?k=laird+superfood+creamer&i=grocery-intl-ship
+2026-05-25 10:48:50,940 | Laird Superfood | Unexpected response 200 (len=2365) for https://www.amazon.com/s?k=laird+superfood+creamer&i=grocery-intl-ship
+2026-05-25 10:48:51,800 | Laird Superfood | Unexpected response 200 (len=2374) for https://www.amazon.com/s?k=laird+superfood+instafuel&i=grocery-intl-ship
+2026-05-25 10:48:57,688 | Laird Superfood | Unexpected response 200 (len=2374) for https://www.amazon.com/s?k=laird+superfood+instafuel&i=grocery-intl-ship
+2026-05-25 14:44:12,889 | Four Sigmatic | Fetch attempt 1 failed for https://www.amazon.com/dp/B08L45MMQQ: Failed to perform, curl: (7) Failed to connect to www.amazon.com port 443 after 2016 ms: Could not connect to server. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.

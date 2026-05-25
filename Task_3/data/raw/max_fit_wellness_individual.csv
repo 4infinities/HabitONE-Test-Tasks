@@ -1,0 +1,9 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Max Fit Wellness;Dark Roast Instant Mushroom Coffee (60 Servings);instant;;60;;19.99;0;0.33;lion's mane;own_site;https://www.maxfitwellness.com/products/instant-mushroom-coffee-dark-roast-60-servings;23.05.2026;single
+Max Fit Wellness;Dark Roast Instant Mushroom Coffee (60 Servings);instant;;60;;18.99;5;0.32;lion's mane;own_site;https://www.maxfitwellness.com/products/instant-mushroom-coffee-dark-roast-60-servings;23.05.2026;subscription
+Max Fit Wellness;Immunity Mushroom Instant Coffee;instant;;60;141.7;19.99;0;0.33;chaga;own_site;https://www.maxfitwellness.com/products/immunity-mushroom-instant-coffee;23.05.2026;single
+Max Fit Wellness;Immunity Mushroom Instant Coffee;instant;;60;141.7;18.99;5;0.32;chaga;own_site;https://www.maxfitwellness.com/products/immunity-mushroom-instant-coffee;23.05.2026;subscription
+Max Fit Wellness;Original 10 Mushrooms Instant Coffee;instant;2.36;60;141.7;19.99;0;0.33;mushroom;own_site;https://www.maxfitwellness.com/products/10-mushrooms-coffee-60-servings5oz;23.05.2026;single
+Max Fit Wellness;Original 10 Mushrooms Instant Coffee;instant;2.36;60;141.7;18.99;5;0.32;mushroom;own_site;https://www.maxfitwellness.com/products/10-mushrooms-coffee-60-servings5oz;23.05.2026;subscription
+Max Fit Wellness;Skinny Instant Mushroom Coffee (60 Servings);instant;;60;;19.99;0;0.33;turkey tail;own_site;https://www.maxfitwellness.com/products/skinny-instant-mushroom-coffee-60-servings;23.05.2026;single
+Max Fit Wellness;Skinny Instant Mushroom Coffee (60 Servings);instant;;60;;18.99;5;0.32;turkey tail;own_site;https://www.maxfitwellness.com/products/skinny-instant-mushroom-coffee-60-servings;23.05.2026;subscription

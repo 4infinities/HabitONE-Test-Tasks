@@ -1,0 +1,25 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Rasa;Bold;ground;7.56;30;226.8;49.99;0;1.67;adaptogen;own_site;https://wearerasa.com/products/bold-rasa-8oz;23.05.2026;single
+Rasa;Bold;ground;7.56;30;226.8;39.99;20;1.33;adaptogen;own_site;https://wearerasa.com/products/bold-rasa-8oz;23.05.2026;subscription
+Rasa;Bold;ground;7.56;120;907.2;180;0;1.5;adaptogen;own_site;https://wearerasa.com/products/bold-rasa-8oz?variant=39982893105226;23.05.2026;single
+Rasa;Bold;ground;7.56;120;907.2;144;20;1.2;adaptogen;own_site;https://wearerasa.com/products/bold-rasa-8oz?variant=39982893105226;23.05.2026;subscription
+Rasa;Dirty;ground;7.56;30;226.8;29.99;0;1;adaptogen;own_site;https://wearerasa.com/products/dirty-rasa;23.05.2026;single
+Rasa;Dirty;ground;7.56;30;226.8;23.99;20;0.8;adaptogen;own_site;https://wearerasa.com/products/dirty-rasa;23.05.2026;subscription
+Rasa;Dirty;ground;7.56;120;907.2;108;0;0.9;adaptogen;own_site;https://wearerasa.com/products/dirty-rasa?variant=32475247804490;23.05.2026;single
+Rasa;Dirty;ground;7.56;120;907.2;86.4;20;0.72;adaptogen;own_site;https://wearerasa.com/products/dirty-rasa?variant=32475247804490;23.05.2026;subscription
+Rasa;Original;ground;7.56;30;226.8;29.99;0;1;adaptogen;own_site;https://wearerasa.com/products/original-rasa;23.05.2026;single
+Rasa;Original;ground;7.56;30;226.8;23.99;20;0.8;adaptogen;own_site;https://wearerasa.com/products/original-rasa;23.05.2026;subscription
+Rasa;Original;ground;7.56;120;907.2;108;0;0.9;adaptogen;own_site;https://wearerasa.com/products/original-rasa?variant=39982877179978;23.05.2026;single
+Rasa;Original;ground;7.56;120;907.2;86.4;20;0.72;adaptogen;own_site;https://wearerasa.com/products/original-rasa?variant=39982877179978;23.05.2026;subscription
+Rasa;The Rasa Variety Pack;packet;;;;29.99;0;1.87;adaptogen;own_site;https://wearerasa.com/products/rasa-variety-pack;23.05.2026;single
+Rasa;The Rasa Variety Pack;packet;;;;23.99;20;1.5;adaptogen;own_site;https://wearerasa.com/products/rasa-variety-pack;23.05.2026;subscription
+Rasa;Classic Herbal Roast;packet;;;;36;0;1.5;adaptogen;own_site;https://wearerasa.com/products/classic-herbal-roast;23.05.2026;single
+Rasa;Classic Herbal Roast;packet;;;;28.8;20;1.2;adaptogen;own_site;https://wearerasa.com/products/classic-herbal-roast;23.05.2026;subscription
+Rasa;Radiant Roast Coffee;instant;;;;36;0;1.5;adaptogen;own_site;https://wearerasa.com/products/radiant-roast-coffee;23.05.2026;single
+Rasa;Radiant Roast Coffee;instant;;;;28.8;20;1.2;adaptogen;own_site;https://wearerasa.com/products/radiant-roast-coffee;23.05.2026;subscription
+Rasa;AIP-Friendly;ground;;;;29.99;0;1;adaptogen;own_site;https://wearerasa.com/products/aip-friendly-2;23.05.2026;single
+Rasa;AIP-Friendly;ground;;;;23.99;20;0.8;adaptogen;own_site;https://wearerasa.com/products/aip-friendly-2;23.05.2026;subscription
+Rasa;Crème de la Creamer;creamer;7.56;30;226.8;32;0;1.07;adaptogen;own_site;https://wearerasa.com/products/creme-de-la-creamer;23.05.2026;single
+Rasa;Crème de la Creamer;creamer;7.56;30;226.8;25.6;20;0.85;adaptogen;own_site;https://wearerasa.com/products/creme-de-la-creamer;23.05.2026;subscription
+Rasa;Crème de la Creamer;creamer;2.36;12;28.3;24;0;2;adaptogen;own_site;https://wearerasa.com/products/creme-de-la-creamer?variant=39982909784138;23.05.2026;single
+Rasa;Crème de la Creamer;creamer;2.36;12;28.3;19.2;20;1.6;adaptogen;own_site;https://wearerasa.com/products/creme-de-la-creamer?variant=39982909784138;23.05.2026;subscription

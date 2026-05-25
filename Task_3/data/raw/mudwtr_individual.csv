@@ -1,0 +1,23 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+MudWtr;Original Starter Kit;instant;5;30;150;42.5;15;1.42;;own_site;https://mudwtr.com/products/30-servings-tin;23.05.2026;single
+MudWtr;Original Starter Kit;instant;5;30;150;34;43.3;1.13;;own_site;https://mudwtr.com/products/30-servings-tin;23.05.2026;subscription
+MudWtr;Original (30 serving);instant;5;30;150;42.5;15;1.42;adaptogen;own_site;https://mudwtr.com/products/30-serving-tin;23.05.2026;single
+MudWtr;Original (30 serving);instant;5;30;150;34;32;1.13;adaptogen;own_site;https://mudwtr.com/products/30-serving-tin;23.05.2026;subscription
+MudWtr;Original (90 serving);instant;5;90;450;106.25;15;1.18;lion's mane;own_site;https://mudwtr.com/products/90-serving-bag;23.05.2026;single
+MudWtr;Original (90 serving);instant;5;90;450;85;32;0.94;lion's mane;own_site;https://mudwtr.com/products/90-serving-bag;23.05.2026;subscription
+MudWtr;Coconut Creamer (30 serving);creamer;5;30;150;21.25;15;0.71;;own_site;https://mudwtr.com/products/30-serving-creamer-bag;23.05.2026;single
+MudWtr;Coconut Creamer (30 serving);creamer;5;30;150;17;32;0.57;;own_site;https://mudwtr.com/products/30-serving-creamer-bag;23.05.2026;subscription
+MudWtr;Coconut Creamer (90 serving);creamer;5;90;450;42.5;15;0.47;;own_site;https://mudwtr.com/products/90-serving-creamer-bag;23.05.2026;single
+MudWtr;Coconut Creamer (90 serving);creamer;5;90;450;34;32;0.38;;own_site;https://mudwtr.com/products/90-serving-creamer-bag;23.05.2026;subscription
+MudWtr;Coconut Sweetener (30 serving);instant;5;30;150;21.25;15;0.71;;own_site;https://mudwtr.com/products/30-serving-sweetener-bag;23.05.2026;single
+MudWtr;Coconut Sweetener (30 serving);instant;5;30;150;17;32;0.57;;own_site;https://mudwtr.com/products/30-serving-sweetener-bag;23.05.2026;subscription
+MudWtr;Coconut Sweetener (90 serving);instant;5;90;450;42.5;15;0.47;;own_site;https://mudwtr.com/products/90-serving-sweetener-bag;23.05.2026;single
+MudWtr;Coconut Sweetener (90 serving);instant;5;90;450;34;32;0.38;;own_site;https://mudwtr.com/products/90-serving-sweetener-bag;23.05.2026;subscription
+MudWtr;Mushroom Boost (30 serving);instant;5;30;150;21.25;15;0.71;mushroom;own_site;https://mudwtr.com/products/30-serving-mushroom-boost;23.05.2026;single
+MudWtr;Mushroom Boost (30 serving);instant;5;30;150;17;32;0.57;mushroom;own_site;https://mudwtr.com/products/30-serving-mushroom-boost;23.05.2026;subscription
+MudWtr;Mushroom Boost (90 serving);instant;5;90;450;42.5;15;0.47;mushroom;own_site;https://mudwtr.com/products/90-serving-mushroom-boost;23.05.2026;single
+MudWtr;Mushroom Boost (90 serving);instant;5;90;450;34;32;0.38;mushroom;own_site;https://mudwtr.com/products/90-serving-mushroom-boost;23.05.2026;subscription
+MudWtr;Original x Manukora Starter Kit;instant;5;30;150;62.9;15;2.1;;own_site;https://mudwtr.com/products/original-x-manukora-starter-kit;23.05.2026;single
+MudWtr;Original x Manukora Starter Kit;instant;5;30;150;34;54.1;1.13;;own_site;https://mudwtr.com/products/original-x-manukora-starter-kit;23.05.2026;subscription
+MudWtr;Coffee (30 Serving);instant;5;30;150;42.5;15;1.42;l-theanine;own_site;https://mudwtr.com/products/coffee-30-serving;23.05.2026;single
+MudWtr;Coffee (30 Serving);instant;5;30;150;34;32;1.13;l-theanine;own_site;https://mudwtr.com/products/coffee-30-serving;23.05.2026;subscription

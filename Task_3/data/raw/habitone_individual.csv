@@ -1,0 +1,26 @@
+brand;product_name;format;serving_price;serving_count;volume_g;price_usd;discount_pct;key_ingredient;channel;url;date_collected;purchase_type;add_ons
+HabitONE;FUNCTIONAL Coffee;instant;0.93;30;192;28;60;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235133183;20.05.2026;subscription;cocoa_single, resipes_ebook
+HabitONE;FUNCTIONAL Coffee;instant;0.90;60;384;54;60;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235165951;20.05.2026;subscription;cocoa_single, resipes_ebook, reset_guide
+HabitONE;FUNCTIONAL Coffee;instant;0.87;90;576;78;60;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235198719;20.05.2026;subscription;resipes_ebook, reset_guide, collagen_creamer
+HabitONE;FUNCTIONAL Coffee;instant;1.50;30;192;45;0;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235133183;20.05.2026;single;
+HabitONE;FUNCTIONAL Coffee;instant;1.47;60;384;88;0;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235165951;20.05.2026;single;
+HabitONE;FUNCTIONAL Coffee;instant;1.43;90;576;129;0;;own_site;https://habitone.co/products/habitone-super-coffee?variant=47108235198719;20.05.2026;single;
+HabitONE;MAGNESIUM Cocoa;instant;0.93;30;141;28;60;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053346559;20.05.2026;subscription;resipes_ebook
+HabitONE;MAGNESIUM Cocoa;instant;0.90;60;282;54;60;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053379327;20.05.2026;subscription;resipes_ebook, reset_guide
+HabitONE;MAGNESIUM Cocoa;instant;0.87;90;423;78;60;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053412095;20.05.2026;subscription;resipes_ebook, reset_guide, functional_coffee
+HabitONE;MAGNESIUM Cocoa;instant;1.50;30;141;45;0;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053346559;20.05.2026;single;
+HabitONE;MAGNESIUM Cocoa;instant;1.47;60;282;88;0;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053379327;20.05.2026;single;
+HabitONE;MAGNESIUM Cocoa;instant;1.43;90;423;129;0;;own_site;https://habitone.co/products/magnesium-cocoa?variant=47616053412095;20.05.2026;single;
+HabitONE;COLLAGEN Creamer;creamer;0.93;30;141;28;60;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673480959;20.05.2026;subscription;resipes_ebook
+HabitONE;COLLAGEN Creamer;creamer;0.90;60;282;54;60;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673513727;20.05.2026;subscription;resipes_ebook, reset_guide
+HabitONE;COLLAGEN Creamer;creamer;0.87;90;423;78;60;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673546495;20.05.2026;subscription;resipes_ebook, reset_guide, functional_coffee
+HabitONE;COLLAGEN Creamer;creamer;1.50;30;141;45;0;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673480959;20.05.2026;single;
+HabitONE;COLLAGEN Creamer;creamer;1.47;60;282;88;0;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673513727;20.05.2026;single;
+HabitONE;COLLAGEN Creamer;creamer;1.43;90;423;129;0;;own_site;https://habitone.co/products/collagen-creamer?variant=47616673546495;20.05.2026;single;
+HabitONE;PROTEIN Coffee;instant;1.67;15;300;25;61;;own_site;https://habitone.co/products/protein-coffee?variant=48119475470591;20.05.2026;subscription;resipes_ebook
+HabitONE;PROTEIN Coffee;instant;1.60;30;600;48;61;;own_site;https://habitone.co/products/protein-coffee?variant=48119475503359;20.05.2026;subscription;resipes_ebook, reset_guide
+HabitONE;PROTEIN Coffee;instant;1.53;60;1200;92;61;;own_site;https://habitone.co/products/protein-coffee?variant=48119475536127;20.05.2026;subscription;resipes_ebook, reset_guide, magnesium_cocoa
+HabitONE;PROTEIN Coffee;instant;2.67;15;300;40;0;;own_site;https://habitone.co/products/protein-coffee?variant=48119475470591;20.05.2026;single;
+HabitONE;PROTEIN Coffee;instant;2.60;30;600;78;0;;own_site;https://habitone.co/products/protein-coffee?variant=48119475503359;20.05.2026;single;
+HabitONE;PROTEIN Coffee;instant;2.53;60;1200;152;0;;own_site;https://habitone.co/products/protein-coffee?variant=48119475536127;20.05.2026;single;
+HabitONE;FULL RESET BUNDLE;bundle;;90;;78;62;;own_site;;20.05.2026;single;cocoa_single, resipes_ebook

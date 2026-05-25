@@ -31,7 +31,7 @@ class RyzeScraper(AmazonScraperBase):
     }
 
     EXTRA_INGREDIENT_KW = {
-        "mushroom blend": ["6 mushroom", "7 mushroom", "mushroom blend", "mushroom complex"],
+        "mushroom blend": ["6 mushroom", "7 mushroom", "mushroom blend", "mushroom complex", "mushroom"],
         "lion's mane":    ["lion's mane", "lion mane"],
         "cordyceps":      ["cordyceps"],
         "reishi":         ["reishi"],

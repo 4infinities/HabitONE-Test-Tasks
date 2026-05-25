@@ -1,0 +1,27 @@
+brand;product_name;format;serving_size_g;serving_count;volume_g;price_usd;discount_pct;serving_price;key_ingredient;channel;url;date_collected;purchase_type
+Clevr;Chai Superlatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/chai-superlatte;23.05.2026;single
+Clevr;Chai Superlatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/chai-superlatte;23.05.2026;subscription
+Clevr;Chill Chai Superlatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/chill-chai-superlatte;23.05.2026;single
+Clevr;Chill Chai Superlatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/chill-chai-superlatte;23.05.2026;subscription
+Clevr;Coffee SuperLatte - 8 Servings;instant;;8;;18;0;2.25;;own_site;https://clevrblends.com/products/coffee-superlatte-8-servings;23.05.2026;single
+Clevr;Honey Lavender Matcha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/honey-lavender-matcha-superlatte;23.05.2026;single
+Clevr;Honey Lavender Matcha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/honey-lavender-matcha-superlatte;23.05.2026;subscription
+Clevr;Honey Pistachio Matcha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/pistachio-matcha;23.05.2026;single
+Clevr;Honey Pistachio Matcha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/pistachio-matcha;23.05.2026;subscription
+Clevr;Sleeptime SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/sleeptime-superlatte;23.05.2026;single
+Clevr;Sleeptime SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/sleeptime-superlatte;23.05.2026;subscription
+Clevr;Salted Caramel Chai SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/salted-caramel-chai;23.05.2026;single
+Clevr;Salted Caramel Chai SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/salted-caramel-chai;23.05.2026;subscription
+Clevr;Matcha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/matcha-superlatte;23.05.2026;single
+Clevr;Matcha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/matcha-superlatte;23.05.2026;subscription
+Clevr;Iced Strawberry Matcha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/iced-strawberry-matcha-superlatte;23.05.2026;single
+Clevr;Iced Strawberry Matcha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/iced-strawberry-matcha-superlatte;23.05.2026;subscription
+Clevr;Honey Vanilla Matcha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/honey-vanilla-matcha-superlatte;23.05.2026;single
+Clevr;Honey Vanilla Matcha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/honey-vanilla-matcha-superlatte;23.05.2026;subscription
+Clevr;London Fog SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/london-fog-superlatte;23.05.2026;single
+Clevr;London Fog SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/london-fog-superlatte;23.05.2026;subscription
+Clevr;Mocha SuperLatte;instant;;14;;29;0;;adaptogen;own_site;https://clevrblends.com/products/mocha-superlatte;23.05.2026;single
+Clevr;Mocha SuperLatte;instant;;14;;20.3;30;;adaptogen;own_site;https://clevrblends.com/products/mocha-superlatte;23.05.2026;subscription
+Clevr;Yuzu Lemonade SuperTea;instant;;14;;29;0;;;own_site;https://clevrblends.com/products/yuzu-lemon-supertea-1;23.05.2026;single
+Clevr;Yuzu Lemonade SuperTea;instant;;14;;20.3;30;;;own_site;https://clevrblends.com/products/yuzu-lemon-supertea-1;23.05.2026;subscription
+;;;;;;;;;;;;;
