@@ -94,7 +94,7 @@ WHERE b.is_habitone = 0
 ORDER BY pr.format;
 
 
--- Q7: Average serving price by brand (broader coverage than price/g — 823 vs 583 rows)
+-- Q7: Average serving price by brand (broader coverage than price/g — 795 vs 573 rows)
 SELECT
     b.name                                    AS brand,
     ROUND(AVG(p.serving_price), 3)            AS avg_serving_price,
