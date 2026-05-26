@@ -157,6 +157,9 @@ def load_all(conn: sqlite3.Connection) -> tuple[int, int, int]:
                     ),
                 )
                 seen_products[product_id] = True
+                sc_val = _int(row.get("serving_count", ""))
+                if sc_val and sc_val > 0:
+                    product_serving_count[product_id] = sc_val
 
             price_usd = _float(row.get("price_usd", ""))
             if price_usd is None:
