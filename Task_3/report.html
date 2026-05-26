@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>HabitONE — Конкурентний аналіз функціонального кофе</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:980px;margin:0 auto;padding:20px 32px;color:#222;background:#fafafa;line-height:1.6}
+h1{color:#1a237e;border-bottom:3px solid #1a237e;padding-bottom:8px}
+h2{color:#283593;margin-top:40px;border-left:4px solid #3949ab;padding-left:10px}
+.verdict{border:2px solid #1a237e;border-radius:8px;padding:18px 24px;margin:20px 0;background:#e8eaf6}
+.verdict h3{color:#1a237e;margin:0 0 10px;font-size:1.2em}
+.warn{background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:12px 16px;margin:12px 0}
+.pass{background:#d4edda;border:1px solid #28a745;border-radius:4px;padding:12px 16px;margin:12px 0}
+.info{background:#d1ecf1;border:1px solid #17a2b8;border-radius:4px;padding:12px 16px;margin:12px 0}
+.rec{border-left:3px solid #3949ab;padding:8px 14px;margin:12px 0;background:#f5f5f5;font-size:.95em}
+footer{color:#888;font-size:.85em;margin-top:40px;border-top:1px solid #ddd;padding-top:12px}
+/* Bar chart */
+.bar-wrap{margin:20px 0}
+.bar-row{display:flex;align-items:center;margin:3px 0;gap:8px}
+.bar-lbl{width:170px;font-size:.86em;text-align:right;color:#444;flex-shrink:0}
+.bar-lbl.hn{font-weight:700;color:#c62828}
+.bar-outer{flex:1;background:#eeeeee;border-radius:3px;height:20px}
+.bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:6px;font-size:.75em;font-weight:600;color:#fff;box-sizing:border-box;white-space:nowrap;min-width:2px}
+.bf-gray{background:#bdbdbd}
+.bf-blue{background:#3949ab}
+.bf-red{background:#c62828}
+.chart-caption{font-size:.82em;color:#555;font-style:italic;margin:4px 0 16px;text-align:center}
+.legend-dot{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<h1>HabitONE — Конкурентний аналіз функціонального кофе</h1>
+<p style="color:#555">
+  Дата збору даних: 20–25 травня 2026 р. &nbsp;|&nbsp;
+  Брендів проаналізовано: 23 (включно з HabitONE) &nbsp;|&nbsp;
+  Продуктів у БД: 219 &nbsp;|&nbsp;
+  Рядків цін: 960
+</p>
+
+<div class="verdict">
+  <h3>Executive Summary</h3>
+  <p>Ціна за порцією у HabitONE <strong>конкурентна</strong> ($1.28/порція — дешевше за Ryze $1.71, MudWtr $1.55, Everyday Dose $1.50), але три структурні проблеми підривають цю перевагу:</p>
+  <ol style="margin:0;padding-left:20px">
+    <li style="margin-bottom:6px"><strong>Знижка на підписку занадто глибока.</strong> 37% — вдвічі більше за медіану peer set (~13%). Привчає покупців чекати на акції та знецінює single-ціну. <em>Рішення: скоротити до 15–20%.</em></li>
+    <li style="margin-bottom:6px"><strong>HabitONE відсутній у форматі packet.</strong> 7 конкурентів продають порційні саше — HabitONE не має жодного. Packets не потребують нової рецептури. <em>Рішення: додати один packet SKU.</em></li>
+    <li><strong>Amazon-ціноутворення створює плутанину.</strong> Малі пробні SKU на Amazon (~$25) знаходяться далеко нижче від $87 single-ціни на власному сайті. <em>Рішення: позиціонувати Amazon-SKU як starter/trial і додати upsell-шлях до підписки.</em></li>
+  </ol>
+</div>
+
+<!-- ===== 1. PRICE POSITION ===== -->
+<h2>1. Позиція на ринку за ціною порції</h2>
+<p>
+  HabitONE знаходиться на <strong>~54-му перцентилі</strong> серед 23 брендів ($1.28/порцію, 13-й з 23 за single serving price).
+  Серед прямих конкурентів (peer set: DTC-першочергові бренди, ≤12 core-продуктів) — <strong>2-й найдешевший</strong> після IQBAR ($1.12).
+  Бренди з нижчою ціною за межами peer set — переважно Amazon-native commodity (Bunkell $0.70, Taoters $0.77) або кремери іншого формату, які не є прямими замінниками кави.
+</p>
+
+<div class="bar-wrap">
+  <div class="bar-row"><span class="bar-lbl">Max Fit Wellness</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:15.9%">$0.33</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Pella Nutrition</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:23.2%">$0.48</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">La Republica</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:27.1%">$0.56</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">VenturePal</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:28.5%">$0.59</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Bunkell</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:33.8%">$0.70</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">North Spore</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:35.3%">$0.73</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Taoters</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:37.2%">$0.77</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">YEGE</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:38.2%">$0.79</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Four Sigmatic</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:48.3%">$1.00</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">IQBAR</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:54.1%">$1.12</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Nootrum</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:56.5%">$1.17</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Rasa</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:61.8%">$1.28</div></div></div>
+  <div class="bar-row"><span class="bar-lbl hn">▶ HabitONE</span><div class="bar-outer"><div class="bar-fill bf-red" style="width:61.8%">$1.28</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Om Mushrooms</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:62.3%">$1.29</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Lucid</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:67.1%">$1.39</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">BodyBrain Coffee</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:68.1%">$1.41</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Laird Superfood</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:68.1%">$1.41</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Everyday Dose</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:72.5%">$1.50</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">MudWtr</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:74.9%">$1.55</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Shroomi</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:76.3%">$1.58</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Ryze</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:82.6%">$1.71</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Clevr Blends</span><div class="bar-outer"><div class="bar-fill bf-blue" style="width:89.9%">$1.86</div></div></div>
+  <div class="bar-row"><span class="bar-lbl">Strong Coffee Co.</span><div class="bar-outer"><div class="bar-fill bf-gray" style="width:100%">$2.07</div></div></div>
+</div>
+<p class="chart-caption">
+  <span class="legend-dot" style="background:#c62828"></span>HabitONE &nbsp;
+  <span class="legend-dot" style="background:#3949ab"></span>Peer set &nbsp;
+  <span class="legend-dot" style="background:#bdbdbd"></span>Інші бренди &nbsp;&nbsp;
+  Ціна за порцію (single, $ USD)
+</p>
+
+<div class="rec">
+  <strong>Рекомендація:</strong> У комунікаціях та матеріалах для інвесторів порівнювати з peer set, а не з усім ринком: "ми коштуємо як MudWtr і дешевше за Everyday Dose". Виводити ціну за порцію на перший план: "менше $1.30 за чашку".
+</div>
+
+<!-- ===== 2. SINGLE vs SUB ===== -->
+<h2>2. Single vs підписка: розрив занадто великий</h2>
+<p>
+  HabitONE single: <strong>$75.69</strong> ($1.28/порцію) → підписка: <strong>$47.64</strong> (~$0.90/порцію).
+  Знижка <strong>37.1%</strong> — найбільше серед усіх 23 брендів і вдвічі більше за наступного у peer set (Ryze 18.2%).
+  Медіана ринку: ~11–12%. Peer set: IQBAR 12.3%, MudWtr 13.7%, Everyday Dose 10.9%, Shroomi 8.1%.
+</p>
+<div class="warn">
+  Розрив 37% сигналізує покупцю, що single-ціна не є "справжньою". Покупець, який заплатив $75.69, а потім дізнався про $47.64 на підписці, відчує, що переплатив. Така різниця також ускладнює узгоджене ціноутворення на Amazon та в роздрібній торгівлі.
+</div>
+<div class="rec">
+  <strong>Рекомендація:</strong> Скоротити знижку до 15–20% — або підвищивши ціну підписки, або трохи знизивши single-якір. Знижки понад 35% — лише для одноразових acquisition-кампаній.
+</div>
+
+<!-- ===== 3. DISCOUNT AGGRESSIVENESS ===== -->
+<h2>3. Агресивність знижок по брендах</h2>
+<p>
+  Four Sigmatic дає знижки на <strong>83.6%</strong> з 299 рядків цін — фактично модель постійного розпродажу.
+  MudWtr дає знижки на 73.3% SKU при середній глибині ~14%.
+  HabitONE: <strong>61.3%</strong> SKU зі знижкою (19 з 31 рядків) при <strong>найвищій глибині на ринку — 37.1%</strong>.
+  Медіана peer set: ~13%. North Spore — єдиний бренд з нульовим охопленням знижок.
+</p>
+<div class="warn">
+  HabitONE поєднує широке охоплення знижок із найглибшою глибиною — найгірша комбінація для збереження сприйнятої цінності бренду. 83.6% охоплення Four Sigmatic при помірній глибині — стійкіша модель, але теж знецінює бренд.
+</div>
+<div class="rec">
+  <strong>Рекомендація:</strong> Знизити глибину активних знижок з 37% до 20–25%. Знижки 35%+ — лише для залучення нових клієнтів, не як стандартна sub-ставка.
+</div>
+
+<!-- ===== 4. CATALOG ===== -->
+<h2>4. Каталог: формати, прогалини та ширина</h2>
+<p>
+  HabitONE має <strong>5 продуктів</strong>: 3 в <code>instant</code>, 1 <code>creamer</code>, 1 <code>bundle</code>. Медіана по ринку: ~9 продуктів. Лідери: Four Sigmatic (45), Laird Superfood (34), Ryze (25, включно з bundle-варіантами). Навіть середні прямі конкуренти — MudWtr (9), Clevr Blends (12) — мають ширший асортимент.
+</p>
+<p>
+  При цьому конкуренти пропонують чотири формати, яких немає у HabitONE. <strong>Packet</strong> — найпоширеніша прогалина: BodyBrain Coffee, Four Sigmatic, IQBAR, La Republica, Laird, Rasa та Strong Coffee Co. — усі продають порційні саше. <strong>Pods</strong> (K-cups) є у Four Sigmatic (10 SKU) та Ryze. <strong>Ground</strong> — North Spore, Rasa та інші. <strong>Capsule</strong> — Om Mushrooms, Nootrum (формат, суміжний із сегментом БАД, слабко вписується в позиціонування HabitONE).
+</p>
+<div class="rec">
+  <strong>Рекомендація:</strong> Пріоритет — <strong>packets</strong>: мінімальні капвитрати, той самий склад, висока цінність для trial і gifting. Потім — pods за умови виходу в роздріб. Ціль по ширині: <strong>8–10 продуктів за 18 місяців</strong> (1 packet SKU + 1 додатковий instant-смак).
+</div>
+
+<!-- ===== 5. BUNDLES ===== -->
+<h2>5. Бандли: є, це добре</h2>
+<div class="pass">
+  HabitONE вже продає бандли — це відповідає ринковій практиці. Серед конкурентів найактивніше використовує бандли <strong>Ryze</strong> (значна частка каталогу), що підтверджує їхню ефективність як upsell-інструменту для збільшення AOV. Бандли в категорії функціонують як інструмент крос-продажу форматів і смаків, а не як механізм знижок.
+</div>
+
+<!-- ===== 6. AMAZON vs OWN-SITE ===== -->
+<h2>6. Amazon vs власний сайт</h2>
+<p>
+  Більшість брендів коштують <strong>дешевше на Amazon</strong>, ніж на власному сайті. Найбільші розриви: Everyday Dose -$54.93, Strong Coffee Co. -$51.48, HabitONE <strong>-$46.72</strong> (own-site single $87.23 → Amazon single $25.69). Два аутлайєри рухаються у протилежному напрямку: <strong>Clevr Blends (+$9.69)</strong> та <strong>MudWtr (+$9.66)</strong> — обидва проводять акції на власному сайті, що опускають ціну нижче Amazon.
+</p>
+<div class="info">
+  <strong>Модель Clevr/MudWtr:</strong> власний сайт — найдешевший канал (якір підписки), Amazon — близько до повної ціни. Це захищає маржу Amazon і уникає конфлікту каналів. Поточна модель HabitONE протилежна: власний сайт тримає повну ціну ($87.23), Amazon пропонує малі пробні SKU набагато дешевше ($25.69) — масштаб розриву створює плутанину щодо реальної ціни бренду.
+</div>
+<div class="rec">
+  <strong>Рекомендація:</strong> Оцінити модель Clevr/MudWtr. Як мінімум — переконатися, що Amazon-ціни не підривають цінність підписки на власному сайті. Позначити Amazon-SKU як starter/trial та додати прямий upsell-шлях на підписку.
+</div>
+
+<!-- ===== LIMITATIONS ===== -->
+<h2>Обмеження даних</h2>
+<div class="warn">
+  <ul style="margin:0;padding-left:20px">
+    <li>~387/960 рядків цін не мають <code>volume_g</code> (pods-формат, частина Amazon-SKU без даних про вагу). Аналіз serving price охоплює 795 рядків.</li>
+    <li>Laird Superfood (126 рядків) та Ryze (22 рядки) структурно не мають <code>serving_price</code> — не виправляється без повторного збору даних.</li>
+    <li>Amazon-native бренди (Bunkell, Taoters, YEGE, VenturePal) мають commodity-ціноутворення — їх низький $/порцію не порівнюється напряму з брендованими DTC-конкурентами.</li>
+    <li>Ціни зібрані в один часовий проміжок (20–25 травня 2026 р.). Промо-вікна можуть спричиняти тимчасові викривлення.</li>
+    <li>Бренди з малою кількістю рядків: North Spore (1), Lucid (2), Pella Nutrition (3), YEGE (3), Nootrum (3) — висновки лише орієнтовні.</li>
+    <li>Кількість продуктів Four Sigmatic (45) — після дедуплікації Amazon + own-site; raw-кількість до матчингу ~60.</li>
+  </ul>
+</div>
+
+<footer>
+  HabitONE Competitive Analysis &nbsp;|&nbsp; Дата збору: 20–25 травня 2026 р. &nbsp;|&nbsp; Брендів: 23 &nbsp;|&nbsp; Продуктів: 219 &nbsp;|&nbsp; Рядків цін: 960
+</footer>
+
+</body>
+</html>
