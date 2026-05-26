@@ -8,7 +8,9 @@
 # Specific files to ignore
 **/claude.md
 
+
 # Task_1 specific outputs
+Task_1/claude.md
 Task_1/analysis/outputs/*.csv
 Task_1/charts/*.png
 
